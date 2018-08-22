@@ -9,9 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Screen extends JPanel implements ActionListener {
+	private ArrayList<Account>() accounts;
+
 
 	public Screen() {
 		this.setLayout(null);
+
+		accounts.add(new Account("Jennifer", 999.99, 1234));
+		accounts.add(new Account("Jose", 500.01, 4321));
 
 	}
 
