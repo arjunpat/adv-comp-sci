@@ -81,7 +81,17 @@ public class Screen extends JPanel implements ActionListener {
 
 				break;
 			case "loggedin":
-				System.out.println("logged in");
+				this.remove(username);
+				this.remove(password);
+				this.remove(loginButton);
+
+				g.setFont(new Font("Arial", Font.PLAIN, 30));
+
+				g.drawString("Hello, " + accounts.get(currentAccount - 1).getName(), 100, 100);
+				g.setFont(new Font("Arial", Font.PLAIN, 20));
+				g.drawString("Balance: " + accounts.get(currentAccount - 1).getBalance(), 100, 120);
+
+
 				break;
 		}
 
