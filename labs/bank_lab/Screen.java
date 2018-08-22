@@ -7,10 +7,31 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.*;
 
 public class Screen extends JPanel implements ActionListener {
-	private ArrayList<Account>() accounts;
+	private ArrayList<Account> accounts = new ArrayList<Account>();
+	private JTextField username = new JTextField(20);
+	private JTextField password = new JTextField(20);
+	private JButton loginButton = new JButton("Login");
 
+	private int currentAccount = 0;
+	private boolean loginFailed = false;
+
+	private String page = "login";
+
+	private Color green = new Color(79, 255, 146);
+	private Color white = new Color(255, 255, 255);
+	private Color purple = new Color(192, 179, 224);
+	private Color lblue = new Color(176, 224, 230);
+	private Color blue = new Color(0, 0, 255);
+	private Color red = new Color(255, 0, 0);
+	private Color black = new Color(0, 0, 0);
+	private Color yellow = new Color(244, 236, 8);
+	private Color dblue = new Color(30, 144, 255);
+	private Color red1 = new Color(242, 106, 117);
+	private Color yellow1 = new Color(249, 228, 89);
 
 	public Screen() {
 		this.setLayout(null);
@@ -18,19 +39,79 @@ public class Screen extends JPanel implements ActionListener {
 		accounts.add(new Account("Jennifer", 999.99, 1234));
 		accounts.add(new Account("Jose", 500.01, 4321));
 
+
+		username.setBounds(325, 250, 200, 30);
+		this.add(username);
+
+		password.setBounds(325, 350, 200, 30);
+		this.add(password);
+
+		loginButton.setBounds(350, 400, 100, 40);
+		loginButton.addActionListener(this);
+		this.add(loginButton);
+
+		this.setFocusable(true);
+
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(800, 400);
+		return new Dimension(800, 800);
 	}
 
 	public void paintComponent(Graphics g) {
-		
 		super.paintComponent(g);
+
+		switch (page) {
+			case "login":
+				g.setColor(white);
+				g.fillRect(0, 0, 800, 800);
+
+				g.setColor(black);
+				g.setFont(new Font("Arial", Font.PLAIN, 30));
+				g.drawString("Welcome to the bank.", 250, 100);
+
+				g.setFont(new Font("Arial", Font.PLAIN, 20));
+
+				g.drawString("Name", 350, 225);
+				g.drawString("Pin", 350, 325);
+
+				if (loginFailed) {
+					g.drawString("Incorrect credentials", 320, 475);
+				}
+
+				break;
+			case "loggedin":
+				System.out.println("logged in");
+				break;
+		}
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource() == loginButton) {
+			String name = username.getText();
+			int pin = Integer.parseInt(password.getText());
+
+			for (int i = 0; i < accounts.size(); i++) {
+				if (accounts.get(i).getName().equals(name)) {
+					System.out.println(accounts.get(i).getName());
+
+					accounts.get(i).setAccess(pin);
+					if (accounts.get(i).getAccess() == true) {
+						page = "loggedin";
+						currentAccount = i + 1;
+						break;
+					}
+				}
+			}
+
+			if (currentAccount == 0) {
+				loginFailed = true;
+			}
+
+			this.repaint();
+		}
 
 	}
 

@@ -16,7 +16,7 @@ public class Account {
 
 	public boolean getAccess() { return access; }
 
-	public void setAccess(pin) {
+	public void setAccess(int pin) {
 		if (this.pin == pin)
 			this.access = true;
 	}
