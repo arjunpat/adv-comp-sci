@@ -20,6 +20,7 @@ public class Screen extends JPanel implements ActionListener {
 	private JButton loginButton = new JButton("Login");
 	private JButton depositButton = new JButton("Deposit");
 	private JButton withdrawButton = new JButton("Withdraw");
+	private JButton logoutButton = new JButton("Logout");
 
 	private int currentAccount = 0;
 	private boolean loginFailed = false;
@@ -43,6 +44,9 @@ public class Screen extends JPanel implements ActionListener {
 
 		accounts.add(new Account("Jennifer", 999.99, 1234));
 		accounts.add(new Account("Jose", 500.01, 4321));
+		accounts.add(new Account("Arjun", 123123.01, 1357));
+		accounts.add(new Account("Tanay", 2342.01, 7531));
+		accounts.add(new Account("Lee", 3432.01, 01010));
 
 
 		username.setBounds(325, 250, 200, 30);
@@ -57,10 +61,15 @@ public class Screen extends JPanel implements ActionListener {
 
 		withdraw.setBounds(500, 275, 200, 30);
 		deposit.setBounds(200, 275, 200, 30);
+		
 		withdrawButton.setBounds(500, 320, 100, 40);
 		withdrawButton.addActionListener(this);
+		
 		depositButton.setBounds(200, 320, 100, 40);
 		depositButton.addActionListener(this);
+
+		logoutButton.setBounds(640, 50, 100, 40);
+		logoutButton.addActionListener(this);
 
 		this.setFocusable(true);
 
@@ -93,9 +102,6 @@ public class Screen extends JPanel implements ActionListener {
 
 				break;
 			case "loggedin":
-				this.remove(username);
-				this.remove(password);
-				this.remove(loginButton);
 
 				g.setFont(new Font("Arial", Font.PLAIN, 30));
 
@@ -126,10 +132,15 @@ public class Screen extends JPanel implements ActionListener {
 					accounts.get(i).setAccess(pin);
 					if (accounts.get(i).getAccess() == true) {
 
+						this.remove(username);
+						this.remove(password);
+						this.remove(loginButton);
+
 						this.add(withdraw);
 						this.add(deposit);
 						this.add(withdrawButton);
 						this.add(depositButton);
+						this.add(logoutButton);
 
 						page = "loggedin";
 						currentAccount = i + 1;
@@ -141,9 +152,7 @@ public class Screen extends JPanel implements ActionListener {
 			if (currentAccount == 0) {
 				loginFailed = true;
 			}
-		}
-
-		if (e.getSource() == withdrawButton) {
+		} else if (e.getSource() == withdrawButton) {
 			double amt = Double.parseDouble(withdraw.getText());
 
 			accounts.get(currentAccount - 1).withdraw(amt);
@@ -153,6 +162,21 @@ public class Screen extends JPanel implements ActionListener {
 
 			accounts.get(currentAccount - 1).deposit(amt);
 
+		} else if (e.getSource() == logoutButton) {
+			
+			this.add(username);
+			this.add(password);
+			this.add(loginButton);
+
+			this.remove(withdraw);
+			this.remove(deposit);
+			this.remove(withdrawButton);
+			this.remove(depositButton);
+			this.remove(logoutButton);
+
+
+			currentAccount = 0;
+			page = "login";
 		}
 
 		this.repaint();
