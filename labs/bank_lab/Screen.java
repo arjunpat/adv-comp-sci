@@ -14,7 +14,12 @@ public class Screen extends JPanel implements ActionListener {
 	private ArrayList<Account> accounts = new ArrayList<Account>();
 	private JTextField username = new JTextField(20);
 	private JTextField password = new JTextField(20);
+	private JTextField deposit = new JTextField(20);
+	private JTextField withdraw = new JTextField(20);
+
 	private JButton loginButton = new JButton("Login");
+	private JButton depositButton = new JButton("Deposit");
+	private JButton withdrawButton = new JButton("Withdraw");
 
 	private int currentAccount = 0;
 	private boolean loginFailed = false;
@@ -49,6 +54,13 @@ public class Screen extends JPanel implements ActionListener {
 		loginButton.setBounds(350, 400, 100, 40);
 		loginButton.addActionListener(this);
 		this.add(loginButton);
+
+		withdraw.setBounds(500, 275, 200, 30);
+		deposit.setBounds(200, 275, 200, 30);
+		withdrawButton.setBounds(500, 320, 100, 40);
+		withdrawButton.addActionListener(this);
+		depositButton.setBounds(200, 320, 100, 40);
+		depositButton.addActionListener(this);
 
 		this.setFocusable(true);
 
@@ -89,8 +101,12 @@ public class Screen extends JPanel implements ActionListener {
 
 				g.drawString("Hello, " + accounts.get(currentAccount - 1).getName(), 100, 100);
 				g.setFont(new Font("Arial", Font.PLAIN, 20));
-				g.drawString("Balance: " + accounts.get(currentAccount - 1).getBalance(), 100, 120);
+				g.drawString("Balance: $" + accounts.get(currentAccount - 1).getBalance(), 100, 120);
 
+				g.drawString("Deposit money", 200, 250);
+
+				g.drawString("Withdraw money", 500, 250);
+				
 
 				break;
 		}
@@ -109,6 +125,12 @@ public class Screen extends JPanel implements ActionListener {
 
 					accounts.get(i).setAccess(pin);
 					if (accounts.get(i).getAccess() == true) {
+
+						this.add(withdraw);
+						this.add(deposit);
+						this.add(withdrawButton);
+						this.add(depositButton);
+
 						page = "loggedin";
 						currentAccount = i + 1;
 						break;
@@ -119,9 +141,21 @@ public class Screen extends JPanel implements ActionListener {
 			if (currentAccount == 0) {
 				loginFailed = true;
 			}
-
-			this.repaint();
 		}
+
+		if (e.getSource() == withdrawButton) {
+			double amt = Double.parseDouble(withdraw.getText());
+
+			accounts.get(currentAccount - 1).withdraw(amt);
+
+		} else if (e.getSource() == depositButton) {
+			double amt = Double.parseDouble(deposit.getText());
+
+			accounts.get(currentAccount - 1).deposit(amt);
+
+		}
+
+		this.repaint();
 
 	}
 
