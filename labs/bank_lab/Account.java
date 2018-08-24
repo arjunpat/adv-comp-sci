@@ -31,4 +31,14 @@ public class Account {
 			balance += amt;
 	}
 
+	public void changeName(String name) {
+		if (access)
+			this.name = name;
+	}
+
+	public void changePin(int pin) {
+		if (access)
+			this.pin = pin;
+	}
+
 }
