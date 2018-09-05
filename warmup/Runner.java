@@ -1,12 +1,26 @@
+import java.util.*;
+
 public class Runner {
 	public static void main(String[] args) {
-		Manager manager = new Manager();
-		Animal a1 = new Animal("Dog", 5);
 
-		System.out.println(a1);
+		Scanner kb = new Scanner(System.in);
 
-		manager.changeMe(a1, "cat", 3);
+		ArrayList<Language> langs = new ArrayList<Language>();
+		langs.add(new French());
+		langs.add(new Italian());
+		langs.add(new Latin());
+		langs.add(new Spanish());
 
-		System.out.println(a1);
+		for (int i = 0; i < langs.size(); i++) {
+			System.out.println(i + ". " + langs.get(i).getLanguage());
+		}
+
+		int choice = kb.nextInt();
+
+		System.out.println(langs.get(choice).getLanguage());
+		System.out.println(langs.get(choice).getAuthor());
+		System.out.println(langs.get(choice).getHello());
+		System.out.println(langs.get(choice).getBye());
+
 	}
 }

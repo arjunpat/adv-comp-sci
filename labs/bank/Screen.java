@@ -17,6 +17,12 @@ public class Screen extends JPanel implements ActionListener {
 	private JTextField deposit = new JTextField(20);
 	private JTextField withdraw = new JTextField(20);
 
+	private JTextField changeName = new JTextField(20);
+	private JTextField changePin = new JTextField(20);
+
+	private JButton changeNameButton = new JButton("Change name");
+	private JButton changePinButton = new JButton("Change pin");
+
 	private JButton loginButton = new JButton("Login");
 	private JButton depositButton = new JButton("Deposit");
 	private JButton withdrawButton = new JButton("Withdraw");
@@ -61,6 +67,8 @@ public class Screen extends JPanel implements ActionListener {
 
 		withdraw.setBounds(500, 275, 200, 30);
 		deposit.setBounds(200, 275, 200, 30);
+		changeName.setBounds(200, 525, 200, 30);
+		changePin.setBounds(500, 525, 200, 30);
 		
 		withdrawButton.setBounds(500, 320, 100, 40);
 		withdrawButton.addActionListener(this);
@@ -70,6 +78,12 @@ public class Screen extends JPanel implements ActionListener {
 
 		logoutButton.setBounds(640, 50, 100, 40);
 		logoutButton.addActionListener(this);
+
+		changeNameButton.setBounds(200, 575, 100, 40);
+		changeNameButton.addActionListener(this);
+
+		changePinButton.setBounds(500, 575, 100, 40);
+		changePinButton.addActionListener(this);
 
 		this.setFocusable(true);
 
@@ -107,12 +121,14 @@ public class Screen extends JPanel implements ActionListener {
 
 				g.drawString("Hello, " + accounts.get(currentAccount - 1).getName(), 100, 100);
 				g.setFont(new Font("Arial", Font.PLAIN, 20));
-				g.drawString("Balance: $" + accounts.get(currentAccount - 1).getBalance(), 100, 120);
+				g.drawString("Balance: $" + accounts.get(currentAccount - 1).getBalance(), 100, 130);
 
 				g.drawString("Deposit money", 200, 250);
 
 				g.drawString("Withdraw money", 500, 250);
-				
+
+				g.drawString("Change name", 200, 500);
+				g.drawString("Change pin", 500, 500);
 
 				break;
 		}
@@ -138,9 +154,13 @@ public class Screen extends JPanel implements ActionListener {
 
 						this.add(withdraw);
 						this.add(deposit);
+						this.add(changeName);
+						this.add(changePin);
 						this.add(withdrawButton);
 						this.add(depositButton);
 						this.add(logoutButton);
+						this.add(changeNameButton);
+						this.add(changePinButton);
 
 						page = "loggedin";
 						currentAccount = i + 1;
@@ -152,13 +172,18 @@ public class Screen extends JPanel implements ActionListener {
 			if (currentAccount == 0) {
 				loginFailed = true;
 			}
+
+			username.setText("");
+			password.setText("");
 		} else if (e.getSource() == withdrawButton) {
 			double amt = Double.parseDouble(withdraw.getText());
+			withdraw.setText("");
 
 			accounts.get(currentAccount - 1).withdraw(amt);
 
 		} else if (e.getSource() == depositButton) {
 			double amt = Double.parseDouble(deposit.getText());
+			deposit.setText("");
 
 			accounts.get(currentAccount - 1).deposit(amt);
 
@@ -170,13 +195,22 @@ public class Screen extends JPanel implements ActionListener {
 
 			this.remove(withdraw);
 			this.remove(deposit);
+			this.remove(changeName);
+			this.remove(changePin);
 			this.remove(withdrawButton);
 			this.remove(depositButton);
 			this.remove(logoutButton);
-
+			this.remove(changePinButton);
+			this.remove(changeNameButton);
 
 			currentAccount = 0;
 			page = "login";
+		} else if (e.getSource() == changeNameButton && currentAccount != 0) {
+			accounts.get(currentAccount - 1).changeName(changeName.getText());
+			changeName.setText("");
+		} else if (e.getSource() == changePinButton && currentAccount != 0) {
+			accounts.get(currentAccount - 1).changePin(Integer.parseInt(changePin.getText()));
+			changePin.setText("");
 		}
 
 		this.repaint();

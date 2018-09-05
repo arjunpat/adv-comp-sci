@@ -1,0 +1,1 @@
+I did challenge #2 (you have options to change the name and pin when logged in).
