@@ -6,6 +6,10 @@ public class Company extends Employee {
 		this.companyName = companyName;
 	}
 
+	public double getSalary() {
+		return 120.0;
+	}
+
 	public String toString() {
 		return super.toString() + " Company name: " + companyName;
 	}

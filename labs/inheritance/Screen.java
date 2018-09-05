@@ -1,8 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 
 public class Screen extends JPanel implements ActionListener {
+	ArrayList<Employee> employees;
+
 	private Color green = new Color(79, 255, 146);
 	private Color white = new Color(255, 255, 255);
 	private Color purple = new Color(192, 179, 224);
@@ -16,10 +19,13 @@ public class Screen extends JPanel implements ActionListener {
 	private Color yellow1 = new Color(249, 228, 89);
 
 	public Screen() {
+		employees = new ArrayList<Employee>();
+
+		employees.add(new Teacher("Joe Bill", "History Teacher", "joebill", "Mountain View", "Mountain View High School"));
+
+
 		this.setLayout(null);
-
 		this.setFocusable(true);
-
 	}
 
 	public Dimension getPreferredSize() {

@@ -17,7 +17,7 @@ public abstract class Employee {
 
 		Image pic = Toolkit.getDefaultToolkit().getImage("images/" + photoFile + ".png");
 		Graphics2D g2 = (Graphics2D)g;
-		g2.drawImage(picture, x, y, null);
+		g2.drawImage(pic, x, y, null);
 	}
 
 	public String getName() { return name; }

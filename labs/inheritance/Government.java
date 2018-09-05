@@ -6,6 +6,10 @@ public class Government extends Employee {
 		this.cityName = cityName;
 	}
 
+	public double getSalary() {
+		100.00;
+	}
+
 	public String toString() {
 		return super.toString() + " City name: " + cityName;
 	}
