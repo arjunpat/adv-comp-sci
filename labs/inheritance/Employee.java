@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public abstract class Employee {
 	private String name;
@@ -15,9 +19,12 @@ public abstract class Employee {
 
 	public void drawPhoto(Graphics g, int x, int y) {
 
-		Image pic = Toolkit.getDefaultToolkit().getImage("images/" + photoFile + ".png");
-		Graphics2D g2 = (Graphics2D)g;
-		g2.drawImage(pic, x, y, null);
+		try {
+            BufferedImage pic = ImageIO.read(new File("images/" + photoFile + ".png"));
+			g.drawImage(pic, x, y, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 	public String getName() { return name; }

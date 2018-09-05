@@ -7,7 +7,7 @@ public class Government extends Employee {
 	}
 
 	public double getSalary() {
-		100.00;
+		return 100.00;
 	}
 
 	public String toString() {

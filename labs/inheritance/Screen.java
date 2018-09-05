@@ -33,6 +33,9 @@ public class Screen extends JPanel implements ActionListener {
 	}
 
 	public void paintComponent(Graphics g) {
+
+		employees.get(0).drawPhoto(g, 500, 500);
+
 		super.paintComponent(g);
 
 	}
