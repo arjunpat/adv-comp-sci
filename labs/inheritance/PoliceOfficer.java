@@ -7,6 +7,6 @@ public class PoliceOfficer extends Government {
 	}
 
 	public String toString() {
-		return super.toString() + " Rank: " + rank;
+		return super.toString() + "\n Rank: " + rank;
 	}
 }

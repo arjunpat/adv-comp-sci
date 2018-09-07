@@ -7,6 +7,6 @@ public class Teacher extends Government {
 	}
 
 	public String toString() {
-		return super.toString() + " School name: " + schoolName;
+		return super.toString() + "\n School name: " + schoolName;
 	}
 }

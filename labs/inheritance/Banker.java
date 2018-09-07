@@ -7,7 +7,7 @@ public class Banker extends Company {
 	}
 
 	public String toString() {
-		return super.toString() + " Type: " + type;
+		return super.toString() + "\n Type: " + type;
 	}
 
 

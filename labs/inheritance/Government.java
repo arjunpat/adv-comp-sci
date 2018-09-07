@@ -11,7 +11,7 @@ public class Government extends Employee {
 	}
 
 	public String toString() {
-		return super.toString() + " City name: " + cityName;
+		return super.toString() + "\n City name: " + cityName;
 	}
 
 }

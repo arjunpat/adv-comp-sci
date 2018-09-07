@@ -17,11 +17,11 @@ public abstract class Employee {
 
 	public abstract double getSalary();
 
-	public void drawPhoto(Graphics g, int x, int y) {
+	public void drawPhoto(Graphics g, int x, int y, int width, int height) {
 
 		try {
             BufferedImage pic = ImageIO.read(new File("images/" + photoFile + ".png"));
-			g.drawImage(pic, x, y, null);
+			g.drawImage(pic.getScaledInstance(width, height, Image.SCALE_DEFAULT), x, y, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public abstract class Employee {
 	public String getJobTitle() { return jobTitle; }
 
 	public String toString() {
-		return "Name: " + name + " Job title: " + jobTitle + " Salary: " + this.getSalary();
+		return /*"Name: " + name + " Job title: " + jobTitle + */" Salary: $" + this.getSalary();
 	}
 
 }

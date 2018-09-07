@@ -11,7 +11,7 @@ public class Company extends Employee {
 	}
 
 	public String toString() {
-		return super.toString() + " Company name: " + companyName;
+		return super.toString() + "\n Company name: " + companyName;
 	}
 
 }
