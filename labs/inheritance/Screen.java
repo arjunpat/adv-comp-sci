@@ -119,7 +119,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void paintEmployee(Graphics g, int num) {
-		Employee emp = employees.get(0);
+		Employee emp = employees.get(num);
 
 		g.setColor(lblue);
 		g.fillRect(50, 100, 700, 600);
@@ -154,6 +154,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		} else if (e.getSource() == searchNameButton) {
 			for (int i = 0; i < employees.size(); i++) {
 				if (employees.get(i).getName().equals(searchTextField.getText())) {
+					System.out.println(i);
 					viewingProfile = i;
 					this.remove(showTeachersButton);
 					this.remove(showPoliceOfficersButton);
