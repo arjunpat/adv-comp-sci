@@ -23,6 +23,9 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	private JButton showEngineersButton = new JButton("Show engineers");
 	private JButton showBankersButton = new JButton("Show bankers");
 	private JButton showAllButton = new JButton("Show all");
+	private JButton searchNameButton = new JButton("Search for name");
+
+	private JTextField searchTextField = new JTextField(20);
 
 	private int viewingProfile = -1;
 	private String showOnly = "";
@@ -59,6 +62,12 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		showAllButton.setBounds(620, 100, 160, 60);
 		showAllButton.addActionListener(this);
 		this.add(showAllButton);
+		searchNameButton.setBounds(100, 500, 160, 60);
+		searchNameButton.addActionListener(this);
+		this.add(searchNameButton);
+
+		searchTextField.setBounds(100, 450, 200, 30);
+		this.add(searchTextField);
 
 		this.setLayout(null);
 		this.setFocusable(true);
@@ -102,6 +111,9 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 
+		g.setFont(new Font("Arial", Font.PLAIN, 30));
+		g.drawString("Search for a person", 600, 600);
+
 		if (viewingProfile > -1)
 			this.paintEmployee(g, viewingProfile);
 	}
@@ -139,6 +151,19 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 			showOnly = "Banker";
 		} else if (e.getSource() == showAllButton) {
 			showOnly = "";
+		} else if (e.getSource() == searchNameButton) {
+			for (int i = 0; i < employees.size(); i++) {
+				if (employees.get(i).getName().equals(searchTextField.getText())) {
+					viewingProfile = i;
+					this.remove(showTeachersButton);
+					this.remove(showPoliceOfficersButton);
+					this.remove(showEngineersButton);
+					this.remove(showBankersButton);
+					this.remove(showAllButton);
+					this.remove(searchNameButton);
+					this.remove(searchTextField);
+				}
+			}
 		}
 
 		this.repaint();
@@ -160,8 +185,16 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == 27)
+		if (e.getKeyCode() == 27) {
 			viewingProfile = -1;
+			this.add(showTeachersButton);
+			this.add(showPoliceOfficersButton);
+			this.add(showEngineersButton);
+			this.add(showBankersButton);
+			this.add(showAllButton);
+			this.add(searchNameButton);
+			this.add(searchTextField);
+		}
 
 		this.repaint();
 	}
