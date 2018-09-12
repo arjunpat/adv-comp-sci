@@ -24,7 +24,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	private JButton showBankersButton = new JButton("Show bankers");
 	private JButton showAllButton = new JButton("Show all");
 	private JButton searchNameButton = new JButton("Search for name");
-	private JButton removePersonButton = new JButton("Remove person");
+	private JButton removePersonButton = new JButton("Delete person");
 
 	private JTextField searchTextField = new JTextField(20);
 
@@ -63,14 +63,14 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		showAllButton.setBounds(620, 100, 160, 60);
 		showAllButton.addActionListener(this);
 		this.add(showAllButton);
-		searchNameButton.setBounds(100, 500, 160, 60);
+		searchNameButton.setBounds(250, 600, 160, 60);
 		searchNameButton.addActionListener(this);
 		this.add(searchNameButton);
 
-		removePersonButton.setBounds(500, 100, 160, 60);
+		removePersonButton.setBounds(550, 110, 160, 60);
 		removePersonButton.addActionListener(this);
 
-		searchTextField.setBounds(100, 450, 200, 30);
+		searchTextField.setBounds(250, 550, 200, 30);
 		this.add(searchTextField);
 
 		this.setLayout(null);
@@ -91,10 +91,12 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		int theY = 100;
 		int theI = 0;
 
+		g.setColor(black);
 		if (showOnly.equals("")) {
 			while (theY < 500 && theI < employees.size()) {
 				while (theX < 500 && theI < employees.size()) {
 					employees.get(theI).drawPhoto(g, theX, theY, 100, 100);
+					this.drawString(g, employees.get(theI).getName(), theX, theY + 120);
 					theX += 140;
 					theI++;
 				}
@@ -106,6 +108,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 				while (theX < 500 && theI < employees.size()) {
 					if (employees.get(theI).getClass().getName().equals(showOnly)) {
 						employees.get(theI).drawPhoto(g, theX, theY, 100, 100);
+						this.drawString(g, employees.get(theI).getName(), theX, theY + 120);
 						theX += 140;
 					}
 					theI++;
@@ -115,8 +118,8 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 
-		g.setFont(new Font("Arial", Font.PLAIN, 30));
-		g.drawString("Search for a person", 600, 600);
+		g.setFont(new Font("Arial", Font.PLAIN, 20));
+		g.drawString("Search and view more info about a person", 200, 530);
 
 		if (viewingProfile > -1)
 			this.paintEmployee(g, viewingProfile);
@@ -125,6 +128,8 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	public void paintEmployee(Graphics g, int num) {
 		Employee emp = employees.get(num);
 
+		g.setColor(white);
+		g.fillRect(0, 0, 800, 800);
 		g.setColor(lblue);
 		g.fillRect(50, 100, 700, 600);
 
@@ -135,12 +140,14 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		g.setFont(new Font("Arial", Font.BOLD, 50));
 		this.drawString(g, emp.getName(), 65, 150);
 
-		g.setFont(new Font("Arial", Font.PLAIN, 20));
+		g.setFont(new Font("Arial", Font.PLAIN, 30));
 		this.drawString(g, emp.getJobTitle(), 65, 190);
 
-		g.setFont(new Font("Arial", Font.PLAIN, 15));
-		this.drawString(g, emp.toString(), 65, 550);
-		this.drawString(g, "Press esc to leave", 65, 600);
+		g.setFont(new Font("Arial", Font.PLAIN, 25));
+		this.drawString(g, emp.toString(), 55, 475);
+
+		g.setFont(new Font("Arial", Font.BOLD, 25));
+		this.drawString(g, "Press esc to leave", 65, 650);
 
 	}
 
@@ -169,6 +176,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 					this.add(removePersonButton);
 				}
 			}
+			searchTextField.setText("");
 		} else if (e.getSource() == removePersonButton) {
 			employees.remove(viewingProfile);
 			viewingProfile = -1;
