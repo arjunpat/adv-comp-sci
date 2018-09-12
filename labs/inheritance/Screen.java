@@ -24,6 +24,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 	private JButton showBankersButton = new JButton("Show bankers");
 	private JButton showAllButton = new JButton("Show all");
 	private JButton searchNameButton = new JButton("Search for name");
+	private JButton removePersonButton = new JButton("Remove person");
 
 	private JTextField searchTextField = new JTextField(20);
 
@@ -65,6 +66,9 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		searchNameButton.setBounds(100, 500, 160, 60);
 		searchNameButton.addActionListener(this);
 		this.add(searchNameButton);
+
+		removePersonButton.setBounds(500, 100, 160, 60);
+		removePersonButton.addActionListener(this);
 
 		searchTextField.setBounds(100, 450, 200, 30);
 		this.add(searchTextField);
@@ -154,7 +158,6 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 		} else if (e.getSource() == searchNameButton) {
 			for (int i = 0; i < employees.size(); i++) {
 				if (employees.get(i).getName().equals(searchTextField.getText())) {
-					System.out.println(i);
 					viewingProfile = i;
 					this.remove(showTeachersButton);
 					this.remove(showPoliceOfficersButton);
@@ -163,8 +166,20 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 					this.remove(showAllButton);
 					this.remove(searchNameButton);
 					this.remove(searchTextField);
+					this.add(removePersonButton);
 				}
 			}
+		} else if (e.getSource() == removePersonButton) {
+			employees.remove(viewingProfile);
+			viewingProfile = -1;
+			this.add(showTeachersButton);
+			this.add(showPoliceOfficersButton);
+			this.add(showEngineersButton);
+			this.add(showBankersButton);
+			this.add(showAllButton);
+			this.add(searchNameButton);
+			this.add(searchTextField);
+			this.remove(removePersonButton);
 		}
 
 		this.repaint();
@@ -195,6 +210,7 @@ public class Screen extends JPanel implements ActionListener, KeyListener {
 			this.add(showAllButton);
 			this.add(searchNameButton);
 			this.add(searchTextField);
+			this.remove(removePersonButton);
 		}
 
 		this.repaint();
