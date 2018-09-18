@@ -39,4 +39,12 @@ public class Schedule {
 		return str;
 	}
 
+	public void deletePeriod(int period) {
+		for (int i = 0; i < mySchedule.size(); i++) {
+			if (mySchedule.get(i).getKey() == period) {
+				mySchedule.remove(i);
+			}
+		}
+	}
+
 }
