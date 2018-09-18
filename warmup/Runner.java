@@ -1,15 +1,23 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Runner {
 	public static void main(String[] args) {
 
-		ArrayList<MyItem<String, Double>> list = new ArrayList<MyItem<String, Double>>();
-		list.add(new MyItem<String, Double>("car", 15000.0));
-		list.add(new MyItem<String, Double>("potato", 12.0));
-		list.add(new MyItem<String, Double>("carrot", 1.0));
+		Scanner sc = new Scanner(System.in);
 
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
+		ArrayList<Student> list = new ArrayList<Student>();
+
+		while (true) {
+
+			System.out.println("Enter a name");
+			String name = sc.next();
+
+			System.out.println("Enter their grade");
+			int grade = sc.nextInt();
+
+			list.add(new Student(name, grade));
+
 		}
 
 	}

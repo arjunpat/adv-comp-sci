@@ -21,7 +21,8 @@ public abstract class View extends JPanel {
 	private final int WINDOW_HEIGHT = 800;
 	
 	public View() {
-
+		this.setLayout(null);
+		this.setFocusable(true);
 	}
 
 	public Dimension getPreferredSize() {

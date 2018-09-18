@@ -5,6 +5,7 @@ public class ScreenManager {
 
 	private ArrayList<Pair<Student, Schedule>> students = new ArrayList<Pair<Student, Schedule>>();
 	private JFrame jFrame;
+	private ShowStudentsView showStudentsView;
 
 	public ScreenManager(JFrame jFrame) {
 		this.jFrame = jFrame;
@@ -28,6 +29,8 @@ public class ScreenManager {
 		students.add(new Pair<Student, Schedule>(new Student("Marley Magee", "mm"), arjunp));
 		students.add(new Pair<Student, Schedule>(new Student("Arjun Patrawala", "ap"), marleym));
 
+
+		showStudentsView = new ShowStudentsView(this, students);
 		this.showAllStudents();
 	}
 
@@ -39,9 +42,11 @@ public class ScreenManager {
 	}
 
 	public void showAllStudents() {
-		this.updateScreen(new ShowStudentsView(this, students));
+		this.updateScreen(showStudentsView);
 	}
 
-	
+	public void showStudent(int i) {
+		this.updateScreen(new StudentView(this, students.get(i)));
+	}
 
 }
