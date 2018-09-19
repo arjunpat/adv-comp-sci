@@ -19,25 +19,13 @@ public class Runner {
 
 			ListIterator<Integer> it = list.listIterator();
 
-			if (!it.hasNext()) {
-				it.add(input);
-			} else {
-
-				boolean isAdded = false;
-
-				while (it.hasNext()) {
-					if (it.next() > input) {
-						it.previous();
-						it.add(input);
-						isAdded = true;
-						break;
-					}
-				}
-
-				if (!isAdded) {
-					it.add(input);
+			while (it.hasNext()) {
+				if (it.next() > input) {
+					it.previous();
+					break;
 				}
 			}
+			it.add(input);
 
 
 		}
