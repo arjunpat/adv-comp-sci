@@ -1,24 +1,48 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.ListIterator;
 
 public class Runner {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 
-		ArrayList<Student> list = new ArrayList<Student>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
 
 		while (true) {
 
-			System.out.println("Enter a name");
-			String name = sc.next();
+			int input = sc.nextInt();
 
-			System.out.println("Enter their grade");
-			int grade = sc.nextInt();
+			if (input == -1) {
+				break;
+			}
 
-			list.add(new Student(name, grade));
+			ListIterator<Integer> it = list.listIterator();
+
+			if (!it.hasNext()) {
+				it.add(input);
+			} else {
+
+				boolean isAdded = false;
+
+				while (it.hasNext()) {
+					if (it.next() > input) {
+						it.previous();
+						it.add(input);
+						isAdded = true;
+						break;
+					}
+				}
+
+				if (!isAdded) {
+					it.add(input);
+				}
+			}
+
 
 		}
+
+		System.out.println(list);
 
 	}
 }
