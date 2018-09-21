@@ -9,7 +9,7 @@ public class BasicInformationView extends View {
 
 	private ScreenManager manager;
 	private Resume resume;
-	private JTextField name, address, email, objective;
+	private JTextField name, address, email, objective, phone;
 
 	public BasicInformationView(ScreenManager manager, Resume resume) {
 		super();
@@ -18,9 +18,9 @@ public class BasicInformationView extends View {
 		this.resume = resume;
 
 		JButton nextButton = new JButton("Next");
-		nextButton.setBounds(600, 600, 160, 60);
+		nextButton.setBounds(600, 700, 160, 60);
 		nextButton.addActionListener(e -> {
-			resume.init(name.getText(), email.getText(), address.getText(), objective.getText());
+			resume.init(name.getText(), email.getText(), address.getText(), objective.getText(), phone.getText());
 			manager.showEducationView();
 		});
 		this.add(nextButton);
@@ -44,6 +44,11 @@ public class BasicInformationView extends View {
 		objective.setBounds(125, 500, 200, 30);
 		objective.setText("Objective");
 		this.add(objective);
+
+		phone = new JTextField(20);
+		phone.setBounds(125, 600, 200, 30);
+		phone.setText("Phone");
+		this.add(phone);
 
 	}
 

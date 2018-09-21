@@ -1,19 +1,19 @@
 package resume;
 
-public class School {
+public class Education {
 
 	private String name;
 	private String degree;
 	private Date graduationDate;
 
-	public School(String name, String degree, String year, String month) {
+	public Education(String name, String degree, String year, String month) {
 		this.name = name;
 		this.degree = degree;
-		graduationDate = new Date(year, month);
+		this.graduationDate = new Date(year, month);
 	}
 
 	public Date getGraduationDate() {
-		return graduationDate;
+		return this.graduationDate;
 	}
 
 	public String toString() {

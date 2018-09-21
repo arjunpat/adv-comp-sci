@@ -29,4 +29,8 @@ public class ScreenManager {
 		this.updateScreen(new EducationView(this, resume));
 	}
 
+	public void showJobView() {
+		this.updateScreen(new JobView(this, resume));
+	}
+
 }

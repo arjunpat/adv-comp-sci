@@ -12,6 +12,8 @@ public class EducationView extends View {
 
 	private JTextField name, gradYear, gradMonth, degree;
 
+	private JButton[] deleteButtons = new JButton[0];
+
 	public EducationView(ScreenManager manager, Resume resume) {
 		super();
 
@@ -19,9 +21,9 @@ public class EducationView extends View {
 		this.resume = resume;
 
 		JButton nextButton = new JButton("Next");
-		nextButton.setBounds(600, 600, 160, 60);
+		nextButton.setBounds(600, 700, 160, 60);
 		nextButton.addActionListener(e -> {
-
+			manager.showJobView();
 		});
 		this.add(nextButton);
 
@@ -48,7 +50,7 @@ public class EducationView extends View {
 		JButton addSchool = new JButton("Add school");
 		addSchool.setBounds(165, 550, 110, 30);
 		addSchool.addActionListener(e -> {
-			resume.addSchool(name.getText(), degree.getText(), gradYear.getText(), gradMonth.getText());
+			resume.addEducation(name.getText(), degree.getText(), gradYear.getText(), gradMonth.getText());
 			
 			name.setText("School name");
 			gradYear.setText("Graduation year");
@@ -65,12 +67,31 @@ public class EducationView extends View {
 		g.setColor(black);
 
 		g.setFont(new Font("Arial", Font.PLAIN, 40));
-		g.drawString("Education information", 125, 100);
+		g.drawString(resume.getName() + ", add your education", 125, 100);
 
 		g.fillRect(350, 200, 2, 400);
 
 		g.setFont(new Font("Arial", Font.PLAIN, 18));
-		this.drawString(g, resume.schoolsToString(), 400, 250);
+		this.drawString(g, resume.educationToString(), 400, 250);
+
+
+		if (deleteButtons.length != resume.getNumOfSchools()) {
+			for (int i = 0; i < deleteButtons.length; i++) {
+				this.remove(deleteButtons[i]);
+			}
+			deleteButtons = new JButton[resume.getNumOfSchools()];
+
+			for (int i = 0; i < deleteButtons.length; i++) {
+				deleteButtons[i] = new JButton("X");
+				deleteButtons[i].setBounds(355, 250 + (88 * i), 40, 30);
+				final int theI = i;
+				deleteButtons[i].addActionListener(e -> {
+					resume.removeSchool(theI);
+					this.repaint();
+				});
+				this.add(deleteButtons[i]);
+			}
+		}
 	}
 
 	private void drawString(Graphics g, String text, int x, int y) {
