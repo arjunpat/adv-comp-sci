@@ -30,6 +30,12 @@ public class Runner {
 
 		}
 
+		ListIterator<Integer> it = list.listIterator();
+
+		while (it.hasNext()) {
+			System.out.println(li.next());
+		}
+
 		System.out.println(list);
 
 	}
