@@ -33,4 +33,8 @@ public class ScreenManager {
 		this.updateScreen(new JobView(this, resume));
 	}
 
+	public void showResume() {
+		this.updateScreen(new DisplayResumeView(this, resume));
+	}
+
 }

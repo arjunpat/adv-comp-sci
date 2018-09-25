@@ -64,10 +64,13 @@ public class EducationView extends View {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(black);
 
-		g.setFont(new Font("Arial", Font.PLAIN, 40));
-		g.drawString(resume.getName() + ", add your education", 125, 100);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		g.setColor(yellow);
+		g.fillRect(0, 64, 30, 42);
+
+		g.setColor(black);
+		g.drawString(resume.getName() + ", add your education", 45, 100);
 
 		g.fillRect(350, 200, 2, 400);
 

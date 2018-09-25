@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -53,10 +54,13 @@ public class BasicInformationView extends View {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(black);
 
-		g.setFont(new Font("Arial", Font.PLAIN, 40));
-		g.drawString("Basic information", 125, 100);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		g.setColor(yellow);
+		g.fillRect(0, 64, 30, 42);
+
+		g.setColor(black);
+		g.drawString("Basic information", 45, 100);
 	}
 
 }

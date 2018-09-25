@@ -41,8 +41,8 @@ public class Resume {
 
 	}
 
-	public void addJob(String title, String company, String year, String month) {
-		Job toAdd = new Job(title, company, year, month);
+	public void addJob(String title, String company, String year, String month, String yearStart, String monthStart, String description) {
+		Job toAdd = new Job(title, company, year, month, yearStart, monthStart, description);
 		ListIterator<Job> it = jobs.listIterator();
 
 		while (it.hasNext()) {
