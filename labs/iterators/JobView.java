@@ -47,15 +47,15 @@ public class JobView extends View {
 		company.setText("Company");
 		this.add(company);
 
-		startMonth = new JTextField(20);
-		startMonth.setBounds(125, 450, 200, 30);
-		startMonth.setText("Job start year");
-		this.add(startMonth);
-
 		startYear = new JTextField(20);
-		startYear.setBounds(125, 500, 200, 30);
-		startYear.setText("Job start month");
+		startYear.setBounds(125, 450, 200, 30);
+		startYear.setText("Job start year");
 		this.add(startYear);
+
+		startMonth = new JTextField(20);
+		startMonth.setBounds(125, 500, 200, 30);
+		startMonth.setText("Job start month");
+		this.add(startMonth);
 
 		description = new JTextField(20);
 		description.setBounds(125, 550, 200, 30);
@@ -73,7 +73,7 @@ public class JobView extends View {
 			endMonth.setText("Job end month");
 			company.setText("Company");
 			startYear.setText("Job start year");
-			startMonth.setText("Job start year");
+			startMonth.setText("Job start month");
 			description.setText("Description");
 
 			this.repaint();

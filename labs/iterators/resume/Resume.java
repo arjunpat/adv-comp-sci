@@ -21,6 +21,7 @@ public class Resume {
 		this.email = email;
 		this.address = address;
 		this.objective = objective;
+		this.phone = phone;
 
 		schools = new ArrayList<Education>();
 		jobs = new ArrayList<Job>();
@@ -94,6 +95,10 @@ public class Resume {
 
 	public String getName() {
 		return name;
+	}
+
+	public String basicInfoToString() {
+		return "Email: " + email + "\nAddress:" + address + "\nObjective: " + objective + "\nPhone: " + phone;
 	}
 
 }

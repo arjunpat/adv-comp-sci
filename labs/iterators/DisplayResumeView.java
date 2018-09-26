@@ -27,11 +27,19 @@ public class DisplayResumeView extends View {
 		g.setColor(black);
 		g.drawString(resume.getName() + ", here is your resume", 45, 100);
 
-		g.fillRect(350, 300, 2, 400);
+		g.setFont(new Font("Times", Font.PLAIN, 18));
+
+		this.drawString(g, resume.basicInfoToString(), 75, 150);
+
+		g.setFont(new Font("Times", Font.BOLD, 40));
+		g.drawString("Work", 75, 270);
+		g.fillRect(75, 280, 250, 2);
+		g.drawString("School", 400, 270);
+		g.fillRect(400, 280, 250, 2);
 
 		g.setFont(new Font("Times", Font.PLAIN, 18));
-		this.drawString(g, resume.jobsToString(), 75, 350);
-		this.drawString(g, resume.educationToString(), 400, 350);
+		this.drawString(g, resume.jobsToString(), 75, 310);
+		this.drawString(g, resume.educationToString(), 400, 310);
 
 	}
 
