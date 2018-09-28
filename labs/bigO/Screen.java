@@ -34,15 +34,6 @@ public class Screen extends View {
 		showAllButton.setBounds(20, 40, 140, 50);
 		this.add(showAllButton);
 
-		// randomize button
-		JButton randomizeButton = new JButton("Scramble");
-		randomizeButton.addActionListener(e -> {
-			db.scramble();
-			this.populateStudentTextArea();
-		});
-		randomizeButton.setBounds(20, 100, 140, 50);
-		this.add(randomizeButton);
-
 		// Search
 		final JTextField searchTextBox = new JTextField(20);
 		searchTextBox.setBounds(20, 230, 200, 30);
@@ -55,13 +46,62 @@ public class Screen extends View {
 			searchTextBox.setText("");
 
 			if (res > -1) {
-				studentTextArea.setText((res + 1) + ". " + db.getStudent(res).toString() + "\nPasses: " + db.getPasses());
+				studentTextArea.setText((res + 1) + ". " + db.getStudent(res).toString());
 			} else {
 				studentTextArea.setText("Oof! No results found.");
 			}
 
+			this.repaint();
+
 		});
 		this.add(binarySearchButton);
+
+		JButton sequentialSearchButton = new JButton("Sequential search");
+		sequentialSearchButton.setBounds(180, 280, 140, 30);
+		sequentialSearchButton.addActionListener(e -> {
+			int res = db.sequentialSearch(searchTextBox.getText());
+			searchTextBox.setText("");
+
+			if (res > -1) {
+				studentTextArea.setText((res + 1) + ". " + db.getStudent(res).toString());
+			} else {
+				studentTextArea.setText("Oof! No results found.");
+			}
+
+			this.repaint();
+		});
+		this.add(sequentialSearchButton);
+
+
+		// challenge things - randomization/sorting
+		JButton randomizeButton = new JButton("Scramble");
+		randomizeButton.addActionListener(e -> {
+			db.scramble();
+			this.populateStudentTextArea();
+
+			this.repaint();
+		});
+		randomizeButton.setBounds(20, 400, 140, 50);
+		this.add(randomizeButton);
+
+		JButton bubbleSortButton = new JButton("Bubble sort");
+		bubbleSortButton.addActionListener(e -> {
+			db.bubbleSort();
+			this.populateStudentTextArea();
+
+			this.repaint();
+		});
+		bubbleSortButton.setBounds(20, 480, 140, 50);
+		this.add(bubbleSortButton);
+
+		JButton mergeSortButton = new JButton("Merge sort");
+		mergeSortButton.addActionListener(e -> {
+			db.mergeSort();
+			this.populateStudentTextArea();
+			this.repaint();
+		});
+		mergeSortButton.setBounds(20, 530, 140, 50);
+		this.add(mergeSortButton);
 
 	}
 
@@ -70,6 +110,12 @@ public class Screen extends View {
 		g.setColor(black);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		g.drawString("Search by Last Name", 20, 200);
+		g.drawString("Sort", 20, 380);
+
+		if (db.getPasses() != 0) {
+			g.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			g.drawString("Passes: " + db.getPasses(), 20, 120);
+		}
 
 	}
 

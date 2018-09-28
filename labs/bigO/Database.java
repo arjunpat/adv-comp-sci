@@ -40,12 +40,11 @@ public class Database {
 	}
 
 	public int binarySearch(String lastName) {
-		return this._binarySearch(lastName, 0, students.size());
-	}
+		this.passes = 0;
+		int startPos = 0;
+		int endPos = students.size() - 1;
 
-	private int _binarySearch(String lastName, int startPos, int endPos) {
-
-		if (startPos <= endPos) {
+		while (startPos <= endPos) {
 			this.passes++;
 			int mid = (startPos + endPos) / 2;
 
@@ -56,10 +55,7 @@ public class Database {
 
 			} else if (students.get(mid).getLastName().compareTo(lastName) < 0) {
 				startPos = mid + 1;
-
 			}
-
-			return this._binarySearch(lastName, startPos, endPos);
 
 		}
 
@@ -69,8 +65,10 @@ public class Database {
 
 
 	public int sequentialSearch(String lastName) {
+		this.passes = 0;
+
 		for (int i = 0; i < students.size(); i++) {
-			passes++;
+			this.passes++;
 
 			if (students.get(i).getLastName().equals(lastName))
 				return i + 1;
@@ -79,10 +77,86 @@ public class Database {
 		return -1;
 	}
 
-	public int getPasses() {
-		int num = this.passes;
+
+	public void bubbleSort() {
 		this.passes = 0;
-		return num;
+
+		Student temp;
+
+		for (int i = 0; i < students.size(); i++) {
+			for (int j = i + 1; j < students.size(); j++) {
+				this.passes++;
+
+				if (students.get(i).getLastName().compareTo(students.get(j).getLastName()) > 0) {
+					temp = students.get(i);
+					students.set(i, students.get(j));
+					students.set(j, temp);
+				}
+			}
+		}
+	}
+
+	public void mergeSort() {
+		this.passes = 0;
+		this._mergeSort(0, students.size());
+	}
+
+
+	private void _mergeSort(int start, int end) {
+		int mid = (start + end) / 2;
+
+		if (mid == start)
+			return;
+
+		this._mergeSort(start, mid);
+		this._mergeSort(mid, end);
+
+		this.merge(start, end);
+	}
+
+	public void merge(int start, int end) {
+
+		this.passes++;
+		Student[] temp = new Student[end - start];
+
+		int mid = (start + end) / 2;
+		int i = start;
+		int j = mid;
+		int k = 0;
+
+		while (i < mid && j < end) {
+			if (students.get(i).getLastName().compareTo(students.get(j).getLastName()) < 0) {
+				temp[k] = students.get(i);
+				i++;
+			} else {
+				temp[k] = students.get(j);
+				j++;
+			}
+
+			k++;
+		}
+
+		while (i < mid) {
+			temp[k] = students.get(i);
+			i++;
+			k++;
+		}
+
+		while (j < end) {
+			temp[k] = students.get(j);
+			j++;
+			k++;
+		}
+
+		for (i = 0; i < end - start; i++) {
+			students.set(start + i, temp[i]);
+		}
+
+	}
+
+
+	public int getPasses() {
+		return this.passes;
 	}
 
 	public Student getStudent(int i) {
