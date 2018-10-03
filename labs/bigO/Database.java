@@ -114,7 +114,7 @@ public class Database {
 		this.merge(start, end);
 	}
 
-	public void merge(int start, int end) {
+	private void merge(int start, int end) {
 
 		this.passes++;
 		Student[] temp = new Student[end - start];
