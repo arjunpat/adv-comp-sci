@@ -1,42 +1,20 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.ListIterator;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class Runner {
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
+		HashSet<Car> cars = new HashSet<Car>();
 
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		cars.add(new Car("Focus", "Ford", 2005));
+		cars.add(new Car("Accord", "Honda", 2014));
+		cars.add(new Car("Camry", "Toyota", 2012));
+		cars.add(new Car("Accord", "Honda", 2014));
 
-		while (true) {
-
-			int input = sc.nextInt();
-
-			if (input == -1) {
-				break;
-			}
-
-			ListIterator<Integer> it = list.listIterator();
-
-			while (it.hasNext()) {
-				if (it.next() > input) {
-					it.previous();
-					break;
-				}
-			}
-			it.add(input);
-
-
-		}
-
-		ListIterator<Integer> it = list.listIterator();
-
+		Iterator<Car> it = cars.iterator();
 		while (it.hasNext()) {
-			System.out.println(li.next());
+			System.out.println(it.next());
 		}
-
-		System.out.println(list);
 
 	}
 }
