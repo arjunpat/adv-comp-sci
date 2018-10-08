@@ -19,12 +19,14 @@ public class Item implements Comparable<Item> {
 	public int hashCode() {
 		int hashCode = 0;
 
-		for (int i = name.length() - 1; i >= 0; i++) {
+		/*for (int i = name.length() - 1; i >= 0; i++) {
 			int num = (int)name.charAt(i);
-			num -= 96
+			num -= 96;
 
 			hashCode += num * Math.pow(i, 26);
-		}
+		}*/
+
+		hashCode = name.hashCode();
 
 		hashCode = (hashCode * 31) + (int)(price * 100);
 
@@ -32,7 +34,7 @@ public class Item implements Comparable<Item> {
 	}
 
 	public int compareTo(Item item) {
-		return item.getCompareString().compareTo(item.getCompareString());
+		return this.getCompareString().compareTo(item.getCompareString());
 	}
 
 	public String getCompareString() {

@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.Scanner;
+import java.util.Iterator;
 import java.io.FileNotFoundException;
 import java.io.File;
 
@@ -28,6 +29,19 @@ public class Database {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+
+	public String getAllItems() {
+		String things = "";
+		Iterator it = treeSetItems.iterator();
+
+		while (it.hasNext()) {
+			things += it.next().toString() + "\n";
+		}
+
+		return things.substring(0, things.length() - 1);
 	}
 
 	
