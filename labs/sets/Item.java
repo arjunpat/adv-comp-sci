@@ -17,18 +17,15 @@ public class Item implements Comparable<Item> {
 	}
 
 	public int hashCode() {
+
 		int hashCode = 0;
+		char[] array = name.toCharArray();
 
-		/*for (int i = name.length() - 1; i >= 0; i++) {
-			int num = (int)name.charAt(i);
-			num -= 96;
+		for (int i = array.length - 1; i >= 0; i--) {
+			hashCode += ((int)array[i] - 96) * Math.pow(26, i);
+		}
 
-			hashCode += num * Math.pow(i, 26);
-		}*/
-
-		hashCode = name.hashCode();
-
-		hashCode = (hashCode * 31) + (int)(price * 100);
+		hashCode = hashCode + (int)(price * 100);
 
 		return hashCode;
 	}
@@ -41,7 +38,10 @@ public class Item implements Comparable<Item> {
 		return name + "-" + price;
 	}
 
+	public String getName() { return name; }
+	public double getPrice() { return price; }
+
 	public String toString() {
-		return "Name: " + name + " Price: " + price;
+		return name + ", $" + price;
 	}
 }
