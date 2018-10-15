@@ -1,0 +1,100 @@
+button,ABC Inc.,34.65
+drawer,ABC Inc.,42.76
+ipod,ABC Inc.,83.48
+stockings,ABC Inc.,48.4
+seat belt,ABC Inc.,38.79
+playing card,ABC Inc.,35.78
+cell phone,ABC Inc.,14.25
+pillow,ABC Inc.,61.92
+pen,ABC Inc.,27.54
+newspaper,ABC Inc.,68.21
+stop sign,ABC Inc.,9.68
+thermometer,ABC Inc.,88.89
+thread,ABC Inc.,25.52
+bracelet,ABC Inc.,46.11
+sticky note,ABC Inc.,99.65
+shampoo,ABC Inc.,78.98
+bottle,ABC Inc.,94.09
+bananas,ABC Inc.,47.64
+toothbrush,ABC Inc.,6.11
+sidewalk,ABC Inc.,78.06
+socks,ABC Inc.,76.26
+candy wrapper,ABC Inc.,48.3
+sponge,ABC Inc.,38.24
+bag,ABC Inc.,62.43
+water bottle,XYZ Inc.,95.25
+picture frame,XYZ Inc.,16.44
+grid paper,XYZ Inc.,44.3
+bowl,XYZ Inc.,90.61
+knife,XYZ Inc.,74.46
+candle,XYZ Inc.,90.12
+slipper,XYZ Inc.,40.25
+model car,XYZ Inc.,96.24
+floor,XYZ Inc.,92.42
+canvas,XYZ Inc.,69.75
+paper,XYZ Inc.,81.27
+glasses,XYZ Inc.,80.75
+puddle,XYZ Inc.,63.53
+glow stick,XYZ Inc.,13.12
+eraser,XYZ Inc.,45.12
+toilet,XYZ Inc.,84.54
+camera,XYZ Inc.,96
+blouse,XYZ Inc.,38.43
+keyboard,XYZ Inc.,21.31
+mirror,XYZ Inc.,48.81
+needle,XYZ Inc.,81.79
+lotion,XYZ Inc.,81.1
+hanger,XYZ Inc.,37.61
+food,XYZ Inc.,8.72
+charger,XYZ Inc.,23.54
+apple,XYZ Inc.,86.99
+plate,XYZ Inc.,69.73
+magnet,XYZ Inc.,67.78
+shovel,XYZ Inc.,52.45
+rug,XYZ Inc.,3.8
+ice cube tray,XYZ Inc.,24.92
+outlet,XYZ Inc.,25.2
+cork,XYZ Inc.,64.38
+shoes,XYZ Inc.,47.51
+flowers,XYZ Inc.,21.11
+spoon,XYZ Inc.,33.54
+purse,XYZ Inc.,4.89
+chocolate,XYZ Inc.,77.32
+shoe lace,XYZ Inc.,66.56
+bow,XYZ Inc.,98.07
+cat,XYZ Inc.,9.34
+truck,MVHS Inc.,26.75
+piano,MVHS Inc.,74.77
+towel,MVHS Inc.,21.34
+ring,MVHS Inc.,52.38
+cookie jar,MVHS Inc.,11.81
+clay pot,MVHS Inc.,63.65
+perfume,MVHS Inc.,15.18
+lip gloss,MVHS Inc.,89.16
+wagon,MVHS Inc.,61.12
+cinder block,MVHS Inc.,89.84
+couch,MVHS Inc.,74.34
+clamp,MVHS Inc.,29.47
+soap,MVHS Inc.,22.31
+hard drive,MVHS Inc.,8.03
+desk,MVHS Inc.,63.29
+video games,MVHS Inc.,5.48
+deodorant,MVHS Inc.,88.57
+toothpaste,MVHS Inc.,39.57
+speakers,MVHS Inc.,66.97
+photo album,MVHS Inc.,7
+coasters,MVHS Inc.,44.6
+phone,MVHS Inc.,97.2
+wallet,MVHS Inc.,38.4
+mp3 player,MVHS Inc.,77.42
+sketch pad,MVHS Inc.,70.49
+remote,MVHS Inc.,32.3
+washing machine,MVHS Inc.,66.75
+balloon,MVHS Inc.,51.24
+conditioner,MVHS Inc.,68.56
+door,MVHS Inc.,80.32
+lamp,MVHS Inc.,10.14
+money,MVHS Inc.,48.07
+plastic fork,MVHS Inc.,62.24
+air freshener,MVHS Inc.,24.66
+leg warmers,MVHS Inc.,60.8
