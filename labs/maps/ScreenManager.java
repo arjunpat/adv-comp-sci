@@ -23,4 +23,8 @@ public class ScreenManager {
 	public void showMainView() {
 		this.updateScreen(new MainView(this, this.db));
 	}
+
+	public void goToAdminArea() {
+		this.updateScreen(new AdminView(this, this.db));
+	}
 }

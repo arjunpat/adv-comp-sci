@@ -37,6 +37,22 @@ public abstract class View extends JPanel {
 		this.draw(g);
 	}
 
+	protected void drawTitle(Graphics g, Color c, String text, int x, int y) {
+		g.setColor(black);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		g.drawString(text, x, y);
+		g.setColor(c);
+		g.fillRect(x, y + 5, (int)(text.length() * 11.2), 3);
+	}
+
+	protected void drawBigTitle(Graphics g, Color c, String text, int x, int y) {
+		g.setColor(black);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 36));
+		g.drawString(text, x, y);
+		g.setColor(c);
+		g.fillRect(x, y + 5, text.length() * 18, 4);
+	}
+
 	public abstract void draw(Graphics g);
 
 }
