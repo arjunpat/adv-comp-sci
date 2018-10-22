@@ -12,7 +12,7 @@ public class AdminView extends View {
 		this.screenManager = screenManager;
 		this.db = db;
 
-		JButton backButton = new JButton("←");
+		JButton backButton = new JButton("<-");
 		backButton.setBounds(10, 20, 50, 50);
 		backButton.addActionListener(e -> {
 			screenManager.showMainView();
