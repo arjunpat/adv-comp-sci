@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Screen extends View {
 
-	private int squareSize = 7;
-	private int gridSize = 80;
+	private final int SQUARE_SIZE = 15;
+	private final int GRID_SIZE = 37;
 	private Stack<Square[][]> history = new Stack<Square[][]>();
 	private Square[][] current;
 	private Color currentColor = new Color(0, 0, 0);
@@ -14,26 +14,59 @@ public class Screen extends View {
 	public Screen() {
 		super();
 
-		this.current = new Square[gridSize][gridSize];
+		this.current = new Square[GRID_SIZE][GRID_SIZE];
 		for (int r = 0; r < this.current.length; r++) {
 			for (int c = 0; c < this.current[0].length; c++) {
-				this.current[r][c] = new Square(squareSize);
+				this.current[r][c] = new Square(SQUARE_SIZE);
 			}
 		}
+		history.push(this.current);
+		this.current = cloneGrid(this.current);
+
+		JButton undoButton = new JButton("Undo");
+		undoButton.setBounds(600, 100, 175, 100);
+		undoButton.addActionListener(e -> {
+			undo();
+			repaint();
+		});
+		this.add(undoButton);
 
 		addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
 
-				System.out.println("Moused clicked at (" + x + ", " + y + ")");
+				System.out.println("Moused released at (" + x + ", " + y + ")");
 
 				// if they want to change color
 				if (x > 20 && x < 20 + 255 && y > 650 && y < 650 + 128) {
 					currentColor = new Color(255, x - 20, 2 * (y - 650));
-				} else if (x > 20 ) {
+				} else {
+
+					int r = (int)((y - 20) / SQUARE_SIZE);
+					int c = (int)((x - 20) / SQUARE_SIZE);
+
+					addToHistory(r, c, currentColor);
 
 				}
+
+				repaint();
+			}
+		});
+
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+
+				System.out.println("Mouse dragged at (" + x + ", " + y + ")");
+
+				int r = (int)((y - 20) / SQUARE_SIZE);
+				int c = (int)((x - 20) / SQUARE_SIZE);
+
+				if (r < GRID_SIZE && c < GRID_SIZE && r >= 0 && c >= 0)
+					current[r][c].changeColor(currentColor);
 
 				repaint();
 			}
@@ -50,7 +83,22 @@ public class Screen extends View {
 		drawTitle(g, red, "Color chooser", 20, 620);
 		drawTitle(g, red, "Current color", 350, 620);
 
+	}
 
+	private void addToHistory(int r, int c, Color color) {
+		if (r < GRID_SIZE && c < GRID_SIZE && r >= 0 && c >= 0) {
+			this.current[r][c].changeColor(color);
+			history.push(this.current);
+			this.current = this.cloneGrid(this.current);
+			System.out.println("Saved " + history.size());
+		}
+	}
+
+	private void undo() {
+		if (history.size() > 1) {
+			history.pop();
+			this.current = this.cloneGrid(history.peek());
+		}
 	}
 
 	private Square[][] cloneGrid(Square[][] squareGrid) {
@@ -70,7 +118,7 @@ public class Screen extends View {
 
 		for (int r = 0; r < toDraw.length; r++) {
 			for (int c = 0; c < toDraw[0].length; c++) {
-				toDraw[r][c].draw(g, 20 + (squareSize * c), 20 + (squareSize * r));
+				toDraw[r][c].draw(g, 20 + (SQUARE_SIZE * c), 20 + (SQUARE_SIZE * r));
 			}
 		}
 
