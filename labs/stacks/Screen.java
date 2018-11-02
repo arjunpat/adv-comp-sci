@@ -33,6 +33,7 @@ public class Screen extends View {
 		this.add(clearButton);
 
 		addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseReleased(MouseEvent e) {
 				int x = e.getX();
 				int y = e.getY();
