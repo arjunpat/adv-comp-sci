@@ -14,22 +14,23 @@ public class Screen extends View {
 	public Screen() {
 		super();
 
-		this.current = new Square[GRID_SIZE][GRID_SIZE];
-		for (int r = 0; r < this.current.length; r++) {
-			for (int c = 0; c < this.current[0].length; c++) {
-				this.current[r][c] = new Square(SQUARE_SIZE);
-			}
-		}
-		history.push(this.current);
-		this.current = cloneGrid(this.current);
+		addBlankCanvas();
 
 		JButton undoButton = new JButton("Undo");
-		undoButton.setBounds(600, 100, 175, 100);
+		undoButton.setBounds(600, 100, 175, 80);
 		undoButton.addActionListener(e -> {
 			undo();
 			repaint();
 		});
 		this.add(undoButton);
+
+		JButton clearButton = new JButton("Clear");
+		clearButton.setBounds(600, 200, 175, 80);
+		clearButton.addActionListener(e -> {
+			addBlankCanvas();
+			repaint();
+		});
+		this.add(clearButton);
 
 		addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
@@ -82,6 +83,7 @@ public class Screen extends View {
 		this.drawCurrentColor(g, this.currentColor);
 		drawTitle(g, red, "Color chooser", 20, 620);
 		drawTitle(g, red, "Current color", 350, 620);
+		drawTitle(g, blue, "Controls", 600, 60);
 
 	}
 
@@ -99,6 +101,17 @@ public class Screen extends View {
 			history.pop();
 			this.current = this.cloneGrid(history.peek());
 		}
+	}
+
+	private void addBlankCanvas() {
+		this.current = new Square[GRID_SIZE][GRID_SIZE];
+		for (int r = 0; r < this.current.length; r++) {
+			for (int c = 0; c < this.current[0].length; c++) {
+				this.current[r][c] = new Square(SQUARE_SIZE);
+			}
+		}
+		history.push(this.current);
+		this.current = cloneGrid(this.current);
 	}
 
 	private Square[][] cloneGrid(Square[][] squareGrid) {
