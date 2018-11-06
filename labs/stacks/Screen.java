@@ -145,9 +145,8 @@ public class Screen extends View {
 
 		for (int blue = 0; blue <= 255; blue += 2) {
 			for (int green = 0; green <= 255; green++) {
-					g.setColor(new Color(255, green, blue));
-					g.fillRect(startX + green, (int)(startY + (.5 * blue)), 1, 1);
-
+				g.setColor(new Color(255, green, blue));
+				g.fillRect(startX + green, (int)(startY + (.5 * blue)), 1, 1);
 			}
 		}
 	}

@@ -1,59 +1,22 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.util.Queue;
+import java.util.LinkedList;
 
-public class Runner extends View {
-
-	private String hi;
-
-	public Runner() {
-		super();
-
-		JTextField field = new JTextField(20);
-		field.setBounds(20, 20, 200, 30);
-		this.add(field);
-
-
-		JButton undo = new JButton("Undo");
-		undo.setBounds(20, 100, 100, 30);
-		undo.addActionListener(e -> {
-			Stack<String> theStack = new Stack<String>();
-
-			String[] arr = field.getText().split(" ");
-
-			for (int i = 0; i < arr.length; i++) {
-				theStack.push(arr[i]);
-			}
-
-			System.out.println(theStack);
-
-			theStack.pop();
-
-			String toShow = "";
-			while (!theStack.isEmpty()) {
-				toShow = theStack.pop() + " " + toShow;
-			}
-
-			field.setText(toShow);
-
-		});
-		this.add(undo);
-
-	}
-
-	public void draw(Graphics g) {
-
-	}
+public class Runner {
 
 	public static void main(String[] args) {
 
-		JFrame jFrame = new JFrame("Undo");
-		jFrame.add(new Runner());
+		Queue<Customer> waitingList = new LinkedList<Customer>();
 
-		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jFrame.pack();
-		jFrame.setVisible(true);
-		
+		waitingList.add(new Customer("Arjun", "12391203"));
+		waitingList.add(new Customer("Tanay", "12312432"));
+		waitingList.add(new Customer("Marley", "12958281"));
+
+		while (waitingList.size() > 0) {
+			System.out.println(waitingList.poll());
+		}
+
+
+
 	}
+
 }
