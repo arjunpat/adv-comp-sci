@@ -1,14 +1,16 @@
-package views;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class NurseView extends View {
+public class DoctorView extends View {
 
-	public NurseView() {
-		
+	private Database database;
+
+	public DoctorView(Database database) {
+		super();
+		this.database = database;
+
 	}
 
 	public void draw(Graphics g) {
@@ -19,5 +21,4 @@ public class NurseView extends View {
 	public Dimension getPreferredSize() {
 		return new Dimension(400, 400);
 	}
-
 }

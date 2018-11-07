@@ -1,13 +1,16 @@
-package views;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class BillerView extends View {
+public class AdminView extends View {
 
-	public BillerView() {
+	private Database database;
+
+	public AdminView(Database database) {
+		super();
+		this.database = database;
+
 
 	}
 

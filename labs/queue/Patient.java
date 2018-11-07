@@ -35,7 +35,9 @@ public class Patient implements Comparable<Patient> {
 	}
 
 	public String toString() {
-		return firstName + " " + lastName + " - " + illness + " - " + priority;
+		String[] pri = {"low", "medium", "high"};
+
+		return firstName + " " + lastName + " - " + illness + " - " + pri[this.priority - 1];
 	}
 
 	public int getPriority() { return this.priority; }
