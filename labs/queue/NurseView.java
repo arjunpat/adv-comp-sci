@@ -51,8 +51,12 @@ public class NurseView extends View {
 		JButton updatePatient = new JButton("Update patient");
 		updatePatient.setBounds(600, 375, 150, 30);
 		updatePatient.addActionListener(e -> {
-			database.updatePatient();
-
+			database.updatePatient(firstName.getText(), lastName.getText(), illness.getText(), priority.getText());
+			priority.setText("Priority");
+			illness.setText("Illness");
+			lastName.setText("Last name");
+			firstName.setText("First name");
+			this.populatePatientTextArea();
 		});
 		this.add(updatePatient);
 

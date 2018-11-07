@@ -42,4 +42,21 @@ public class Patient implements Comparable<Patient> {
 
 	public int getPriority() { return this.priority; }
 	public double getCreated() { return this.created; }
+	public String getFirstName() { return this.firstName; }
+	public String getLastName() { return this.lastName; }
+
+	public String getPriorityString() {
+		String[] pri = {"low", "medium", "high"};
+
+		return pri[this.priority - 1];
+	}
+
+	public String getIllness() {
+		return this.illness;
+	}
+
+	public void update(String illness, int priority) {
+		this.illness = illness;
+		this.priority = priority;
+	}
 }
