@@ -1,5 +1,5 @@
 public class Patient implements Comparable<Patient> {
-	private String firstName, lastName, illness, doctorsNotes;
+	private String firstName, lastName, illness, doctorsNote;
 	private double billingAmount;
 	private int priority;
 	private double created;
@@ -23,15 +23,15 @@ public class Patient implements Comparable<Patient> {
 		if (pri == this.priority) {
 
 			if (p.getCreated() > this.created) {
-				return 1;
+				return -1;
 			}
 
-			return -1;
+			return 1;
 
 		} else if (pri < this.priority) {
-			return 1;
+			return -1;
 		}
-		return -1;
+		return 1;
 	}
 
 	public String toString() {
@@ -58,5 +58,21 @@ public class Patient implements Comparable<Patient> {
 	public void update(String illness, int priority) {
 		this.illness = illness;
 		this.priority = priority;
+	}
+
+	public void setDoctorsNote(String doctorsNote) {
+		this.doctorsNote = doctorsNote;
+	}
+
+	public String getDoctorsNote() {
+		return this.doctorsNote;
+	}
+
+	public void setCost(double cost) {
+		this.billingAmount = cost;
+	}
+
+	public String getCompareString() {
+		return lastName + "-" + firstName;
 	}
 }

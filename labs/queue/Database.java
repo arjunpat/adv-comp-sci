@@ -1,12 +1,19 @@
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.TreeSet;
 
 public class Database {
 
 	private PriorityQueue<Patient> patients;
+	private Queue<Patient> billingQueue;
+	private TreeSet<Patient> donePatients;
 
 	public Database() {
 		patients = new PriorityQueue<Patient>();
+		billingQueue = new LinkedList<Patient>();
+		donePatients = new TreeSet<Patient>();
 
 		this.addPatient("Tanay", "Sonthalia", "cold", "low");
 		this.addPatient("Arjun", "Patrawala", "flu", "medium");
@@ -62,6 +69,29 @@ public class Database {
 
 	public Patient getTopPatient() {
 		return patients.peek();
+	}
+
+	public void doneWithPatient(Patient p) {
+		patients.remove(p);
+		billingQueue.add(p);
+	}
+
+	public Patient getPatientToBill() {
+		return billingQueue.peek();
+	}
+
+	public void removePatientFromBilling(Patient p) {
+		billingQueue.remove(p);
+		donePatients.add(p);
+	}
+
+	public String getCompletedPatients() {
+		String data = "";
+
+		Iterator<Patient> i = donePatients.iterator();
+		while (i.hasNext()) {
+			Patient p = i.next();
+		}
 	}
 
 }

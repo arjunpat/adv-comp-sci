@@ -20,23 +20,23 @@ public class NurseView extends View {
 		this.add(patientScrollPane);
 
 		JTextField firstName = new JTextField(20);
-		firstName.setBounds(420, 100, 200, 30);
+		firstName.setBounds(420, 75, 200, 30);
 		this.add(firstName);
 
 		JTextField lastName = new JTextField(20);
-		lastName.setBounds(420, 175, 200, 30);
+		lastName.setBounds(420, 150, 200, 30);
 		this.add(lastName);
 
 		JTextField illness = new JTextField(20);
-		illness.setBounds(420, 250, 200, 30);
+		illness.setBounds(420, 225, 200, 30);
 		this.add(illness);
 
 		JTextField priority = new JTextField(20);
-		priority.setBounds(420, 325, 200, 30);
+		priority.setBounds(420, 300, 200, 30);
 		this.add(priority);
 
 		JButton addPatient = new JButton("Add patient");
-		addPatient.setBounds(420, 375, 150, 30);
+		addPatient.setBounds(420, 350, 150, 30);
 		addPatient.addActionListener(e -> {
 			database.addPatient(firstName.getText(), lastName.getText(), illness.getText(), priority.getText());
 
@@ -49,7 +49,7 @@ public class NurseView extends View {
 		this.add(addPatient);
 
 		JButton updatePatient = new JButton("Update patient");
-		updatePatient.setBounds(600, 375, 150, 30);
+		updatePatient.setBounds(600, 350, 150, 30);
 		updatePatient.addActionListener(e -> {
 			database.updatePatient(firstName.getText(), lastName.getText(), illness.getText(), priority.getText());
 			priority.setText("Priority");

@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import javax.swing.border.Border;
+import java.awt.geom.RoundRectangle2D;
+
 public class DoctorView extends View {
 
 	private Database database;
@@ -13,8 +16,24 @@ public class DoctorView extends View {
 		this.database = database;
 		this.patient = database.getTopPatient();
 
-		JButton addDoctorsNote = new JButton("Add doctor's note");
+		JTextArea doctorsNoteTextArea = new JTextArea(350, 200);
+		doctorsNoteTextArea.setBounds(25, 190, 350, 200);
+		doctorsNoteTextArea.setBorder(new RoundBorder(10));
+		this.add(doctorsNoteTextArea);
+
+		JButton addDoctorsNote = new JButton("Next");
+		addDoctorsNote.setBounds(275, 400, 100, 30);
+		addDoctorsNote.addActionListener(e -> {
+			this.patient.setDoctorsNote(doctorsNoteTextArea.getText());
+			database.doneWithPatient(this.patient);
+			this.patient = database.getTopPatient();
+
+			repaint();
+			doctorsNoteTextArea.setText("Type note here...");
+		});
 		this.add(addDoctorsNote);
+
+		doctorsNoteTextArea.setText("Type note here...");
 
 	}
 
@@ -32,6 +51,38 @@ public class DoctorView extends View {
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(400, 400);
+		return new Dimension(400, 450);
+	}
+
+	public class RoundBorder implements Border {
+
+		private int radius;
+
+		public RoundBorder(int radius) {
+			this.radius = radius;
+		}
+
+		public int getRadius() {
+			return radius;
+		}
+
+		@Override
+		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+			Graphics2D g2d = (Graphics2D) g.create();
+			g2d.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, getRadius(), getRadius()));
+			g2d.dispose();
+		}
+
+		@Override
+		public Insets getBorderInsets(Component c) {
+			int value = getRadius() / 2;
+			return new Insets(value, value, value, value);
+		}
+
+		@Override
+		public boolean isBorderOpaque() {
+			return false;
+		}
+
 	}
 }
