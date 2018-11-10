@@ -11,6 +11,7 @@ public class MainView extends View {
 	public MainView(Runner runner, Database database) {
 		super();
 		this.database = database;
+		this.database.addChangeListener(this);
 
 		JButton toAdmin = new JButton("Admin View");
 		toAdmin.setBounds(20, 70, 140, 60);
@@ -41,6 +42,8 @@ public class MainView extends View {
 		this.add(toNurse);
 
 	}
+
+	public void onChange() {}
 
 	public void draw(Graphics g) {
 		drawTitle(g, red, "Open a view", 20, 40);

@@ -11,6 +11,7 @@ public class BillerView extends View {
 	public BillerView(Database database) {
 		super();
 		this.database = database;
+		this.database.addChangeListener(this);
 		this.patient = database.getPatientToBill();
 
 		JTextField cost = new JTextField(20);
@@ -37,14 +38,25 @@ public class BillerView extends View {
 
 		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		g.setColor(black);
-		g.drawString("First name: "  + patient.getFirstName(), 20, 70);
-		g.drawString("Last name: "  + patient.getLastName(), 20, 100);
-		g.drawString("Priority: "  + patient.getPriorityString(), 20, 130);
-		g.drawString("Illness: "  + patient.getIllness(), 20, 160);
-		g.drawString("Doctor's note: " + patient.getDoctorsNote(), 20, 190);
 
-		g.drawString("Enter cost below", 20, 300);
-		g.drawString("$", 20, 320);
+		try {
+			g.drawString("First name: "  + patient.getFirstName(), 20, 70);
+			g.drawString("Last name: "  + patient.getLastName(), 20, 100);
+			g.drawString("Priority: "  + patient.getPriorityString(), 20, 130);
+			g.drawString("Illness: "  + patient.getIllness(), 20, 160);
+			g.drawString("Doctor's note: " + patient.getDoctorsNote(), 20, 190);
+
+			g.drawString("Enter cost below", 20, 300);
+			g.drawString("$", 20, 320);
+		} catch (Exception e) {
+			g.drawString("No patients ready for billing.", 20, 70);
+		}
+
+	}
+
+	public void onChange() {
+		this.patient = database.getPatientToBill();
+		repaint();
 	}
 
 	@Override

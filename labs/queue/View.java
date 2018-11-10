@@ -54,4 +54,5 @@ public abstract class View extends JPanel {
 	}
 
 	public abstract void draw(Graphics g);
+	public abstract void onChange();
 }

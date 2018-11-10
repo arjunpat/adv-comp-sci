@@ -14,6 +14,7 @@ public class DoctorView extends View {
 	public DoctorView(Database database) {
 		super();
 		this.database = database;
+		this.database.addChangeListener(this);
 		this.patient = database.getTopPatient();
 
 		JTextArea doctorsNoteTextArea = new JTextArea(350, 200);
@@ -43,10 +44,21 @@ public class DoctorView extends View {
 
 		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		g.setColor(black);
-		g.drawString("First name: "  + patient.getFirstName(), 20, 70);
-		g.drawString("Last name: "  + patient.getLastName(), 20, 100);
-		g.drawString("Priority: "  + patient.getPriorityString(), 20, 130);
-		g.drawString("Illness: "  + patient.getIllness(), 20, 160);
+
+		try {
+			g.drawString("First name: "  + patient.getFirstName(), 20, 70);
+			g.drawString("Last name: "  + patient.getLastName(), 20, 100);
+			g.drawString("Priority: "  + patient.getPriorityString(), 20, 130);
+			g.drawString("Illness: "  + patient.getIllness(), 20, 160);
+		} catch (Exception e) {
+			g.drawString("No patients waiting for service.", 20, 70);
+		}
+
+	}
+
+	public void onChange() {
+		this.patient = database.getTopPatient();
+		repaint();
 	}
 
 	@Override

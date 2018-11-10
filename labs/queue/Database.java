@@ -3,21 +3,30 @@ import java.util.Queue;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
+import java.util.ArrayList;
 
 public class Database {
 
 	private PriorityQueue<Patient> patients;
 	private Queue<Patient> billingQueue;
-	private TreeSet<Patient> donePatients;
+	private TreeSet<String> donePatients;
+	private ArrayList<View> allTheViews;
 
 	public Database() {
 		patients = new PriorityQueue<Patient>();
 		billingQueue = new LinkedList<Patient>();
-		donePatients = new TreeSet<Patient>();
+		donePatients = new TreeSet<String>();
+		allTheViews = new ArrayList<View>();
 
 		this.addPatient("Tanay", "Sonthalia", "cold", "low");
 		this.addPatient("Arjun", "Patrawala", "flu", "medium");
 		this.addPatient("Marley", "Magee", "dead", "high");
+		this.addPatient("Bob", "Ita", "overdose", "high");
+		this.addPatient("Nick", "Cardigan", "PE", "medium");
+		this.addPatient("Ben", "Frank", "pregnant", "high");
+		this.addPatient("Lee", "Fauset", "runny nose", "low");
+		this.addPatient("Tyler", "Ferri", "bordom", "low");
+		this.addPatient("Ganghis", "Khan", "anger", "high");
 
 	}
 
@@ -32,6 +41,8 @@ public class Database {
 		}
 
 		patients.add(new Patient(firstName, lastName, illness, pri));
+
+		this.changesMade();
 	}
 
 	public void updatePatient(String firstName, String lastName, String illness, String priority) {
@@ -54,6 +65,8 @@ public class Database {
 				p.update(illness, pri);
 			}
 		}
+
+		this.changesMade();
 	}
 
 	public String getAllPatients() {
@@ -74,6 +87,8 @@ public class Database {
 	public void doneWithPatient(Patient p) {
 		patients.remove(p);
 		billingQueue.add(p);
+
+		this.changesMade();
 	}
 
 	public Patient getPatientToBill() {
@@ -82,15 +97,31 @@ public class Database {
 
 	public void removePatientFromBilling(Patient p) {
 		billingQueue.remove(p);
-		donePatients.add(p);
+		donePatients.add(p.serialize());
+
+		this.changesMade();
 	}
 
 	public String getCompletedPatients() {
 		String data = "";
 
-		Iterator<Patient> i = donePatients.iterator();
+		Iterator<String> i = donePatients.iterator();
 		while (i.hasNext()) {
-			Patient p = i.next();
+			data += i.next() + "\n";
+		}
+
+		data += "\nPatients cared for: " + donePatients.size();
+
+		return data;
+	}
+
+	public void addChangeListener(View v) {
+		allTheViews.add(v);
+	}
+
+	public void changesMade() {
+		for (int i = 0; i < allTheViews.size(); i++) {
+			allTheViews.get(i).onChange();
 		}
 	}
 

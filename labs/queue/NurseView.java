@@ -11,6 +11,7 @@ public class NurseView extends View {
 	public NurseView(Database database) {
 		super();
 		this.database = database;
+		this.database.addChangeListener(this);
 
 		this.patientTextArea.setEditable(false);
 		JScrollPane patientScrollPane = new JScrollPane(patientTextArea);
@@ -71,6 +72,10 @@ public class NurseView extends View {
 
 		drawTitle(g, blue, "Add/update a patient", 420, 30);
 
+	}
+
+	public void onChange() {
+		this.populatePatientTextArea();
 	}
 
 	private void populatePatientTextArea() {

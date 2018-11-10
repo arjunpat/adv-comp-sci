@@ -72,7 +72,7 @@ public class Patient implements Comparable<Patient> {
 		this.billingAmount = cost;
 	}
 
-	public String getCompareString() {
-		return lastName + "-" + firstName;
+	public String serialize() {
+		return lastName + ", " + firstName + " - " + illness + " - " + doctorsNote + " - $" + billingAmount;
 	}
 }
