@@ -14,30 +14,22 @@ public class Client {
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			PrintWriter out = new PrintWriter(conn.getOutputStream(), true);
 
-			System.out.println(in.readLine());
-			out.println(kb.nextLine());
-			System.out.println(in.readLine());
+			System.out.println("Welcome to the Chat Bot");
 
+			while (true) {
+				String entry = kb.nextLine();
 
-			System.out.println(in.readLine());
-			out.println(kb.nextLine());
-			System.out.println(in.readLine());
+				out.println(entry);
 
+				if (entry.equals("bye")) {
+					break;
+				}
 
-			System.out.println(in.readLine());
-			out.println(kb.nextLine());
-			System.out.println(in.readLine());
+				System.out.println(in.readLine());
 
+			}
 
-			System.out.println(in.readLine());
-			out.println(kb.nextLine());
-			System.out.println(in.readLine());
-
-
-			System.out.println(in.readLine());
-			out.println(kb.nextLine());
-			System.out.println(in.readLine());
-
+			out.close();
 			in.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
