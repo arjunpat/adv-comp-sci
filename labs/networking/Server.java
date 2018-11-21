@@ -8,7 +8,11 @@ import java.net.*;
 
 public class Server extends View {
 
-	Game game;
+	private Game game;
+	private ServerSocket app;
+	private Socket client;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
 
 	public Server() {
 		game = new Game();
@@ -22,8 +26,14 @@ public class Server extends View {
 				if (x > 20 && x < 620 && y > 20 && y < 620 && game.isMyTurn("server")) {
 					int r = (y - 20) / 200;
 					int c = (x - 20) / 200;
-					game.makeTurn(r, c);
-					repaint();
+					if (game.makeTurn(r, c)) {
+						repaint();
+						try {
+							out.writeObject(game);
+						} catch (Exception err) {
+							System.out.println(err);
+						}
+					}
 				}
 			}
 		});
@@ -32,35 +42,57 @@ public class Server extends View {
 
 	public void draw(Graphics g) {
 
+		drawTitle(g, "Player 1", 20, 680);
 
 		drawGameBoard(g);
+
+		String res = game.checkWin();
+
+		if (!res.equals("none")) g.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		if (res.equals("server")) {
+			g.drawString("You won!", 20, 730);
+		} else if (res.equals("client")) {
+			g.drawString("You lost!", 20, 730);
+		} else if (res.equals("draw")) {
+			g.drawString("It is a draw", 20, 730);
+		}
 	}
 
 	private void drawGameBoard(Graphics g) {
-		int[][] board = game.getBoard();
-
 		// width 600, height 600
 
-		g.setColor(black);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 60));
-		for (int r = 0; r < board.length; r++) {
-			for (int c = 0; c < board[r].length; c++) {
+		g.setColor(black);
+		for (int r = 0; r < 3; r++) {
+			for (int c = 0; c < 3; c++) {
+				int val = game.getBoardAt(r, c);
 				g.drawRect((200 * c) + 20, (200 * r) + 20, 200, 200);
 
-				if (board[r][c] == 1) {
+				if (val == 1) {
 					g.drawString("X", (200 * c) + 90, (200 * r) + 140);
-				} else if (board[r][c] == -1) {
+				} else if (val == -1) {
 					g.drawString("O", (200 * c) + 90, (200 * r) + 140);
 				}
 			}
 		}
 	}
 
-	public void poll() {
+	public void poll() throws Exception {
+
+		app = new ServerSocket(8080);
+		client = app.accept();
+
+		out = new ObjectOutputStream(client.getOutputStream());
+		in = new ObjectInputStream(client.getInputStream());
+
+		while (true) {
+			game = (Game) in.readObject();
+			repaint();
+		}
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JFrame frame = new JFrame("Server");
 		Server server = new Server();
 
