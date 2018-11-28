@@ -8,6 +8,7 @@ public class Game implements Serializable {
 	private int serverWins = 0;
 	private int clientWins = 0;
 
+	private boolean playingAI = false;
 	
 	public Game() {
 		board = new int[3][3];
@@ -120,6 +121,14 @@ public class Game implements Serializable {
 
 	public int getClientWins() {
 		return clientWins;
+	}
+
+	public boolean isPlayingAI() {
+		return playingAI;
+	}
+
+	public void setPlayingAI(boolean val) {
+		playingAI = val;
 	}
 
 }

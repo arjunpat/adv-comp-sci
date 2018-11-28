@@ -15,9 +15,31 @@ public class Client extends View {
 	public Client() {
 		game = new Game();
 
+		JButton btn = new JButton("Reset game");
+		btn.setBounds(630, 80, 150, 50);
+		btn.addActionListener(e -> {
+			game.resetBoard();
+			sendGame();
+			repaint();
+		});
+		this.add(btn);
+
+		JButton playAI = new JButton("Play AI");
+		playAI.setBounds(630, 150, 150, 50);
+		playAI.addActionListener(e -> {
+			game.setPlayingAI(true);
+			game.resetBoard();
+			game.makeTurn(1, 1);
+			sendGame();
+			repaint();
+		});
+		this.add(playAI);
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				remove(playAI);
+
 				int x = e.getX();
 				int y = e.getY();
 
@@ -26,11 +48,7 @@ public class Client extends View {
 					int c = (x - 20) / 200;
 					if (game.makeTurn(r, c)) {
 						repaint();
-						try {
-							out.writeObject(game);
-						} catch (Exception err) {
-							System.out.println(err);
-						}
+						sendGame();
 					}
 				}
 			}
@@ -40,8 +58,7 @@ public class Client extends View {
 
 	public void draw(Graphics g) {
 
-		drawTitle(g, "Player 2", 20, 680);
-
+		drawTitle(g, blue, "Player 2", 20, 680);
 		drawGameBoard(g);
 
 		String res = game.checkWin();
@@ -54,6 +71,10 @@ public class Client extends View {
 		} else if (res.equals("draw")) {
 			g.drawString("It is a draw", 20, 730);
 		}
+
+		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		g.drawString("Your wins: " + game.getClientWins(), 400, 680);
+		g.drawString("Their wins: " + game.getServerWins(), 400, 730);
 
 	}
 
@@ -85,6 +106,15 @@ public class Client extends View {
 		while (true) {
 			game = (Game) in.readObject();
 			repaint();
+		}
+	}
+
+	private void sendGame() {
+		try {
+			out.reset();
+			out.writeObject(game);
+		} catch (Exception err) {
+			System.out.println(err);
 		}
 	}
 
