@@ -5,6 +5,9 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class Server extends View {
 
 	private Game game;
@@ -13,10 +16,12 @@ public class Server extends View {
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 
+	private JButton btn;
+
 	public Server() {
 		game = new Game();
 
-		JButton btn = new JButton("Reset game");
+		btn = new JButton("Reset game");
 		btn.setBounds(630, 80, 150, 50);
 		btn.addActionListener(e -> {
 			game.resetBoard();
@@ -35,6 +40,7 @@ public class Server extends View {
 					int r = (y - 20) / 200;
 					int c = (x - 20) / 200;
 					if (game.makeTurn(r, c)) {
+						playXSound();
 						repaint();
 						sendGame();
 					}
@@ -56,10 +62,13 @@ public class Server extends View {
 			if (!res.equals("none")) g.setFont(new Font("Tahoma", Font.PLAIN, 24));
 			if (res.equals("server")) {
 				g.drawString("You won!", 20, 730);
+				playWinSound();
 			} else if (res.equals("client")) {
 				g.drawString("You lost!", 20, 730);
+				playLoseSound();
 			} else if (res.equals("draw")) {
 				g.drawString("It is a draw", 20, 730);
+				playTieSound();
 			}
 
 			g.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -101,6 +110,7 @@ public class Server extends View {
 			game = (Game) in.readObject();
 
 			if (game.isPlayingAI()) {
+				remove(btn);
 
 				if (Math.random() > .5) {
 					for (int r = 0; r < 3; r++) {
@@ -134,6 +144,24 @@ public class Server extends View {
 			out.writeObject(game);
 		} catch (Exception err) {
 			System.out.println(err);
+		}
+	}
+
+	private void playWinSound() { playSound("sounds/win.wav"); }
+	private void playLoseSound() { playSound("sounds/lose.wav"); }
+	private void playTieSound() { playSound("sounds/tie.wav"); }
+	private void playXSound() { playSound("sounds/x.wav"); }
+	private void playOSound() { playSound("sounds/o.wav"); }
+
+
+	private void playSound(String filename) {
+		try {
+			URL url = this.getClass().getClassLoader().getResource(filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(url));
+			clip.start();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 

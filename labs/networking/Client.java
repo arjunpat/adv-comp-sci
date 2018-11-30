@@ -5,6 +5,9 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class Client extends View {
 
 	private Game game;
@@ -32,13 +35,14 @@ public class Client extends View {
 			game.makeTurn(1, 1);
 			sendGame();
 			repaint();
+
+			remove(playAI);
 		});
 		this.add(playAI);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				remove(playAI);
 
 				int x = e.getX();
 				int y = e.getY();
@@ -47,6 +51,7 @@ public class Client extends View {
 					int r = (y - 20) / 200;
 					int c = (x - 20) / 200;
 					if (game.makeTurn(r, c)) {
+						playOSound();
 						repaint();
 						sendGame();
 					}
@@ -66,10 +71,13 @@ public class Client extends View {
 		if (!res.equals("none")) g.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		if (res.equals("client")) {
 			g.drawString("You won!", 20, 730);
+			playWinSound();
 		} else if (res.equals("server")) {
 			g.drawString("You lost!", 20, 730);
+			playLoseSound();
 		} else if (res.equals("draw")) {
 			g.drawString("It is a draw", 20, 730);
+			playTieSound();
 		}
 
 		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -115,6 +123,24 @@ public class Client extends View {
 			out.writeObject(game);
 		} catch (Exception err) {
 			System.out.println(err);
+		}
+	}
+
+	private void playWinSound() { playSound("sounds/win.wav"); }
+	private void playLoseSound() { playSound("sounds/lose.wav"); }
+	private void playTieSound() { playSound("sounds/tie.wav"); }
+	private void playXSound() { playSound("sounds/x.wav"); }
+	private void playOSound() { playSound("sounds/o.wav"); }
+
+
+	private void playSound(String filename) {
+		try {
+			File f = new File(filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(f));
+			clip.start();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 
