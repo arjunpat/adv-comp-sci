@@ -1,6 +1,8 @@
 package game;
+import java.io.Serializable;
 
-public class Location {
+
+public class Location implements Serializable {
 
 	private int x, y;
 
@@ -19,6 +21,14 @@ public class Location {
 
 	public String toString() {
 		return "(" + x + "," + y + ")";
+	}
+
+	public int hashCode() {
+		return toString().hashCode();
+	}
+
+	public boolean equals(Object l) {
+		return ((Location)l).hashCode() == hashCode();
 	}
 
 }

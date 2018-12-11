@@ -1,0 +1,1 @@
+To start the game, run the Runner class; it will open both server and client.

@@ -4,35 +4,32 @@ import java.io.*;
 import java.net.*;
 import game.Game;
 
-public class Server {
+public class Client {
 
 	private JFrame jFrame;
-	private ServerGameScreen serverGameScreen;
+	private ClientGameScreen clientGameScreen;
 
-	private ServerSocket app;
-	private Socket client;
+	private Socket conn;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 
-	public Server() {
-		jFrame = new JFrame("Server / Player 1");
+	public Client() {
+		jFrame = new JFrame("Client / Player 2");
 
-		serverGameScreen = new ServerGameScreen(this);
+		clientGameScreen = new ClientGameScreen(this);
 		showGameScreen();
 	}
 
 	public void poll() throws Exception {
 
-		app = new ServerSocket(8080);
-		client = app.accept();
+		conn = new Socket("localhost", 8080);
 
-		out = new ObjectOutputStream(client.getOutputStream());
-		in = new ObjectInputStream(client.getInputStream());
+		out = new ObjectOutputStream(conn.getOutputStream());
+		in = new ObjectInputStream(conn.getInputStream());
 
 		while (true) {
-			serverGameScreen.changeOccured((Game) in.readObject());
+			clientGameScreen.changeOccured((Game) in.readObject());
 		}
-
 	}
 
 	public void sendGame(Game game) {
@@ -45,7 +42,7 @@ public class Server {
 	}
 
 	private void showGameScreen() {
-		updateScreen(serverGameScreen);
+		updateScreen(clientGameScreen);
 	}
 
 	private void updateScreen(View view) {
@@ -64,8 +61,8 @@ public class Server {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Server server = new Server();
+		Client client = new Client();
 
-		server.poll();
+		client.poll();
 	}
 }

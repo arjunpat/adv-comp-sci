@@ -1,12 +1,13 @@
+
+package items;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-package item;
-
-public class Item {
-	private int x, y, height, width;
+public abstract class Item {
+	protected int x, y, height, width;
 
 	public Item() {
 
@@ -17,6 +18,14 @@ public class Item {
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 
 }

@@ -10,26 +10,26 @@ import items.Notification;
 import game.Game;
 import game.Location;
 
-public class ServerGameScreen extends View {
+public class ClientGameScreen extends View {
 
 	private Game game;
-	private Server server;
+	private Client client;
 
 	private Notification notification = new Notification("Your opponent is live", 4000);
 
 	private Player player;
-	private Player clientPlayer;
+	private Player serverPlayer;
 	private HashMap<String, Integer> itemsCollectedMap = new HashMap<String, Integer>();
 	private Stack<Boolean> healthStack = new Stack<Boolean>();
 	
-	public ServerGameScreen(Server server) {
+	public ClientGameScreen(Client client) {
 		game = new Game();
-		this.server = server;
+		this.client = client;
 
 		Location l = game.getClientLocation();
-		clientPlayer = new Player(l.getX(), l.getY(), "images/player2.png");
+		player = new Player(l.getX(), l.getY(), "images/player2.png");
 		l = game.getServerLocation();
-		player = new Player(l.getX(), l.getY(), "images/player1.png");
+		serverPlayer = new Player(l.getX(), l.getY(), "images/player1.png");
 
 		addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
@@ -52,7 +52,7 @@ public class ServerGameScreen extends View {
 						game.setStatus("bomb");
 					}
 
-					server.sendGame(game);
+					client.sendGame(game);
 					game.setStatus("");
 
 					repaint();
@@ -60,11 +60,12 @@ public class ServerGameScreen extends View {
 					return;
 				}
 
+
 				checkHit();
 				repaint();
-
-				game.setServerLocation(new Location(player.getX(), player.getY()));
-				server.sendGame(game);
+				
+				game.setClientLocation(new Location(player.getX(), player.getY()));
+				client.sendGame(game);
 				game.setStatus("");
 			}
 			public void keyReleased(KeyEvent e) {}
@@ -91,7 +92,7 @@ public class ServerGameScreen extends View {
 			g.drawImage(pic, l.getX() * 100, l.getY() * 100, null);
 		}
 
-		clientPlayer.draw(g);
+		serverPlayer.draw(g);
 		player.draw(g);
 
 		g.setColor(Color.BLUE);
@@ -115,6 +116,7 @@ public class ServerGameScreen extends View {
 		if (!notification.isOld()) {
 			notification.draw(g);
 		}
+
 	}
 
 	private void drawGrid(Graphics g) {
@@ -139,10 +141,10 @@ public class ServerGameScreen extends View {
 
 				if (healthStack.size() > 1) {
 					healthStack.pop();
-					player.moveTo(520, 510);
+					player.moveTo(520, 500);
 					game.setStatus("health");
 				} else {
-					server.lose("You ran out of health!");
+					client.lose("You ran out of health!");
 					game.setStatus("lost");
 				}
 
@@ -171,13 +173,12 @@ public class ServerGameScreen extends View {
 	public void changeOccured(Game game) {
 		this.game = game;
 
-		Location l = game.getClientLocation();
-		clientPlayer.moveTo(l.getX(), l.getY());
+		Location l = game.getServerLocation();
+		serverPlayer.moveTo(l.getX(), l.getY());
 
 		String status = game.getStatus();
-		System.out.println(status);
 		if (status.equals("lost")) {
-			server.win("Your opponent ran out of health");
+			client.win("Your opponent ran out of health");
 		} else if (status.equals("health")) {
 			notification = new Notification("Your opponent lost a health");
 		} else if (status.equals("collected")) {
