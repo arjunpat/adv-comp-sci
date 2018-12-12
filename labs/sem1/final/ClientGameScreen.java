@@ -20,7 +20,7 @@ public class ClientGameScreen extends View {
 	private Game game;
 	private Client client;
 
-	private Notification notification = new Notification("Your opponent is live", 4000);
+	private Notification notification = new Notification("", false, 0);
 
 	private Player player;
 	private Player serverPlayer;
@@ -60,9 +60,8 @@ public class ClientGameScreen extends View {
 
 						itemsCollectedMap.put("Bombs left", itemsCollectedMap.get("Bombs left") - 1);
 
-						displayNotification("You just placed a bomb");
 					} else {
-						displayNotification("You cannot place a bomb here");
+						displayNotification("You cannot place a bomb here", false);
 					}
 
 					client.sendGame(game);
@@ -172,7 +171,7 @@ public class ClientGameScreen extends View {
 					healthStack.pop();
 					player.moveTo(520, 500);
 
-					displayNotification("You touched an obstacle and lost a health");
+					displayNotification("You touched an obstacle and lost a health", false);
 					game.setStatus("health");
 					playOofSound();
 				} else {
@@ -215,8 +214,12 @@ public class ClientGameScreen extends View {
 		}
 	}
 
-	private void displayNotification(String text) {
-		notification = new Notification(text);
+	public void displayNotification(String text, boolean isGood) {
+		notification = new Notification(text, isGood);
+	}
+
+	public void displayNotification(String text, boolean isGood, int time) {
+		notification = new Notification(text, isGood, time);
 	}
 
 	private void displayResults() {
@@ -246,11 +249,11 @@ public class ClientGameScreen extends View {
 		if (status.equals("lost")) {
 			client.win("Your opponent ran out of health");
 		} else if (status.equals("health")) {
-			displayNotification("Your opponent lost a health");
+			displayNotification("Your opponent lost a health", true);
 		} else if (status.equals("collected")) {
-			displayNotification("Your opponent collected an item");
+			displayNotification("Your opponent collected an item", false);
 		} else if (status.equals("bomb")) {
-			displayNotification("Your opponent has placed a bomb");
+			displayNotification("Your opponent has placed a bomb", false);
 		} else if (status.equals("done")) {
 			displayResults();
 		}

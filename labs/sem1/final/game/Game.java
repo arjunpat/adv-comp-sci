@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.Serializable;
+import java.util.Stack;
 
 public class Game implements Serializable {
 	private HashMap<Location, Integer> map;
@@ -53,22 +54,28 @@ public class Game implements Serializable {
 		map.put(new Location(6, 2), 1);
 		map.put(new Location(7, 6), 2);
 
-		// inside L
-		map.put(new Location(0, 3), 3);
-		map.put(new Location(1, 5), 0);
 
-		// outside L
-		map.put(new Location(1, 1), 0);
-		map.put(new Location(3, 3), 3);
-		map.put(new Location(4, 4), 0);
-		map.put(new Location(5, 6), 0);
-		map.put(new Location(7, 7), 3);
-		map.put(new Location(5, 3), 4);
-		map.put(new Location(0, 6), 4);
-		map.put(new Location(3, 6), 5);
-		map.put(new Location(7, 5), 5);
-		map.put(new Location(5, 1), 5);
-		map.put(new Location(2, 1), 3);
+		// randomly generated items
+		Stack<Integer> items = new Stack<Integer>();
+
+		items.push(3); items.push(0); items.push(0); items.push(3);
+		items.push(0); items.push(0); items.push(3); items.push(4);
+		items.push(4); items.push(5); items.push(5); items.push(5);
+		items.push(3);
+
+		while (!items.isEmpty()) {
+			int itemNum = items.pop();
+
+			while (true) {
+				Location l = new Location((int)(Math.random() * 8), (int)(Math.random() * 8));
+
+				if (!map.containsKey(l)) {
+					map.put(l, itemNum);
+					break;
+				}
+			}
+
+		}
 
 	}
 

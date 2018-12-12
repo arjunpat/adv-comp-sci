@@ -21,16 +21,24 @@ public class Server {
 		showGameScreen();
 	}
 
-	public void poll() throws Exception {
+	public void poll() {
 
-		app = new ServerSocket(8080);
-		client = app.accept();
+		try {
+			app = new ServerSocket(8080);
+			client = app.accept();
 
-		out = new ObjectOutputStream(client.getOutputStream());
-		in = new ObjectInputStream(client.getInputStream());
+			out = new ObjectOutputStream(client.getOutputStream());
+			in = new ObjectInputStream(client.getInputStream());
+			sendGame(serverGameScreen.getGame());
 
-		while (true) {
-			serverGameScreen.changeOccured((Game) in.readObject());
+			serverGameScreen.displayNotification("Connected to client", true, 4000);
+
+			while (true) {
+				serverGameScreen.changeOccured((Game) in.readObject());
+			}
+
+		} catch (Exception e) {
+			serverGameScreen.displayNotification("Error connecting to client", false, 4000);
 		}
 
 	}
@@ -65,7 +73,7 @@ public class Server {
 		updateScreen(new ResultScreen(true, why));
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		Server server = new Server();
 
 		server.poll();
