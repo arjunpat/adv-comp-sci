@@ -3,14 +3,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-import java.util.Map.Entry;
-import java.awt.image.BufferedImage;
 import items.Player;
 import items.Notification;
 import game.Game;
 import game.Location;
 
 import javax.swing.Timer;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.net.URL;
+import java.util.Map.Entry;
+import java.awt.image.BufferedImage;
 
 public class ClientGameScreen extends View {
 
@@ -171,6 +174,7 @@ public class ClientGameScreen extends View {
 
 					displayNotification("You touched an obstacle and lost a health");
 					game.setStatus("health");
+					playOofSound();
 				} else {
 					client.lose("You ran out of health!");
 					game.setStatus("lost");
@@ -191,8 +195,23 @@ public class ClientGameScreen extends View {
 					displayResults();
 				} else {
 					game.setStatus("collected");
+					playDingSound();
 				}
 			}
+		}
+	}
+
+	private void playDingSound() { playSound("items/sounds/ding.wav"); }
+	private void playOofSound() { playSound("items/sounds/oof.wav"); }
+
+	private void playSound(String filename) {
+		try {
+			URL url = this.getClass().getClassLoader().getResource(filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(url));
+			clip.start();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 

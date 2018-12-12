@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-
 import java.io.Serializable;
 
 public class Game implements Serializable {

@@ -17,6 +17,7 @@ public class ResultScreen extends View {
 
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Tahoma", Font.BOLD, 58));
+		
 		if (won) {
 			g.drawString("You Win!", 20, 100);
 		} else {
