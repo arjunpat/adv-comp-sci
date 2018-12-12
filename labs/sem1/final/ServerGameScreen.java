@@ -10,6 +10,8 @@ import items.Notification;
 import game.Game;
 import game.Location;
 
+import javax.swing.Timer;
+
 public class ServerGameScreen extends View {
 
 	private Game game;
@@ -21,6 +23,8 @@ public class ServerGameScreen extends View {
 	private Player clientPlayer;
 	private HashMap<String, Integer> itemsCollectedMap = new HashMap<String, Integer>();
 	private Stack<Boolean> healthStack = new Stack<Boolean>();
+
+	private HashMap<Integer, BufferedImage> images = new HashMap<Integer, BufferedImage>();
 	
 	public ServerGameScreen(Server server) {
 		game = new Game();
@@ -47,13 +51,18 @@ public class ServerGameScreen extends View {
 
 					Location l = getCurrentLocation();
 
-					if (!game.getMap().containsKey(l)) {
+					if (!game.getMap().containsKey(l) && itemsCollectedMap.get("Bombs left") > 0) {
 						game.getMap().put(l, 2);
 						game.setStatus("bomb");
+
+						itemsCollectedMap.put("Bombs left", itemsCollectedMap.get("Bombs left") - 1);
+
+						displayNotification("You just placed a bomb");
+					} else {
+						displayNotification("You cannot place a bomb here");
 					}
 
 					server.sendGame(game);
-					game.setStatus("");
 
 					repaint();
 
@@ -65,7 +74,6 @@ public class ServerGameScreen extends View {
 
 				game.setServerLocation(new Location(player.getX(), player.getY()));
 				server.sendGame(game);
-				game.setStatus("");
 			}
 			public void keyReleased(KeyEvent e) {}
 			public void keyTyped(KeyEvent e) {}
@@ -74,6 +82,16 @@ public class ServerGameScreen extends View {
 		for (int i = 0; i < 5; i++) {
 			healthStack.push(true);
 		}
+
+		itemsCollectedMap.put("Bombs left", 5);
+
+
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+			}
+		});
+		timer.start();
 
 	}
 
@@ -85,8 +103,17 @@ public class ServerGameScreen extends View {
 
 		while (it.hasNext()) {
 			Entry<Location, Integer> e = it.next();
+			int itemType = e.getValue();
 			Location l = e.getKey();
-			BufferedImage pic = game.getImage(e.getValue());
+
+			BufferedImage pic;
+
+			if (images.containsKey(itemType)) {
+				pic = images.get(itemType);
+			} else {
+				pic = game.getImage(itemType);
+				images.put(itemType, pic);
+			}
 
 			g.drawImage(pic, l.getX() * 100, l.getY() * 100, null);
 		}
@@ -140,6 +167,8 @@ public class ServerGameScreen extends View {
 				if (healthStack.size() > 1) {
 					healthStack.pop();
 					player.moveTo(520, 510);
+
+					displayNotification("You touched an obstacle and lost a health");
 					game.setStatus("health");
 				} else {
 					server.lose("You ran out of health!");
@@ -156,8 +185,27 @@ public class ServerGameScreen extends View {
 
 				game.getMap().remove(l);
 				player.itemCollected();
-				game.setStatus("collected");
+				if (game.itemCollected()) {
+					game.setStatus("done");
+					displayResults();
+				} else {
+					game.setStatus("collected");
+				}
 			}
+		}
+	}
+
+	private void displayNotification(String text) {
+		notification = new Notification(text);
+	}
+
+	private void displayResults() {
+		int collected = player.getItemsCollected();
+
+		if (collected > 6) {
+			server.win("You collected " + collected + " of the 13 items!");
+		} else {
+			server.lose("You collected " + collected + " of the 13 items!");
 		}
 	}
 
@@ -175,15 +223,16 @@ public class ServerGameScreen extends View {
 		clientPlayer.moveTo(l.getX(), l.getY());
 
 		String status = game.getStatus();
-		System.out.println(status);
 		if (status.equals("lost")) {
 			server.win("Your opponent ran out of health");
 		} else if (status.equals("health")) {
-			notification = new Notification("Your opponent lost a health");
+			displayNotification("Your opponent lost a health");
 		} else if (status.equals("collected")) {
-			notification = new Notification("Your opponent collected an item");
+			displayNotification("Your opponent collected an item");
 		} else if (status.equals("bomb")) {
-			notification = new Notification("Your opponent has placed a bomb");
+			displayNotification("Your opponent has placed a bomb");
+		} else if (status.equals("done")) {
+			displayResults();
 		}
 
 		repaint();

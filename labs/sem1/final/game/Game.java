@@ -14,16 +14,24 @@ public class Game implements Serializable {
 	private Location clientLocation;
 	private String status = "";
 
+	private int itemsCollected;
+
 	private String[] values = {
 		"Food",
 		"Wall",
-		"Bomb"
+		"Bomb",
+		"Computer",
+		"Phone",
+		"Drink"
 	};
 
 	private String[] images = {
 		"../items/images/food.png",
 		"../items/images/wall.png",
-		"../items/images/wall.png"
+		"../items/images/bomb.png",
+		"../items/images/computer.png",
+		"../items/images/phone.png",
+		"../items/images/drink.png"
 	};
 
 	public Game() {
@@ -32,20 +40,36 @@ public class Game implements Serializable {
 		clientLocation = new Location(520, 500);
 
 		map = new HashMap<Location, Integer>();
-
-		map.put(new Location(1, 1), 0);
 		
+		// wall
 		map.put(new Location(0, 2), 1);
 		map.put(new Location(1, 2), 1);
 		map.put(new Location(2, 2), 1);
 		map.put(new Location(2, 3), 1);
 		map.put(new Location(2, 4), 1);
 		map.put(new Location(2, 5), 1);
+		map.put(new Location(3, 2), 1);
+		map.put(new Location(4, 2), 1);
+		map.put(new Location(5, 2), 1);
+		map.put(new Location(6, 2), 1);
+		map.put(new Location(7, 6), 2);
 
-		map.put(new Location(3, 3), 0);
+		// inside L
+		map.put(new Location(0, 3), 3);
+		map.put(new Location(1, 5), 0);
+
+		// outside L
+		map.put(new Location(1, 1), 0);
+		map.put(new Location(3, 3), 3);
 		map.put(new Location(4, 4), 0);
-		map.put(new Location(5, 5), 0);
-		map.put(new Location(7, 7), 0);
+		map.put(new Location(5, 6), 0);
+		map.put(new Location(7, 7), 3);
+		map.put(new Location(5, 3), 4);
+		map.put(new Location(0, 6), 4);
+		map.put(new Location(3, 6), 5);
+		map.put(new Location(7, 5), 5);
+		map.put(new Location(5, 1), 5);
+		map.put(new Location(2, 1), 3);
 
 	}
 
@@ -101,6 +125,12 @@ public class Game implements Serializable {
 		String current = status;
 		status = "";
 		return current;
+	}
+
+	public boolean itemCollected() {
+		itemsCollected++;
+
+		return itemsCollected == 13;
 	}
 	
 }

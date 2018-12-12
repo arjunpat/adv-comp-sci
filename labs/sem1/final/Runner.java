@@ -23,6 +23,7 @@ public class Runner {
 		});
 
 		s.start();
+		Thread.sleep(500);
 		c.start();
 
 	}

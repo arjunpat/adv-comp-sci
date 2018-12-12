@@ -36,6 +36,8 @@ public class Client {
 		try {
 			out.reset();
 			out.writeObject(game);
+			
+			game.setStatus("");
 		} catch (Exception err) {
 			System.out.println(err);
 		}

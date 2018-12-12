@@ -10,6 +10,7 @@ public class Notification extends Item {
 	private String text;
 	private double created;
 	private int length;
+	private int borderLength = 3;
 
 	public Notification(String text) {
 		this.text = text;
@@ -30,14 +31,14 @@ public class Notification extends Item {
 	public void draw(Graphics g) {
 
 		g.setColor(Color.RED);
-		g.fillRect(148, 0, 404, 44);
+		g.fillRect(150 - borderLength, 0, 400 + (2 * borderLength), 40 + borderLength);
 
 		g.setColor(Color.WHITE);
-		g.fillRect(150, 2, 400, 40);
+		g.fillRect(150, 0, 400, 40);
 
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		g.drawString(text, 175, 28);
+		g.drawString(text, 175, 25);
 	}
 }
