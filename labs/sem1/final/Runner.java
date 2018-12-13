@@ -1,14 +1,12 @@
 
 public class Runner {
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		Thread s = new Thread(new Runnable() {
 			public void run() {
 				Server server = new Server();
 
-				try {
-					server.poll(); 
-				} catch (Exception e) { e.printStackTrace(); }
+				server.poll(); 
 			}
 		});
 
@@ -16,14 +14,12 @@ public class Runner {
 			public void run() {
 				Client client = new Client();
 
-				try {
-					client.poll();
-				} catch (Exception e) { e.printStackTrace(); }
+				client.poll();
 			}
 		});
 
 		s.start();
-		Thread.sleep(500);
+		try {Thread.sleep(1000);} catch (Exception e) { e.printStackTrace(); }
 		c.start();
 
 	}

@@ -123,11 +123,11 @@ public class ServerGameScreen extends View {
 		clientPlayer.draw(g);
 		player.draw(g);
 
-		g.setColor(Color.BLUE);
+		g.setColor(new Color(0, 0, 255, 220));
 		g.fillRect(650, 0, 150, 180);
 		g.setFont(new Font("Tahoma", Font.BOLD, 14));
 		g.setColor(Color.WHITE);
-		g.drawString("Health: " + healthStack.size(), 660, 20);
+		g.drawString("My health: " + healthStack.size(), 660, 20);
 		g.drawString("Items collected: " + player.getItemsCollected(), 660, 40);
 
 		Iterator<Entry<String, Integer>> i = itemsCollectedMap.entrySet().iterator();
@@ -141,8 +141,12 @@ public class ServerGameScreen extends View {
 			y += 20;
 		}
 
-		if (!notification.isOld()) {
+		if (!notification.done)
 			notification.draw(g);
+
+		if (notification.isOld()) {
+			notification.addASecond();
+			animateNotificationDown();
 		}
 	}
 
@@ -215,10 +219,57 @@ public class ServerGameScreen extends View {
 
 	public void displayNotification(String text, boolean isGood) {
 		notification = new Notification(text, isGood);
+		animateNotificationUp();
 	}
 
 	public void displayNotification(String text, boolean isGood, int time) {
 		notification = new Notification(text, isGood, time);
+		animateNotificationUp();
+	}
+
+	private void animateNotificationUp() {
+		notification.setY(800);
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() > Notification.FINAL_Y) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveUp();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		animate.start();
+	}
+
+	private void animateNotificationDown() {
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() < 800) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveDown();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				notification.done = true;
+
+			}
+		});
+
+		animate.start();
 	}
 
 	private void displayResults() {
