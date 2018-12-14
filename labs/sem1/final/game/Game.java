@@ -52,8 +52,8 @@ public class Game implements Serializable {
 		map.put(new Location(4, 2), 1);
 		map.put(new Location(5, 2), 1);
 		map.put(new Location(6, 2), 1);
-		map.put(new Location(7, 6), 2);
 
+		map.put(new Location(5, 5), 2);
 
 		// randomly generated items
 		Stack<Integer> items = new Stack<Integer>();

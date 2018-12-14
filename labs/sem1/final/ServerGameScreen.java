@@ -141,7 +141,7 @@ public class ServerGameScreen extends View {
 			y += 20;
 		}
 
-		if (!notification.done)
+		if (!notification.isDone())
 			notification.draw(g);
 
 		if (notification.isOld()) {
@@ -264,7 +264,7 @@ public class ServerGameScreen extends View {
 					}
 				}
 
-				notification.done = true;
+				notification.done();
 
 			}
 		});

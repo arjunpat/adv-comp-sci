@@ -13,7 +13,7 @@ public class Notification extends Item {
 	private int length;
 	private int borderLength = 1;
 
-	public boolean done = false;
+	private boolean done = false;
 
 	private int x = 20;
 	private int y = 720;
@@ -83,5 +83,13 @@ public class Notification extends Item {
 
 	public void addASecond() {
 		created += 1000;
+	}
+
+	public void done() {
+		done = true;
+	}
+
+	public boolean isDone() {
+		return done;
 	}
 }
