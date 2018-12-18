@@ -183,6 +183,10 @@ public class ClientGameScreen extends View {
 					game.setStatus("lost");
 				}
 
+				if (itemType == 2) {
+					game.getMap().remove(l);
+				}
+
 			} else {
 				String key = game.getObjectName(game.getMap().get(l));
 				if (itemsCollectedMap.containsKey(key)) {

@@ -67,6 +67,7 @@ public class Game implements Serializable {
 			int itemNum = items.pop();
 
 			while (true) {
+
 				Location l = new Location((int)(Math.random() * 8), (int)(Math.random() * 8));
 
 				if (!map.containsKey(l)) {
@@ -74,7 +75,6 @@ public class Game implements Serializable {
 					break;
 				}
 			}
-
 		}
 
 	}
