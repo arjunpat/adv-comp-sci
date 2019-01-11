@@ -9,14 +9,7 @@ public class LinkedList<T> {
 	}
 
 	public T getLast() {
-		Node<T> current = first;
-
-		while (true) {
-			if (!current.hasNext()) {
-				return current.getData();
-			}
-			current = current.next();
-		}
+		return get(size() - 1);
 	}
 
 	public void add(T val) {
@@ -74,7 +67,6 @@ public class LinkedList<T> {
 	}
 
   public void remove(int i) {
-
     Node<T> before = getNode(i - 1);
     Node<T> after = getNode(i + 1);
 
