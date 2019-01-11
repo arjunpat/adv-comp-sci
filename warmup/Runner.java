@@ -2,12 +2,15 @@ import java.util.LinkedList;
 
 public class Runner {
 	public static void main(String[] args) {
-		LinkedList<Item> ll = new LinkedList<Item>();
+		LinkedList<String> ll = new LinkedList<String>();
 
-		ll.add(new Item("Pencil", .25));
-		ll.add(new Item("Pen", .49));
-		ll.add(new Item("Paper", .1));
+		ll.add("hello");
+		ll.add("wassup!");
 
-		System.out.println(ll);
+		System.out.println(ll.size());
+
+		for (int i = 0; i < ll.size(); i++) {
+			System.out.println(ll.get(i));
+		}
 	}
 }
