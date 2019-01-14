@@ -1,11 +1,9 @@
 import java.util.Iterator;
 
-public class LinkedList<T> {
+public class SLList<T> {
 	private Node<T> first;
 
-	public LinkedList() {
-		System.out.println("LinkedList created");
-	}
+	public SLList() {}
 
 	public T getFirst() {
 		if (first == null)
@@ -27,24 +25,19 @@ public class LinkedList<T> {
 	public void add(T val) {
 		if (first == null) {
 			first = new Node<T>(val);
-			return;
+		} else {
+			Node<T> current = first;
+
+			while (current.hasNext()) {
+				current = current.next();
+			}
+
+			current.setNext(new Node<T>(val));
 		}
-
-		Node<T> current = first;
-
-		while (current.hasNext()) {
-			current = current.next();
-		}
-
-		current.setNext(new Node<T>(val));
 	}
 
 	public void add(int index, T val) {
-		Node<T> before = first;
-
-		for (int i = 1; i < index; i++) {
-			before = before.next();
-		}
+		Node<T> before = getNode(index - 1);
 
 		Node<T> after = before.next();
 		Node<T> current = new Node<T>(val);
@@ -58,7 +51,6 @@ public class LinkedList<T> {
 	}
 
 	public int size() {
-
 		Node<T> current = first;
 		int size = 0;
 
@@ -74,7 +66,6 @@ public class LinkedList<T> {
 		Node<T> current = first;
 
 		for (int j = 0; j < i; j++) {
-
 			if (current.hasNext()) {
 				current = current.next();
 			} else {

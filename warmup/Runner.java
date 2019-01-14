@@ -2,7 +2,7 @@ import java.util.Iterator;
 
 public class Runner {
 	public static void main(String[] args) {
-		LinkedList<String> ll = new LinkedList<String>();
+		/*SLList<String> ll = new SLList<String>();
 
 		ll.add("hello");
 		ll.add("wassup!");
@@ -21,6 +21,24 @@ public class Runner {
 
 		while (it.hasNext()) {
 			System.out.println(it.next());
-		}
+		}*/
+
+		SLList<String> strings = new SLList<String>();
+		strings.add("cat");
+		strings.add("dog");
+		strings.add("pig");
+		strings.add("bird");
+
+		System.out.println(strings);
+
+		SLList<Integer> integers = new SLList<Integer>();
+		integers.add(5);
+		integers.add(5);
+		integers.add(2);
+		integers.add(1);
+		integers.add(7);
+		integers.add(8);
+
+		System.out.println(integers);
 	}
 }
