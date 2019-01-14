@@ -40,5 +40,21 @@ public class Runner {
 		integers.add(8);
 
 		System.out.println(integers);
+
+		SLList<Animal> animals = new SLList<Animal>();
+		animals.add(new Animal("dog"));
+		animals.add(new Animal("cat"));
+		animals.add(new Animal("bear"));
+		animals.add(new Animal("fish"));
+
+		animals.add(2, new Animal("geck"));
+		animals.add(3, new Animal("human"));
+		animals.add(0, new Animal("mouse"));
+
+		System.out.println(animals);
+		animals.remove(3);
+		System.out.println("remove one");
+		System.out.println(animals);
+
 	}
 }
