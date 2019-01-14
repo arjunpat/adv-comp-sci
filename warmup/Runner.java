@@ -50,10 +50,10 @@ public class Runner {
 		animals.add(2, new Animal("geck"));
 		animals.add(3, new Animal("human"));
 		animals.add(0, new Animal("mouse"));
+		animals.add(7, new Animal("cow"));
 
 		System.out.println(animals);
 		animals.remove(3);
-		System.out.println("remove one");
 		System.out.println(animals);
 
 	}

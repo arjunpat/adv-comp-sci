@@ -37,6 +37,14 @@ public class SLList<T> {
 	}
 
 	public void add(int index, T val) {
+
+		if (index == 0) {
+			Node<T> newNode = new Node<T>(val);
+			newNode.setNext(first);
+			first = newNode;
+			return;
+		}
+
 		Node<T> before = getNode(index - 1);
 
 		Node<T> after = before.next();
