@@ -84,11 +84,66 @@ public class SLList<T> {
 		return current;
 	}
 
-	public void remove(int i) {
-		Node<T> before = getNode(i - 1);
-		Node<T> after = getNode(i + 1);
+	public boolean contains(T val) {
+		Node<T> current = first;
 
-		before.setNext(after);
+		while (current != null) {
+			if (current.getData().equals(val)) {
+				return true;
+			}
+
+			current = current.next();
+		}
+
+		return false;
+	}
+
+	public int indexOf(T val) {
+		Node<T> current = first;
+		int i = 0;
+
+		while (current != null) {
+			if (current.getData().equals(val)) {
+				return i;
+			}
+
+			current = current.next();
+			i++;
+		}
+
+		return -1;
+	}
+
+	public void set(int index, T val) {
+		Node<T> current = first;
+		int i = 0;
+
+		while (current != null) {
+			if (i == index) {
+				current.setData(val);
+			}
+
+			current = current.next();
+			i++;
+		}
+
+	}
+
+	public void remove(int i) {
+
+		if (i == 0) {
+			first = getNode(1);
+		} else {
+			Node<T> before = getNode(i - 1);
+			Node<T> after = getNode(i + 1);
+
+			before.setNext(after);
+		}
+	}
+
+	public void remove(T val) {
+		int i = indexOf(val);
+		remove(i);
 	}
 
 	public void clear() {
@@ -136,6 +191,10 @@ public class SLList<T> {
 
 		public T getData() {
 			return data;
+		}
+
+		public void setData(T val) {
+			data = val;
 		}
 
 		public Node<T> next() {

@@ -1,7 +1,10 @@
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class Runner {
 	public static void main(String[] args) {
+		Scanner kb = new Scanner(System.in);
+
 		/*SLList<String> ll = new SLList<String>();
 
 		ll.add("hello");
@@ -31,30 +34,27 @@ public class Runner {
 
 		System.out.println(strings);
 
-		SLList<Integer> integers = new SLList<Integer>();
-		integers.add(5);
-		integers.add(5);
-		integers.add(2);
-		integers.add(1);
-		integers.add(7);
-		integers.add(8);
+		System.out.println("Enter an index");
+		System.out.println(strings.get(kb.nextInt()));
 
-		System.out.println(integers);
+		System.out.println("Enter a word");
+		String word = kb.next();
 
-		SLList<Animal> animals = new SLList<Animal>();
-		animals.add(new Animal("dog"));
-		animals.add(new Animal("cat"));
-		animals.add(new Animal("bear"));
-		animals.add(new Animal("fish"));
+		if (strings.contains(word)) {
+			System.out.println("Is in list at index " + strings.indexOf(word));
+		} else {
+			System.out.println("Is not in list");
+		}
 
-		animals.add(2, new Animal("geck"));
-		animals.add(3, new Animal("human"));
-		animals.add(0, new Animal("mouse"));
-		animals.add(7, new Animal("cow"));
+		System.out.println("Enter a word");
+		word = kb.next();
+		strings.remove(word);
+		System.out.println(strings);
 
-		System.out.println(animals);
-		animals.remove(3);
-		System.out.println(animals);
+		System.out.println("Type a location");
+		int location = kb.nextInt();
+		strings.set(location, "Hello");
+		System.out.println(strings);
 
 	}
 }
