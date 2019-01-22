@@ -1,59 +1,40 @@
 /*
-Ask the user for information on a new student.  Then create a node of that student and add it your list of connected nodes.
-Go through and print the connected nodes of students.
-Ask the user the id of a student.  Then remove that student from your list of connected nodes.
-Go through and print the connected nodes of students. (Hint: You can override the equals(Object) method to check for just the IDs).
+Create a DLList object.
+Add the following strings "Cat", "Dog", "Bird", "Bear", and "Pig".
+Display the list.
+Ask the user to add in an Animal.  Add that animal and display the list.
+Ask the user to add in an Animal at a location.  Add that animal and display the list.
+Ask the user to get  an Animal at a location.  Get it, and display that animal.
 */
-
 import java.util.Scanner;
 
 public class Runner {
   public static void main(String[] args) {
-
+    DLList<String> list = new DLList<String>();
     Scanner kb = new Scanner(System.in);
 
-    LinkedList<Profile> profileList = new LinkedList<Profile>();
+    list.add("Cat");
+    list.add("Dog");
+    list.add("Bird");
+    list.add("Bear");
+    list.add("Pig");
 
-    profileList.add(new Profile("Marley", 16));
-    profileList.add(new Profile("Arjun", 15));
-    profileList.add(new Profile("Tanay", 16));
+    System.out.println(list);
 
-    LinkedList<Student> studentList = new LinkedList<Student>();
-
-    studentList.add(new Student("Marley", 23423, 16, "11th"));
-  	studentList.add(new Student("Arjun", 23492, 15, "11th"));
-  	studentList.add(new Student("Tanay", 26432, 16, "10th"));
-
-    System.out.println("What is the name of the student?");
+    System.out.println("Ender an animal");
     String name = kb.next();
+    list.add(name);
+    System.out.println(list);
 
-    System.out.println("What is the student id?");
-    int id = kb.nextInt();
+    System.out.println("Enter an animal");
+    String name2 = kb.next();
+    System.out.println("Enter an index");
+    int index = kb.nextInt();
+    list.add(index, name2);
+    System.out.println(list);
 
-    System.out.println("What is the student's age?");
-    int age = kb.nextInt();
-
-    System.out.println("What is the student's grade?");
-    String grade = kb.next();
-
-    studentList.add(new Student(name, id, age, grade));
-
-    for (int i = 0; i < studentList.size(); i++) {
-      System.out.println(studentList.get(i));
-    }
-
-    System.out.println("Enter an ID");
-    int id2 = kb.nextInt();
-
-    for (int i = 0; i < studentList.size(); i++) {
-      if (id2 == studentList.get(i).getID()) {
-        studentList.remove(i);
-      }
-    }
-
-    for (int i = 0; i < studentList.size(); i++) {
-      System.out.println(studentList.get(i));
-    }
-
+    System.out.println("Enter an index");
+    int index2 = kb.nextInt();
+    System.out.println(list.get(index2));
   }
 }
