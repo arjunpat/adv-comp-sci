@@ -65,15 +65,38 @@ public class DLList<T> {
     return str + "]";
   }
 
-  public void add(int index, T data) {
-    Node<T> newNode = new Node<T>(data);
-    Node<T> before = head;
+  public void remove(int index) {
+    remove(getNode(index));
+  }
 
-    for (int i = 0; i < index; i++) {
-      before = before.next();
+  public void remove(T data) {
+    Node<T> current = head.next();
+
+    while (current != null) {
+      if (data.equals(current.getData())) {
+        remove(current);
+        break;
+      }
+
+      current = current.next();
     }
+  }
 
-    Node<T> after = before.next();
+  private void remove(Node<T> current) {
+    Node<T> before = current.prev();
+    Node<T> after = current.next();
+
+    before.setNext(after);
+    after.setPrev(before);
+
+    if (size > 0)
+      size--;
+  }
+
+  public void add(int index, T data) {
+    Node<T> after = getNode(index);
+    Node<T> before = after.prev();
+    Node<T> newNode = new Node<T>(data);
 
     before.setNext(newNode);
     after.setPrev(newNode);
@@ -81,6 +104,10 @@ public class DLList<T> {
     newNode.setNext(after);
 
     size++;
+  }
+
+  public void set(int index, T data) {
+    getNode(index).setData(data);
   }
 
   public int size() {
@@ -98,6 +125,10 @@ public class DLList<T> {
 
     public T getData() {
       return data;
+    }
+
+    public void setData(T data) {
+      this.data = data;
     }
 
     public Node<T> next() {
