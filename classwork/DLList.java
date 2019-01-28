@@ -1,150 +1,165 @@
-public class DLList<T> {
-  private Node<T> head = new Node<T>(null);
-  private Node<T> tail = new Node<T>(null);
+public class DLList<E extends Comparable<E>> {
+  private Node<E> dummy;
   private int size = 0;
 
   public DLList() {
-    head.setNext(tail);
-    head.setPrev(null);
-    tail.setPrev(head);
-    tail.setNext(null);
+    dummy = new Node<E>(null);
+    dummy.setNext(dummy);
+    dummy.setPrev(dummy);
   }
 
-  public void add(T data) {
-    Node<T> newNode = new Node<T>(data);
-    Node<T> currentLast = tail.prev();
+  public void add(E data) {
+    Node<E> newNode = new Node<E>(data);
 
-    currentLast.setNext(newNode);
-    newNode.setPrev(currentLast);
-    newNode.setNext(tail);
-    tail.setPrev(newNode);
+    if (size == 0) {
+      dummy.setNext(newNode);
+      dummy.setPrev(newNode);
+      newNode.setNext(dummy);
+      newNode.setPrev(dummy);
+      size = 1;
+    } else {
 
-    size++;
-  }
+      Node<E> current = dummy.next();
 
-  private Node<T> getNode(int index) {
-    Node<T> current;
-
-    if (index < (size / 2)) {
-      current = head;
-
-      for (int i = 0; i <= index; i++) {
+      while (current.getData() != null) {
+        if (current.getData().compareTo(data) < 0) {
+          break;
+        }
         current = current.next();
       }
 
-    } else {
-      current = tail;
+      Node<E> after = current.next();
+      current.setNext(newNode);
+      newNode.setPrev(current);
+      newNode.setNext(after);
+      after.setPrev(newNode);
 
-      for (int i = size - 1; i >= index; i--) {
-        current = current.prev();
-      }
+      size++;
 
+    }
+
+  }
+
+  private Node<E> getNode(int index) {
+    Node<E> current = dummy.next();
+
+    while (index != 0) {
+      current = current.next();
+      index--;
     }
 
     return current;
   }
 
-  public T get(int index) {
+  public E get(int index) {
     return getNode(index).getData();
   }
 
-  public String toString() {
-		String str = "[";
-		Node<T> current = head.next();
-
-    for (int i = 0; i < size; i++) {
-      str += current.getData().toString();
-
-      current = current.next();
-
-      if (i != size - 1) {
-        str += ", ";
-      }
-    }
-
-    return str + "]";
-  }
-
   public void remove(int index) {
-    remove(getNode(index));
-  }
-
-  public void remove(T data) {
-    Node<T> current = head.next();
-
-    while (current != null) {
-      if (data.equals(current.getData())) {
-        remove(current);
-        break;
-      }
-
-      current = current.next();
-    }
-  }
-
-  private void remove(Node<T> current) {
-    Node<T> before = current.prev();
-    Node<T> after = current.next();
+    Node<E> toRemove = getNode(index);
+    Node<E> before = toRemove.prev();
+    Node<E> after = toRemove.next();
 
     before.setNext(after);
     after.setPrev(before);
 
-    if (size > 0)
-      size--;
+    size--;
   }
 
-  public void add(int index, T data) {
-    Node<T> after = getNode(index);
-    Node<T> before = after.prev();
-    Node<T> newNode = new Node<T>(data);
+  public void remove(E data) {
+    Node<E> current = dummy.next();
+    int index = 0;
 
-    before.setNext(newNode);
-    after.setPrev(newNode);
-    newNode.setPrev(before);
-    newNode.setNext(after);
+    while (current.getData().compareTo(data) != 0) {
+      current = current.next();
+      index++;
+    }
 
-    size++;
+    remove(index);
   }
 
-  public void set(int index, T data) {
-    getNode(index).setData(data);
+  public void set(int index, E data) {
+    remove(index);
+    add(data);
   }
 
   public int size() {
     return size;
   }
 
-  private class Node<T> {
-    private T data;
-    private Node<T> next;
-    private Node<T> prev;
+  public String toString() {
+    String str = "[";
 
-    public Node(T data) {
+		Node<E> current = dummy.next();
+
+		while (true) {
+
+			str += current.getData().toString();
+
+			current = current.next();
+
+			if (current.getData() != null) {
+				str += ", ";
+			} else {
+				break;
+			}
+		}
+
+		return str + "]";
+  }
+
+  private class Node<E> {
+    private Node<E> next, prev;
+    private E data;
+
+    public Node(E data) {
       this.data = data;
     }
 
-    public T getData() {
-      return data;
+    public void setPrev(Node<E> prev) {
+      this.prev = prev;
     }
 
-    public void setData(T data) {
-      this.data = data;
-    }
-
-    public Node<T> next() {
-      return next;
-    }
-
-    public Node<T> prev() {
-      return prev;
-    }
-
-    public void setNext(Node<T> next) {
+    public void setNext(Node<E> next) {
       this.next = next;
     }
 
-    public void setPrev(Node<T> prev) {
-      this.prev = prev;
+    public E getData() {
+      return data;
     }
+
+    public void setData(E data) {
+      this.data = data;
+    }
+
+    public Node<E> prev() {
+      return prev;
+    }
+
+    public Node<E> next() {
+      return next;
+    }
+  }
+
+  public static void main(String[] args) {
+    DLList<String> hello = new DLList<String>();
+
+    hello.add("wassup");
+    hello.add("how are you");
+    hello.add("welcome");
+    hello.add("a");
+    System.out.println(hello);
+
+    hello.remove(3);
+    hello.add("YOUR MOM");
+    System.out.println(hello);
+
+    hello.remove("YOUR MOM");
+    System.out.println(hello);
+
+    hello.set(0, "b");
+    System.out.println(hello);
+    System.out.println(hello.size());
+
   }
 }
