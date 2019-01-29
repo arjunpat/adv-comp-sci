@@ -22,22 +22,21 @@ public class DLList<E extends Comparable<E>> {
       Node<E> current = dummy.next();
 
       while (current.getData() != null) {
-        if (current.getData().compareTo(data) < 0) {
+        if (current.getData().compareTo(data) > 0) {
           break;
         }
         current = current.next();
       }
 
-      Node<E> after = current.next();
-      current.setNext(newNode);
-      newNode.setPrev(current);
-      newNode.setNext(after);
-      after.setPrev(newNode);
+      Node<E> before = current.prev();
+      before.setNext(newNode);
+      newNode.setPrev(before);
+      newNode.setNext(current);
+      current.setPrev(newNode);
 
       size++;
 
     }
-
   }
 
   private Node<E> getNode(int index) {

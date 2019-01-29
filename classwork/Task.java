@@ -12,7 +12,7 @@ public class Task implements Comparable<Task> {
   }
 
   public int compareTo(Task t) {
-    return t.getRank() - rank;
+    return rank - t.getRank();
   }
 
   public String toString() {

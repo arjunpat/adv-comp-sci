@@ -16,7 +16,7 @@ public class Runner {
       String userChoice = key.nextLine();
       key.nextLine();
       if (userChoice.equals ("Display")) {
-        for (int i = 0; i < taskList.size() - 1; i ++) {
+        /*for (int i = 0; i < taskList.size() - 1; i ++) {
           int loc = i;
           for (int j = i + 1; j < taskList.size(); j ++) {
             if (taskList.get(j).getRank() < taskList.get(loc).getRank()) {
@@ -26,7 +26,7 @@ public class Runner {
           Task temp = taskList.get(i);
           taskList.set (i, taskList.get(loc));
           taskList.set (loc, temp);
-        }
+        }*/
         System.out.println (taskList.toString());
       } else if (userChoice.equals ("Add")) {
         System.out.print ("Input a task name: ");
