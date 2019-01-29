@@ -11,6 +11,10 @@ public class Task implements Comparable<Task> {
     return rank;
   }
 
+  public String getName() {
+    return name;
+  }
+
   public int compareTo(Task t) {
     return rank - t.getRank();
   }
