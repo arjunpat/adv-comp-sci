@@ -49,7 +49,7 @@ public class Notification {
 
 	public void draw(Graphics g) {
 		g.setColor(new Color(50, 50, 50, 240));
-		g.fillRoundRect(x, y, 400, 50, 4, 4);
+		g.fillRoundRect(x, y, 400, 50, 8, 8);
 
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 14));

@@ -108,7 +108,7 @@ public class Card {
 		if (hovered && !selected) {
 			g.setColor(new Color(255, 255, 255));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(new Color(235, 235, 235));
+			g.setColor(new Color(220, 220, 220));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
 			g.setColor(Color.BLACK);
 			g.drawRoundRect(x, y, 125, 200, 15, 15);
@@ -116,9 +116,9 @@ public class Card {
 			// y += 35;
 			g.setColor(new Color(255, 255, 255));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(new Color(215, 215, 215));
+			g.setColor(new Color(180, 180, 180));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(Color.RED);
+			g.setColor(Color.BLACK);
 			g.drawRoundRect(x, y, 125, 200, 15, 15);
 		} else {
 			g.setColor(new Color(255, 255, 255));
