@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import javax.swing.Timer;
+
 import deck.*;
 
 public class Runner extends View {
@@ -11,6 +13,7 @@ public class Runner extends View {
 	private Deck deck = new Deck();
 	private DLList<Card> cardsToDisplay;
 	private JButton playGameButton, drawButton, endButton;
+	private Notification notification = new Notification("", 0);
 
 	public Runner() {
 
@@ -25,16 +28,24 @@ public class Runner extends View {
 				int x = e.getX();
 				int y = e.getY();
 
+				boolean shouldRepaint = false;
+
 				for (int i = 0; i < 5; i++) {
-					cardsToDisplay.get(i).setHovered(false);
+					if (cardsToDisplay.get(i).isHovering()) {
+						cardsToDisplay.get(i).setHovered(false);
+						shouldRepaint = true;
+					}
 				}
 
 				int i = getCardIndex(x, y);
 				if (i > -1) {
 					cardsToDisplay.get(i).setHovered(true);
+					shouldRepaint = true;
 				}
 
-				repaint();
+				if (shouldRepaint) {
+					repaint();
+				}
 			}
 		});
 
@@ -47,9 +58,8 @@ public class Runner extends View {
 				int i = getCardIndex(x, y);
 				if (i > -1) {
 					cardsToDisplay.get(i).toggleSelected();
+					repaint();
 				}
-
-				repaint();
 			}
 		});
 
@@ -60,6 +70,7 @@ public class Runner extends View {
 			animateCardsOut();
 			remove(playGameButton);
 			add(drawButton);
+			displayNotification("Select the cards you want to keep", 5000);
 		});
 		add(playGameButton);
 
@@ -69,6 +80,7 @@ public class Runner extends View {
 			animateCardsInDraw();
 			remove(drawButton);
 			add(endButton);
+			animateNotificationDown();
 		});
 
 		endButton = new JButton("Finish Game");
@@ -79,6 +91,13 @@ public class Runner extends View {
 			remove(endButton);
 			add(playGameButton);
 		});
+
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+			}
+		});
+		timer.start();
 
 	}
 
@@ -91,6 +110,14 @@ public class Runner extends View {
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Tahoma", Font.BOLD, 40));
 		g.drawString("Your score: " + score, 10, 300);
+
+		if (!notification.isDone())
+			notification.draw(g);
+
+		if (notification.isOld()) {
+			notification.addASecond();
+			animateNotificationDown();
+		}
 
 	}
 
@@ -190,6 +217,56 @@ public class Runner extends View {
 		});
 
 		thread.start();
+	}
+
+	public void displayNotification(String text, int time) {
+		notification = new Notification(text, time);
+		animateNotificationUp();
+	}
+
+	private void animateNotificationUp() {
+		notification.setY(500);
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() > Notification.FINAL_Y) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveUp();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		animate.start();
+	}
+
+	private void animateNotificationDown() {
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() < 500) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveDown();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				notification.done();
+
+			}
+		});
+
+		animate.start();
 	}
 
 	private int getCardIndex(int x, int y) {

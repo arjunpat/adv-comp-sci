@@ -84,6 +84,10 @@ public class Card {
 		this.hovered = hovered;
 	}
 
+	public boolean isHovering() {
+		return hovered;
+	}
+
 	private double xStep;
 	private double yStep;
 	public void animateTo(int finalX, int finalY, int increments) {
