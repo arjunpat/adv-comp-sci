@@ -7,6 +7,10 @@ public class Runner extends View {
 
 	private JTextArea shoppingCartTextArea = new JTextArea(390, 350);
 	private SLList<Item> items = new SLList<Item>();
+<<<<<<< HEAD
+=======
+	String sortingBy = "time";
+>>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 
 	public Runner() {
 
@@ -52,6 +56,17 @@ public class Runner extends View {
 			price.setText("Price");
 			quantity.setText("Quantity");
 
+<<<<<<< HEAD
+=======
+			if (sortingBy.equals("time")) {
+				sortTime();
+			} else if (sortingBy.equals("alpha")) {
+				sortAlpha();
+			} else if (sortingBy.equals("price")) {
+				sortPrice();
+			}
+
+>>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 			populateShoppingCart();
 		});
 		add(addButton);
@@ -82,6 +97,32 @@ public class Runner extends View {
 		});
 		add(removeButton);
 
+<<<<<<< HEAD
+=======
+		JButton sortAlphaBtn = new JButton("Sort Alpha");
+		sortAlphaBtn.setBounds(400, 400, 250, 30);
+		sortAlphaBtn.addActionListener(e -> {
+			sortAlpha();
+			populateShoppingCart();
+		});
+		add(sortAlphaBtn);
+
+		JButton sortTimeBtn = new JButton("Sort by time added");
+		sortTimeBtn.setBounds(400, 440, 250, 30);
+		sortTimeBtn.addActionListener(e -> {
+			sortTime();
+			populateShoppingCart();
+		});
+		add(sortTimeBtn);
+
+		JButton sortByPrice = new JButton("Sort by price");
+		sortByPrice.setBounds(400, 480, 250, 30);
+		sortByPrice.addActionListener(e -> {
+			sortPrice();
+			populateShoppingCart();
+		});
+		add(sortByPrice);
+>>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 	}
 
 	public void draw(Graphics g) {
@@ -113,6 +154,57 @@ public class Runner extends View {
 		shoppingCartTextArea.setText(str);
 	}
 
+<<<<<<< HEAD
+=======
+	private void sortAlpha()  {
+		for (int i = 0; i < items.size() - 1; i++) {
+			for (int j = i + 1; j < items.size(); j++) {
+				Item one = items.get(i);
+				Item two = items.get(j);
+
+				if (one.getName().compareTo(two.getName()) > 0) {
+					items.set(i, two);
+					items.set(j, one);
+				}
+			}
+		}
+
+		sortingBy = "alpha";
+	}
+
+	private void sortTime()  {
+		for (int i = 0; i < items.size() - 1; i++) {
+			for (int j = i + 1; j < items.size(); j++) {
+				Item one = items.get(i);
+				Item two = items.get(j);
+
+				if (one.getTime() > two.getTime()) {
+					items.set(i, two);
+					items.set(j, one);
+				}
+			}
+		}
+
+		sortingBy  = "time";
+	}
+
+	private void sortPrice()  {
+		for (int i = 0; i < items.size() - 1; i++) {
+			for (int j = i + 1; j < items.size(); j++) {
+				Item one = items.get(i);
+				Item two = items.get(j);
+
+				if (one.getPrice() > two.getPrice()) {
+					items.set(i, two);
+					items.set(j, one);
+				}
+			}
+		}
+
+		sortingBy  = "price";
+	}
+
+>>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Shopping Cart");
 

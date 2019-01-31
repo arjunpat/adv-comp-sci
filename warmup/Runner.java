@@ -1,17 +1,21 @@
+import java.util.Scanner;
 public class Runner {
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
+    DLList<String> animals = new DLList<String>();
+    animals.add("Bear");
+    animals.add("Bat");
+    animals.add("Dog");
+    animals.add("Horse");
+    animals.add("Rabbit");
 
+    System.out.println("Recursive Print");
+    animals.print();
+    System.out.println();
 
-		SLList<Student> students = new SLList<Student>();
-		students.add(new Student("John", 1234));
-		students.add(new Student("Jen", 4321));
-		students.add(new Student("Jose", 1111));
-
-		students.remove(new Student("John",1234));
-		students.remove(new Student("Jose",1111));
-
-		System.out.println(students);
-
-	}
+    System.out.println("Reverse Order");
+    System.out.println(animals);
+    animals.reverse();
+    System.out.println(animals);
+  }
 }

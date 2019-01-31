@@ -1,59 +1,60 @@
-/*
-Ask the user for information on a new student.  Then create a node of that student and add it your list of connected nodes.
-Go through and print the connected nodes of students.
-Ask the user the id of a student.  Then remove that student from your list of connected nodes.
-Go through and print the connected nodes of students. (Hint: You can override the equals(Object) method to check for just the IDs).
-*/
-
 import java.util.Scanner;
 
 public class Runner {
-  public static void main(String[] args) {
+  public static void main (String[] args) {
 
-    Scanner kb = new Scanner(System.in);
+    Scanner key = new Scanner (System.in);
+    DLList <Task> taskList = new DLList <Task>();
+    taskList.add (new Task ("Homework", 1));
+    taskList.add (new Task ("TV", 3));
+    taskList.add (new Task ("Study", 1));
+    taskList.add (new Task ("Check Email", 2));
+    taskList.add (new Task ("Run", 2));
 
-    LinkedList<Profile> profileList = new LinkedList<Profile>();
+    while (true) {
+      System.out.println("Choose an option (Display, Add, Remove, Update, Quit): ");
+      String userChoice = key.nextLine();
+      if (userChoice.equals ("Display")) {
+        System.out.println (taskList);
+      } else if (userChoice.equals ("Add")) {
+        System.out.println ("Input a task name: ");
+        String name = key.nextLine();
+        System.out.println ("Input a task rank: ");
+        int rank = key.nextInt();
+        taskList.add (new Task (name, rank));
+      } else if (userChoice.equals ("Remove")) {
+        System.out.println ("Input a task name: ");
+        String name = key.nextLine();
+        System.out.println ("Input a task rank: ");
+        int rank = key.nextInt();
+        Task tempTask = new Task (name, rank);
+        for (int i = 0; i < taskList.size(); i ++) {
+          if (taskList.get(i).getName().equals(tempTask.getName()) && taskList.get(i).getRank() == tempTask.getRank()) {
+            taskList.remove(i);
+            break;
+          }
+        }
+      } else if (userChoice.equals ("Update")) {
+        System.out.println ("Input a task name: ");
+        String name = key.nextLine();
+        System.out.println ("Input a task rank: ");
+        int rank = key.nextInt();
 
-    profileList.add(new Profile("Marley", 16));
-    profileList.add(new Profile("Arjun", 15));
-    profileList.add(new Profile("Tanay", 16));
-
-    LinkedList<Student> studentList = new LinkedList<Student>();
-
-    studentList.add(new Student("Marley", 23423, 16, "11th"));
-  	studentList.add(new Student("Arjun", 23492, 15, "11th"));
-  	studentList.add(new Student("Tanay", 26432, 16, "10th"));
-
-    System.out.println("What is the name of the student?");
-    String name = kb.next();
-
-    System.out.println("What is the student id?");
-    int id = kb.nextInt();
-
-    System.out.println("What is the student's age?");
-    int age = kb.nextInt();
-
-    System.out.println("What is the student's grade?");
-    String grade = kb.next();
-
-    studentList.add(new Student(name, id, age, grade));
-
-    for (int i = 0; i < studentList.size(); i++) {
-      System.out.println(studentList.get(i));
-    }
-
-    System.out.println("Enter an ID");
-    int id2 = kb.nextInt();
-
-    for (int i = 0; i < studentList.size(); i++) {
-      if (id2 == studentList.get(i).getID()) {
-        studentList.remove(i);
+        Task tempTask = new Task (name, rank);
+        for (int i = 0; i < taskList.size(); i ++) {
+          if (taskList.get(i).getName().equals(tempTask.getName()) && taskList.get(i).getRank() == tempTask.getRank()) {
+            System.out.println ("Input a task name: ");
+            key.nextLine();
+            name = key.nextLine();
+            System.out.println ("Input a task rank: ");
+            rank = key.nextInt();
+            taskList.set (i, new Task(name, rank));
+          }
+        }
+      } else if (userChoice.equals ("Quit")) {
+        break;
       }
     }
-
-    for (int i = 0; i < studentList.size(); i++) {
-      System.out.println(studentList.get(i));
-    }
-
   }
+
 }

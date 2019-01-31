@@ -22,6 +22,10 @@ public class Item {
 	public String getName() { return name; }
 	public double getPrice() { return price; }
 	public int getQuantity() { return quantity; }
+<<<<<<< HEAD
+=======
+	public double getTime() { return created; }
+>>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 
 	public String toString() {
 		return name + ", $" + price + ", " + quantity;
