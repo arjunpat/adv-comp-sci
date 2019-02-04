@@ -188,6 +188,42 @@ public class Runner extends View {
 				try { Thread.sleep(500); } catch (Exception e) {}
 
 				animateCardsOut();
+
+				try { Thread.sleep(2000); } catch (Exception e) {}
+
+				String result = Deck.checkWin(cardsToDisplay);
+
+				if (result.equals("none")) {
+					displayNotification("You didn't win anything!", 3000);
+				} else if (result.equals("royal_flush")) {
+					score += 250;
+					displayNotification("Royal flush! Wow!", 3000);
+				} else if (result.equals("straight_flush")) {
+					score += 50;
+					displayNotification("Straight flush! Impressive!", 3000);
+				} else if (result.equals("four_of_a_kind")) {
+					score += 25;
+					displayNotification("Four of a kind! Nice!", 3000);
+				} else if (result.equals("full_house")) {
+					score += 9;
+					displayNotification("Full house!", 3000);
+				} else if (result.equals("flush")) {
+					score += 6;
+					displayNotification("Flush!", 3000);
+				} else if (result.equals("straight")) {
+					score += 4;
+					displayNotification("Straight", 3000);
+				} else if (result.equals("3_of_a_kind")) {
+					score += 3;
+					displayNotification("You have 3 of a kind!", 3000);
+				} else if (result.equals("2_pairs")) {
+					score += 2;
+					displayNotification("You have 2 pairs!", 3000);
+				} else if (result.equals("pair")) {
+					score += 1;
+					displayNotification("You have a pair", 3000);
+				}
+
 			}
 		});
 

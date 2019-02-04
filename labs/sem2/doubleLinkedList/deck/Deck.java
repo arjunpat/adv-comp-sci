@@ -40,4 +40,147 @@ public class Deck {
 		return first;
 	}
 
+	public static String checkWin(DLList<Card> values) {
+		/*DLList<Integer> sortedByNum = new DLList<Integer>();
+		DLList<Integer> sortedBySuit = new DLList<Integer>();
+
+		for (int i = 0; i < values.size(); i++) {
+			sortedByNum.add(values.get(i).getCard());
+			sortedBySuit.add(values.get(i).getSuit());
+		}
+
+		for (int i = 0; i < sortedByNum.size(); i++) {
+			for (int j = i + 1; j < sortedByNum.size(); j++) {
+				int a = sortedByNum.get(i);
+				int b = sortedByNum.get(j);
+
+				if (a > b) {
+					sortedByNum.set(i, b);
+					sortedByNum.set(j, a);
+				}
+			}
+		}
+
+		for (int i = 0; i < sortedBySuit.size(); i++) {
+			for (int j = i + 1; j < sortedBySuit.size(); j++) {
+				int a = sortedBySuit.get(i);
+				int b = sortedBySuit.get(j);
+
+				if (a > b) {
+					sortedBySuit.set(i, b);
+					sortedBySuit.set(j, a);
+				}
+			}
+		}
+
+		System.out.println(sortedByNum);
+		System.out.println(sortedBySuit);
+
+		// check royal flush and straight flush
+		if (sortedBySuit.get(0) == sortedBySuit.get(4)) {
+
+			if (sortedByNum.get(0) == 10 && sortedByNum.get(4) == 14) {
+				return "royal_flush";
+			}
+
+			// check straight flush
+			if (isStraight(sortedByNum))
+				return "straight_flush";
+		}
+
+		// check four of a kind
+		if (numberOfRepeatsForFirstIndex(sortedByNum) == 4 || numberOfRepeatsForLastIndex(sortedByNum) == 4) {
+			return "four_of_a_kind";
+		}
+
+		// check full house
+		if (
+			(numberOfRepeatsForFirstIndex(sortedByNum) == 3 && numberOfRepeatsForLastIndex(sortedByNum) == 2)
+			|| (numberOfRepeatsForFirstIndex(sortedByNum) == 2 && numberOfRepeatsForLastIndex(sortedByNum) == 3)
+		) {
+			return "full_house";
+		}
+
+		// check flush
+		if (sortedBySuit.get(0) == sortedBySuit.get(4)) {
+			return "flush";
+		}
+
+
+		// check straight
+		if (isStraight(sortedByNum)) {
+			return "straight";
+		}
+
+		if (highestNumberOfRepeats(sortedBySuit) =< 3) {
+			return "3_of_a_kind";
+		}*/
+
+		
+
+
+		return "none";
+	}
+
+	public static boolean isStraight(DLList<Integer> sortedByNum) {
+		for (int i = 1; i < 5; i++) {
+			if (sortedByNum.get(i) - 1 != sortedByNum.get(i - 1)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static int numberOfRepeatsForFirstIndex(DLList<Integer> list) {
+		int valueOfFirstCard = list.get(0);
+		int counter = 1;
+
+		for (int i = 1; i < 5; i++) {
+			if (list.get(i) == valueOfFirstCard) {
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	public static int numberOfRepeatsForLastIndex(DLList<Integer> list) {
+		int valueOfLastCard = list.get(4);
+		int counter = 1;
+
+		for (int i = 0; i < 4; i++) {
+			if (list.get(i) == valueOfLastCard) {
+				counter++;
+			}
+		}
+
+		return counter;
+	}
+
+	public static int highestNumberOfRepeats(DLList<Integer> list) {
+		DLList<Integer> amounts = new DLList<Integer>();
+
+		for (int i = 0; i < list.size(); i++) {
+			int value = list.get(i);
+			int counter = 0;
+			for (int j = 0; j < list.size(); i++) {
+				if (list.get(j) == value) {
+					counter++;
+				}
+			}
+			amounts.add(counter);
+		}
+
+
+		int currentMax = amounts.get(0);
+		for (int i = 0; i < amounts.size(); i++) {
+			if (currentMax < amounts.get(i)) {
+				currentMax = amounts.get(i);
+			}
+		}
+
+		return currentMax;
+	}
+
 }
