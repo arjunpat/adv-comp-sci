@@ -4,30 +4,26 @@ import java.util.Scanner;
 public class Runner {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    LinkedList[] table = new LinkedList[10];
 
-    for (int i = 0; i < table.length; i++) {
-      table[i] = new LinkedList();
-    }
+    HashTable<Word> words = new HashTable<Word>();
 
     while (true) {
       String input = sc.nextLine();
 
       if (input.equals("end")) {
-        for (int i = 0; i < table.length; i++) {
-          System.out.print("Bucket " + i + " ->");
+        System.out.println(words.contains(new Word("pig")));
+        System.out.println(words.contains(new Word("goat")));
+        System.out.println(words);
 
-          for (int j = 0; j < table[i].size(); j++) {
-            System.out.print(table[i].get(j) + ", ");
-          }
-
-          System.out.println();
-        }
+        words.remove(new Word("pig"));
+        words.remove(new Word("goat"));
+        System.out.println(words);
         break;
       }
 
-      Integer integer = Integer.parseInt(input);
-      table[integer.hashCode() % table.length].add(integer);
+      Word word = new Word(input);
+
+      words.add(word);
     }
   }
 }
