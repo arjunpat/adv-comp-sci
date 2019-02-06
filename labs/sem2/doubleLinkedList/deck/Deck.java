@@ -73,8 +73,8 @@ public class Deck {
 			}
 		}
 
-		System.out.println(sortedByNum);
-		System.out.println(sortedBySuit);
+		/*System.out.println(sortedByNum);
+		System.out.println(sortedBySuit);*/
 
 		// check royal flush and straight flush
 		if (sortedBySuit.get(0).equals(sortedBySuit.get(4))) {

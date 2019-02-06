@@ -106,22 +106,20 @@ public class Card {
 		int y = (int)this.y;
 
 		if (hovered && !selected) {
-			g.setColor(new Color(255, 255, 255));
-			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(new Color(220, 220, 220));
+			g.setColor(new Color(255, 210, 210));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
 			g.setColor(Color.BLACK);
 			g.drawRoundRect(x, y, 125, 200, 15, 15);
 		} else if (selected) {
 			// y += 35;
-			g.setColor(new Color(255, 255, 255));
+			g.setColor(Color.RED);
+			g.fillRoundRect(x - 3, y - 3, 125 + 6, 200 + 6, 15, 15);
+			g.setColor(new Color(255, 210, 210));
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(new Color(180, 180, 180));
-			g.fillRoundRect(x, y, 125, 200, 15, 15);
-			g.setColor(Color.BLACK);
+			g.setColor(Color.RED);
 			g.drawRoundRect(x, y, 125, 200, 15, 15);
 		} else {
-			g.setColor(new Color(255, 255, 255));
+			g.setColor(Color.WHITE);
 			g.fillRoundRect(x, y, 125, 200, 15, 15);
 			g.setColor(Color.BLACK);
 			g.drawRoundRect(x, y, 125, 200, 15, 15);

@@ -3,6 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.net.URL;
+
 import javax.swing.Timer;
 
 import deck.*;
@@ -14,6 +21,7 @@ public class Runner extends View {
 	private DLList<Card> cardsToDisplay;
 	private JButton playGameButton, drawButton, endButton;
 	private Notification notification = new Notification("", 0);
+	private BufferedImage background;
 
 	public Runner() {
 
@@ -66,11 +74,15 @@ public class Runner extends View {
 		playGameButton = new JButton("Play!");
 		playGameButton.setBounds(10, 350, 100, 50);
 		playGameButton.addActionListener(e -> {
-			score--;
-			animateCardsOut();
-			remove(playGameButton);
-			add(drawButton);
-			displayNotification("Select the cards you want to keep", 5000);
+			if (score != 0) {
+				score--;
+				animateCardsOut();
+				remove(playGameButton);
+				add(drawButton);
+				displayNotification("Select the cards you want to keep", 5000);
+			} else {
+				displayNotification("You need at least one score to play", 5000);
+			}
 		});
 		add(playGameButton);
 
@@ -99,15 +111,23 @@ public class Runner extends View {
 		});
 		timer.start();
 
+		try {
+			background = ImageIO.read(getClass().getResource("media/table.jpg"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void draw(Graphics g) {
+
+		g.drawImage(background, 0, 0, null);
 
 		for (int i = 0; i < cardsToDisplay.size(); i++) {
 			cardsToDisplay.get(i).draw(g);
 		}
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("Tahoma", Font.BOLD, 40));
 		g.drawString("Your score: " + score, 10, 300);
 
@@ -138,6 +158,7 @@ public class Runner extends View {
 		Thread thread = new Thread(new Runnable() {
 
 			public void run() {
+				disableButtons();
 
 				final int increments = 35;
 
@@ -155,6 +176,8 @@ public class Runner extends View {
 
 				cardsToDisplay.get(4).animateTo(940, 20, increments);
 				incrementCard(cardsToDisplay.get(4), increments);
+
+				enableButtons();
 			}
 		});
 
@@ -165,6 +188,7 @@ public class Runner extends View {
 
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
+				disableButtons();
 
 				final int increments = 40;
 				int xinc = 0;
@@ -195,6 +219,8 @@ public class Runner extends View {
 
 				if (result.equals("none")) {
 					displayNotification("You didn't win anything!", 3000);
+					playOofSound();
+					return;
 				} else if (result.equals("royal_flush")) {
 					score += 250;
 					displayNotification("Royal flush! Wow!", 3000);
@@ -224,6 +250,9 @@ public class Runner extends View {
 					displayNotification("You have a pair", 3000);
 				}
 
+				playDingSound();
+
+				enableButtons();
 			}
 		});
 
@@ -234,7 +263,7 @@ public class Runner extends View {
 
 		Thread thread = new Thread(new Runnable() {
 			public void run() {
-
+				disableButtons();
 				final int increments = 15;
 
 				for (int i = 4; i >= 0; i--) {
@@ -249,6 +278,8 @@ public class Runner extends View {
 				for (int i = 0; i < 5; i++) {
 					cardsToDisplay.add(deck.drawCard());
 				}
+
+				enableButtons();
 			}
 		});
 
@@ -321,6 +352,32 @@ public class Runner extends View {
 		}
 
 		return -1;
+	}
+
+	private void playDingSound() { playSound("media/ding.wav"); }
+	private void playOofSound() { playSound("media/oof.wav"); }
+
+	private void playSound(String filename) {
+		try {
+			URL url = this.getClass().getClassLoader().getResource(filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(url));
+			clip.start();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void disableButtons() {
+		playGameButton.setEnabled(false);
+		drawButton.setEnabled(false);
+		endButton.setEnabled(false);
+	}
+
+	private void enableButtons() {
+		playGameButton.setEnabled(true);
+		drawButton.setEnabled(true);
+		endButton.setEnabled(true);
 	}
 
 	public static void main(String[] args) {

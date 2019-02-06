@@ -10,7 +10,7 @@ public class Notification {
 	private int length;
 	private int borderLength = 1;
 
-	private int x = 20;
+	private int x = 780;
 	private int y = 500;
 
 	private boolean done = false;
@@ -48,13 +48,17 @@ public class Notification {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(new Color(50, 50, 50, 240));
-		g.fillRoundRect(x, y, 400, 50, 8, 8);
+
+		g.setColor(new Color(50, 50, 50, 150));
+		g.fillRoundRect(x, y, 403, 53, 8, 8);
 
 		g.setColor(Color.WHITE);
+		g.fillRoundRect(x, y, 400, 50, 8, 8);
+
+		g.setColor(new Color(50, 50, 50, 240));
 		g.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		g.drawString(text, 40, y + 30);
+		g.drawString(text, x + 20, y + 30);
 	}
 
 	public void moveUp() {
