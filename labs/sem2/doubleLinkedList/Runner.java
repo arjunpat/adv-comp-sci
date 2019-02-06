@@ -22,8 +22,11 @@ public class Runner extends View {
 	private JButton playGameButton, drawButton, endButton;
 	private Notification notification = new Notification("", 0);
 	private BufferedImage background;
+	private Number number = new Number("");
 
 	public Runner() {
+
+		number.setEnabled(false);
 
 		cardsToDisplay = new DLList<Card>();
 		for (int i = 0; i < 5; i++) {
@@ -75,7 +78,7 @@ public class Runner extends View {
 		playGameButton.setBounds(10, 350, 100, 50);
 		playGameButton.addActionListener(e -> {
 			if (score != 0) {
-				score--;
+				addToScore(-1);
 				animateCardsOut();
 				remove(playGameButton);
 				add(drawButton);
@@ -138,6 +141,8 @@ public class Runner extends View {
 			notification.addASecond();
 			animateNotificationDown();
 		}
+
+		number.draw(g);
 
 	}
 
@@ -219,34 +224,35 @@ public class Runner extends View {
 
 				if (result.equals("none")) {
 					displayNotification("You didn't win anything!", 3000);
+					addToScore(0);
 					playOofSound();
 					return;
 				} else if (result.equals("royal_flush")) {
-					score += 250;
+					addToScore(250);
 					displayNotification("Royal flush! Wow!", 3000);
 				} else if (result.equals("straight_flush")) {
-					score += 50;
+					addToScore(50);
 					displayNotification("Straight flush! Impressive!", 3000);
 				} else if (result.equals("four_of_a_kind")) {
-					score += 25;
+					addToScore(25);
 					displayNotification("Four of a kind! Nice!", 3000);
 				} else if (result.equals("full_house")) {
-					score += 9;
+					addToScore(9);
 					displayNotification("Full house!", 3000);
 				} else if (result.equals("flush")) {
-					score += 6;
+					addToScore(6);
 					displayNotification("Flush!", 3000);
 				} else if (result.equals("straight")) {
-					score += 4;
+					addToScore(4);
 					displayNotification("Straight", 3000);
 				} else if (result.equals("3_of_a_kind")) {
-					score += 3;
+					addToScore(3);
 					displayNotification("You have 3 of a kind!", 3000);
 				} else if (result.equals("2_pairs")) {
-					score += 2;
+					addToScore(2);
 					displayNotification("You have 2 pairs!", 3000);
 				} else if (result.equals("pair")) {
-					score += 1;
+					addToScore(1);
 					displayNotification("You have a pair", 3000);
 				}
 
@@ -330,6 +336,37 @@ public class Runner extends View {
 
 				notification.done();
 
+			}
+		});
+
+		animate.start();
+	}
+
+	private void addToScore(int amountToAdd) {
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				score += amountToAdd;
+				number = new Number("+" + amountToAdd);
+
+				if (amountToAdd >= 0) {
+					number = new Number("+" + amountToAdd);
+				} else {
+					int a = -amountToAdd;
+					number = new Number("-" + a);
+				}
+
+				while (number.getY() > Number.FINAL_Y) {
+					try {
+						Thread.sleep(Number.ANIMATE_WAIT_TIME);
+						number.increment();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				number.setEnabled(false);
 			}
 		});
 
