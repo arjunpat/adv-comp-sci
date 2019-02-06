@@ -41,7 +41,7 @@ public class Deck {
 	}
 
 	public static String checkWin(DLList<Card> values) {
-		/*DLList<Integer> sortedByNum = new DLList<Integer>();
+		DLList<Integer> sortedByNum = new DLList<Integer>();
 		DLList<Integer> sortedBySuit = new DLList<Integer>();
 
 		for (int i = 0; i < values.size(); i++) {
@@ -77,9 +77,9 @@ public class Deck {
 		System.out.println(sortedBySuit);
 
 		// check royal flush and straight flush
-		if (sortedBySuit.get(0) == sortedBySuit.get(4)) {
+		if (sortedBySuit.get(0).equals(sortedBySuit.get(4))) {
 
-			if (sortedByNum.get(0) == 10 && sortedByNum.get(4) == 14) {
+			if (sortedByNum.get(0).equals(10) && sortedByNum.get(4).equals(14)) {
 				return "royal_flush";
 			}
 
@@ -112,12 +112,25 @@ public class Deck {
 			return "straight";
 		}
 
-		if (highestNumberOfRepeats(sortedBySuit) =< 3) {
+		if (highestNumberOfRepeats(sortedByNum) >= 3) {
 			return "3_of_a_kind";
-		}*/
+		}
+
+		int amt = 0;
+		for (int i = 2; i < 15; i++) {
+			if (numOfOccurences(sortedByNum, i) >= 2) {
+				amt++;
+			}
+		}
+
+		if (amt == 2)
+			return "2_pairs";
 
 		
-
+		for (int i = 11; i < 15; i++) {
+			if (numOfOccurences(sortedByNum, i) == 2)
+				return "pair";
+		}
 
 		return "none";
 	}
@@ -137,7 +150,7 @@ public class Deck {
 		int counter = 1;
 
 		for (int i = 1; i < 5; i++) {
-			if (list.get(i) == valueOfFirstCard) {
+			if (list.get(i).equals(valueOfFirstCard)) {
 				counter++;
 			}
 		}
@@ -150,7 +163,7 @@ public class Deck {
 		int counter = 1;
 
 		for (int i = 0; i < 4; i++) {
-			if (list.get(i) == valueOfLastCard) {
+			if (list.get(i).equals(valueOfLastCard)) {
 				counter++;
 			}
 		}
@@ -164,8 +177,8 @@ public class Deck {
 		for (int i = 0; i < list.size(); i++) {
 			int value = list.get(i);
 			int counter = 0;
-			for (int j = 0; j < list.size(); i++) {
-				if (list.get(j) == value) {
+			for (int j = 0; j < list.size(); j++) {
+				if (list.get(j).equals(value)) {
 					counter++;
 				}
 			}
@@ -181,6 +194,18 @@ public class Deck {
 		}
 
 		return currentMax;
+	}
+
+	public static int numOfOccurences(DLList<Integer> list, int val) {
+		int amt = 0;
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(val)) {
+				amt++;
+			}
+		}
+
+		return amt;
 	}
 
 }
