@@ -1,3 +1,3 @@
 find . -type f -name "*.class" -delete
-javac *.java
+javac *.java -Xlint:unchecked
 java Runner

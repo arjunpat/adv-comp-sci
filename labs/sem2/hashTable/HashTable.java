@@ -10,12 +10,16 @@ public class HashTable<E> {
 	}
 
 	public void add(E val) {
-		int index = getHashCode(e);
+		int index = getHashCode(val);
 		table[index].add(val);
 	}
 
 	private int getHashCode(E val) {
 		return val.hashCode() % 400;
+	}
+
+	public DLList<E>[] getTable() {
+		return table;
 	}
 
 	public String toString() {
