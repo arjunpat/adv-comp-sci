@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Grass extends Article {
+public class Tree extends Article {
 	private BufferedImage picture;
 	private int x, y;
-	private final int overlayNumber = 1;
+	private final int overlayNumber = 2;
 
-	public Grass(int x, int y, BufferedImage picture) {
+	public Tree(int x, int y, BufferedImage picture) {
 		this.x = x;
 		this.y = y;
 

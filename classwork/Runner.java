@@ -1,29 +1,27 @@
-import java.util.LinkedList;
-import java.util.Scanner;
-
 public class Runner {
   public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+    HashMap<Student, String> map = new HashMap<Student, String>();
 
-    HashTable<Word> words = new HashTable<Word>();
+    map.put(new Student("Jessica", 1234), "Calculus BC");
+    map.put(new Student("Jessica", 1234), "AP Computer Science");
+    map.put(new Student("Jessica", 1234), "Economics");
 
-    while (true) {
-      String input = sc.nextLine();
+    map.put(new Student("Jose", 4321), "AP Computer Science");
+    map.put(new Student("Jose", 4321), "Statistics");
+    map.put(new Student("Jose", 4321), "Psychology");
 
-      if (input.equals("end")) {
-        System.out.println(words.contains(new Word("car")));
-        System.out.println(words.contains(new Word("goat")));
-        System.out.println(words);
+    map.put(new Student("John", 1111), "Geometry");
+    map.put(new Student("John", 1111), "App and Game Design");
+    map.put(new Student("John", 1111), "Economics");
 
-        words.remove(new Word("jump"));
-        words.remove(new Word("goat"));
-        System.out.println(words);
-        break;
-      }
+    System.out.println(map);
 
-      Word word = new Word(input);
+    map.remove(new Student("John", 1111));
 
-      words.add(word);
-    }
+    System.out.println(map);
+
+    map.remove(new Student("Jessica", 1234), "Economics");
+
+    System.out.println(map);
   }
 }

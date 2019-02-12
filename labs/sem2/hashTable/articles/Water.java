@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Grass extends Article {
+public class Water extends Article {
 	private BufferedImage picture;
 	private int x, y;
 	private final int overlayNumber = 1;
 
-	public Grass(int x, int y, BufferedImage picture) {
+	public Water(int x, int y, BufferedImage picture) {
 		this.x = x;
 		this.y = y;
 
@@ -32,5 +32,9 @@ public class Grass extends Article {
 
 	public int getOverlayNumber() {
 		return overlayNumber;
+	}
+
+	public String toString() {
+		return "water";
 	}
 }

@@ -12,16 +12,13 @@ import javax.imageio.ImageIO;
 public class Dirt extends Article {
 	private BufferedImage picture;
 	private int x, y;
+	private final int overlayNumber = 1;
 
-	public Dirt(int x, int y) {
+	public Dirt(int x, int y, BufferedImage picture) {
 		this.x = x;
 		this.y = y;
 
-		try {
-			picture = ImageIO.read(getClass().getResource("images/dirt.jpeg"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.picture = picture;
 	}
 
 	public void draw(Graphics g) {
@@ -30,6 +27,10 @@ public class Dirt extends Article {
 	}
 
 	public int hashCode() {
-		return (x / 20) + (20 * ((y / 20)));
+		return (x / 40) + (20 * ((y / 40)));
+	}
+
+	public int getOverlayNumber() {
+		return overlayNumber;
 	}
 }

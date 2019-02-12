@@ -9,16 +9,40 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Grass extends Article {
+public class Player extends Article {
 	private BufferedImage picture;
 	private int x, y;
-	private final int overlayNumber = 1;
 
-	public Grass(int x, int y, BufferedImage picture) {
+	public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
 
-		this.picture = picture;
+		try {
+			picture = ImageIO.read(getClass().getResource("images/player.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void moveRight() {
+		x += 40;
+	}
+
+	public void moveLeft() {
+		x -= 40;
+	}
+
+	public void moveUp() {
+		y += 40;
+	}
+
+	public void moveDown() {
+		y -= 40;
+	}
+
+	public void setLocation(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public void draw(Graphics g) {
@@ -31,6 +55,6 @@ public class Grass extends Article {
 	}
 
 	public int getOverlayNumber() {
-		return overlayNumber;
+		return 0;
 	}
 }

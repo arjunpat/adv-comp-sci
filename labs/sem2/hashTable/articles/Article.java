@@ -10,4 +10,6 @@ public abstract class Article {
 	public abstract void draw(Graphics g);
 
 	public abstract int hashCode();
+
+	public abstract int getOverlayNumber();
 }

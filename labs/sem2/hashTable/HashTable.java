@@ -22,6 +22,11 @@ public class HashTable<E> {
 		return table;
 	}
 
+	public DLList<E> get(E val) {
+		int index = getHashCode(val);
+		return table[index];
+	}
+
 	public String toString() {
 		String str = "[";
 

@@ -41,6 +41,20 @@ public class DLList<E> {
 		return current;
 	}
 
+	public boolean contains(E val) {
+    Node<E> current = dummy.next();
+
+    for (int i = 0; i < size; i++) {
+      if (current.getData().equals(val)) {
+        return true;
+			}
+
+			current = current.next();
+    }
+
+    return false;
+  }
+
 	public E get(int index) {
 		return getNode(index).getData();
 	}

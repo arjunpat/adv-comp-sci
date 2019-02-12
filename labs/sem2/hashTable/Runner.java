@@ -7,27 +7,36 @@ import articles.*;
 
 public class Runner extends View {
 
-	private HashTable<Article> hashTable = new HashTable<Article>();
+	private Database database = new Database();
+	private Player player = new Player(400, 480);
 
 	public Runner() {
 
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 10; j++) {
-				hashTable.add(new Grass(i * 40, j * 40));
-			}
-		}
+		addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
 
-		for (int i = 0; i < 20; i++) {
-			for (int j = 10; j < 20; j++) {
-				hashTable.add(new Dirt(i * 40, j * 40));
+				if (keyCode == 40) {
+					player.moveUp();
+				} else if (keyCode == 38) {
+					player.moveDown();
+				} else if (keyCode == 39) {
+					player.moveRight();
+				} else if (keyCode == 37) {
+					player.moveLeft();
+				}
+
+				repaint();
 			}
-		}
+			public void keyReleased(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {}
+		});
 
 	}
 
 	public void draw(Graphics g) {
 
-		DLList<Article>[] table = hashTable.getTable();
+		DLList<Article>[] table = database.getArr();
 
 		for (int i = 0; i < table.length; i++) {
 			DLList<Article> each = table[i];
@@ -37,10 +46,11 @@ public class Runner extends View {
 		}
 
 		drawGrid(g);
+
+		player.draw(g);
 	}
 
 	private void drawGrid(Graphics g) {
-
 		g.setColor(Color.BLACK);
 
 		for (int r = 0; r < 20; r++) {
