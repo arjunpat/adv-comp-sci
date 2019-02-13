@@ -54,7 +54,7 @@ public class Database {
 
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 20; j++) {
-				if (Math.random() > .5) {
+				if (Math.random() > .7) {
 					Article toAdd;
 
 					int which = (int)(Math.random() * 3);

@@ -7,10 +7,7 @@ public class Runner extends View {
 
 	private JTextArea shoppingCartTextArea = new JTextArea(390, 350);
 	private SLList<Item> items = new SLList<Item>();
-<<<<<<< HEAD
-=======
-	String sortingBy = "time";
->>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
+	private String sortingBy = "time";
 
 	public Runner() {
 
@@ -56,8 +53,6 @@ public class Runner extends View {
 			price.setText("Price");
 			quantity.setText("Quantity");
 
-<<<<<<< HEAD
-=======
 			if (sortingBy.equals("time")) {
 				sortTime();
 			} else if (sortingBy.equals("alpha")) {
@@ -65,8 +60,6 @@ public class Runner extends View {
 			} else if (sortingBy.equals("price")) {
 				sortPrice();
 			}
-
->>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 			populateShoppingCart();
 		});
 		add(addButton);
@@ -97,8 +90,6 @@ public class Runner extends View {
 		});
 		add(removeButton);
 
-<<<<<<< HEAD
-=======
 		JButton sortAlphaBtn = new JButton("Sort Alpha");
 		sortAlphaBtn.setBounds(400, 400, 250, 30);
 		sortAlphaBtn.addActionListener(e -> {
@@ -122,7 +113,6 @@ public class Runner extends View {
 			populateShoppingCart();
 		});
 		add(sortByPrice);
->>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 	}
 
 	public void draw(Graphics g) {
@@ -154,8 +144,6 @@ public class Runner extends View {
 		shoppingCartTextArea.setText(str);
 	}
 
-<<<<<<< HEAD
-=======
 	private void sortAlpha()  {
 		for (int i = 0; i < items.size() - 1; i++) {
 			for (int j = i + 1; j < items.size(); j++) {
@@ -203,8 +191,6 @@ public class Runner extends View {
 
 		sortingBy  = "price";
 	}
-
->>>>>>> eea68ad21adb6f64f8f9d99e0e7d5ef2e0ff433c
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Shopping Cart");
 
