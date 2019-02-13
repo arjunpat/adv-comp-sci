@@ -9,29 +9,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-public class Player extends Article {
+public class Bear extends Article {
 	private BufferedImage picture;
 	private int x, y;
+	private final int overlayNumber = 2;
 
-	public Player(int x, int y) {
+	public Bear(int x, int y, BufferedImage picture) {
 		this.x = x;
 		this.y = y;
 
-		try {
-			picture = ImageIO.read(getClass().getResource("images/player.png"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateLocation(int x, int y) {
-		this.x += x;
-		this.y += y;
-	}
-
-	public void setLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.picture = picture;
 	}
 
 	public void draw(Graphics g) {
@@ -44,6 +31,6 @@ public class Player extends Article {
 	}
 
 	public int getOverlayNumber() {
-		return 0;
+		return overlayNumber;
 	}
 }

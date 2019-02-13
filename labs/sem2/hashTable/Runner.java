@@ -15,16 +15,25 @@ public class Runner extends View {
 		addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
+				int dx = 0;
+				int dy = 0;
 
 				if (keyCode == 40) {
-					player.moveUp();
+					dy += 40;
 				} else if (keyCode == 38) {
-					player.moveDown();
+					dy -= 40;
 				} else if (keyCode == 39) {
-					player.moveRight();
+					dx += 40;
 				} else if (keyCode == 37) {
-					player.moveLeft();
+					dx -= 40;
 				}
+
+				player.updateLocation(dx, dy);
+
+				if (!database.canMove(player)) {
+					player.updateLocation(-dx, -dy);
+				}
+
 
 				repaint();
 			}
