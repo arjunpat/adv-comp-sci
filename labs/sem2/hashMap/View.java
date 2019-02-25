@@ -19,9 +19,7 @@ public abstract class View extends JPanel {
 
 	public final void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, this.WINDOW_WIDTH, this.WINDOW_HEIGHT);
+		
 		this.draw(g);
 	}
 
