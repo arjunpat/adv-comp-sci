@@ -52,7 +52,7 @@ public class HomeScreen extends View {
 					repaint();
 					try { Thread.sleep(10); } catch (Exception e) {}
 					countryScreenY -= acc;
-					acc += .5;
+					acc += 3.5;
 				}
 
 				screenManager.showCountry(country);

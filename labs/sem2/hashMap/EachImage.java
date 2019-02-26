@@ -28,10 +28,10 @@ public class EachImage {
 
 	public void draw(Graphics g, int x, int y) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.drawImage(image, x, y, 200, 200, null);
+		g2.drawImage(image, x, y, 600, 400, null);
 
 		g.setColor(Color.black);
-		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		g.drawString(captionText + " — " + date, x, y + 220);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		g.drawString(captionText + " — " + date, x, y + 415);
 	}
 }

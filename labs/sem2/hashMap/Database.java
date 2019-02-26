@@ -21,15 +21,6 @@ public class Database {
 		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
 		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
 		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
-		images.put(getCountryByAbbr("af"), new EachImage("https://images.huffingtonpost.com/2015-11-05-1446719735-6867599-Kabul_Skyline-thumb.jpg", "Nice view", "3/15/06"));
 		
 
 	}
@@ -44,5 +35,9 @@ public class Database {
 
 	public DLList<EachImage> getImageListByCountry(Country c) {
 		return images.get(c);
+	}
+
+	public void addImage(Country c, EachImage i) {
+		images.put(c, i);
 	}
 }
