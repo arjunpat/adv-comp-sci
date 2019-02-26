@@ -8,8 +8,6 @@ public class HomeScreen extends View {
 	private Database db;
 	private JTextArea countriesTextArea = new JTextArea(390, 350);
 	private Runner screenManager;
-	private CountryScreen countryScreen;
-	private int countryScreenY;
 
 	public HomeScreen(Database db, Runner screenManager) {
 		this.db = db;
@@ -42,15 +40,19 @@ public class HomeScreen extends View {
 	public void showCountry(Country country) {
 		Thread animate = new Thread(new Runnable() {
 			public void run() {
-				countryScreenY = 400;
-				double acc = 10;
-				countryScreen = new CountryScreen(db, country, null);
+				int countryScreenY = 400;
+				double acc = 20;
+				CountryScreen countryScreen = new CountryScreen(db, country, null);
+				countryScreen.setBounds(0, countryScreenY, 800, 800);
+				add(countryScreen);
 
 				while (countryScreenY > 0) {
-					countryScreenY -= acc;
-					acc += 1.5;
+					countryScreen.setOpacity((int)(255 * ((400 - countryScreenY) / 400.0)));
+					countryScreen.setLocation(0, countryScreenY);
 					repaint();
 					try { Thread.sleep(10); } catch (Exception e) {}
+					countryScreenY -= acc;
+					acc += .5;
 				}
 
 				screenManager.showCountry(country);
@@ -62,10 +64,6 @@ public class HomeScreen extends View {
 
 	public void draw(Graphics g) {
 		drawTitle(g, Color.RED, "Countries", 400, 30);
-
-		if (countryScreen != null) {
-			countryScreen.draw(g, countryScreenY);
-		}
 	}
 
 	public void populateCountriesTextArea() {

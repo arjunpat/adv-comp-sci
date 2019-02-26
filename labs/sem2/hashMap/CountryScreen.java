@@ -11,6 +11,7 @@ public class CountryScreen extends View {
 	private JTextField url, caption, date;
 	private Runner screenManager;
 	private DLList<EachImage> images;
+	private int opacity = 255;
 
 	public CountryScreen(Database db, Country country, Runner screenManager) {
 		this.db = db;
@@ -62,7 +63,7 @@ public class CountryScreen extends View {
 		if (y < 0)
 			y = 0;
 
-		g.setColor(new Color(255, 255, 255, (int)(255 * ((400 - y) / 400.0))));
+		g.setColor(new Color(255, 255, 255, opacity));
 		g.fillRect(0, y, 800, 800);
 
 		closeButton.setBounds(680, y + 20, 100, 30);
@@ -85,5 +86,9 @@ public class CountryScreen extends View {
 				theY += 240;
 			}
 		}
+	}
+
+	public void setOpacity(int opacity) {
+		this.opacity = opacity;
 	}
 }
