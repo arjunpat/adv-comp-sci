@@ -72,7 +72,8 @@ public class HomeScreen extends View {
 		String str = "";
 
 		for (int i = 0; i < keys.size(); i++) {
-			str += db.getCountryByAbbr(keys.get(i)).toString() + "\n";
+			Country c = db.getCountryByAbbr(keys.get(i));
+			str += c.toString() + " - " + db.getImageListByCountry(c).size() + " images\n";
 		}
 
 		countriesTextArea.setText(str);

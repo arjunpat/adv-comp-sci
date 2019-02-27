@@ -1,4 +1,6 @@
-public class DLList<E> {
+import java.io.Serializable;
+
+public class DLList<E> implements Serializable {
 	
 	private Node<E> dummy;
 	private int size = 0;
@@ -109,7 +111,7 @@ public class DLList<E> {
 		return str + "]";
 	}
 
-	private class Node<E> {
+	private class Node<E> implements Serializable {
 		private Node<E> next, prev;
 		private E data;
 

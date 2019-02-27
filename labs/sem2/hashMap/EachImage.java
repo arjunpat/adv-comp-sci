@@ -6,9 +6,11 @@ import java.util.*;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
-public class EachImage {
+import java.io.Serializable;
+
+public class EachImage implements Serializable {
 	private String url, captionText, date;
-	private Image image;
+	private transient Image image;
 
 	public EachImage(String url, String captionText, String date) {
 		this.url = url;
@@ -26,11 +28,22 @@ public class EachImage {
 		}
 	}
 
+	public String getDateString() {
+		return date;
+	}
+
 	public void draw(Graphics g, int x, int y) {
+		if (image == null) {
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Tahoma", Font.PLAIN, 30));
+			g.drawString("Loading...", x + 250, y + 200);
+			return;
+		}
+
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(image, x, y, 600, 400, null);
 
-		g.setColor(Color.black);
+		g.setColor(Color.BLACK);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		g.drawString(captionText + " — " + date, x, y + 415);
 	}

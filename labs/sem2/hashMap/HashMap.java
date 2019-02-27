@@ -1,4 +1,6 @@
-public class HashMap<K, V> {
+import java.io.Serializable;
+
+public class HashMap<K, V> implements Serializable {
 	private DLList<V>[] table;
 	private DLList<K> keys;
 

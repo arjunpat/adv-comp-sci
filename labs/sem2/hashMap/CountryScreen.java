@@ -36,7 +36,7 @@ public class CountryScreen extends View {
 		add(caption);
 
 		JTextField date = new JTextField();
-		date.setText("Date");
+		date.setText("Date (YYYY-MM-DD)");
 		date.setBounds(20, 140, 200, 30);
 		add(date);
 
@@ -46,10 +46,10 @@ public class CountryScreen extends View {
 			db.addImage(country, new EachImage(url.getText(), caption.getText(), date.getText()));
 			url.setText("URL");
 			caption.setText("Caption");
-			date.setText("Date");
+			date.setText("Date (YYYY-MM-DD)");
 
 			repaint();
-			loadImages();
+			initImages();
 		});
 		add(createImage);
 
@@ -58,6 +58,7 @@ public class CountryScreen extends View {
 		nextImage.addActionListener(e -> {
 			currentImage++;
 			repaint();
+			loadImage(currentImage);
 		});
 		add(nextImage);
 
@@ -66,31 +67,54 @@ public class CountryScreen extends View {
 		previousImage.addActionListener(e -> {
 			currentImage--;
 			repaint();
+			loadImage(currentImage);
 		});
 		add(previousImage);
 
-		loadImages();
+		JButton deleteImage = new JButton("Delete image");
+		deleteImage.setBounds(575, 700, 125, 30);
+		deleteImage.addActionListener(e -> {
+			images.remove(currentImage);
+			initImages();
+			repaint();
+		});
+		add(deleteImage);
+
+		initImages();
 		
 	}
 
-	public void loadImages() {
+	public void initImages() {
 		images = db.getImageListByCountry(country);
 
 		if (images.size() > 0) {
-			currentImage = 0;
-		}
-
-		Thread loadImages = new Thread(new Runnable() {
-			public void run() {
-				for (int i = 0; i < images.size(); i++) {
-					EachImage im = images.get(i);
-					im.loadImage();
-					repaint();
+			for (int i = 0; i < images.size(); i++) {
+				for (int j = i + 1; j < images.size(); j++) {
+					EachImage a = images.get(i);
+					EachImage b = images.get(j);
+					if (a.getDateString().compareTo(b.getDateString()) < 0) {
+						images.set(i, b);
+						images.set(j, a);
+					}
 				}
+			}
+			currentImage = 0;
+			loadImage(currentImage);
+		} else {
+			currentImage = -1;
+		}
+	}
+
+	public void loadImage(int index) {
+		Thread load = new Thread(new Runnable() {
+			public void run() {
+				EachImage im = images.get(index);
+				im.loadImage();
+				repaint();
 			}
 		});
 
-		loadImages.start();
+		load.start();
 	}
 
 	public void draw(Graphics g) {

@@ -1,4 +1,6 @@
-public class Country {
+import java.io.Serializable;
+
+public class Country implements Serializable {
 	private String abb, name;
 
 	public Country(String name, String abb) {
