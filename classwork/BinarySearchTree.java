@@ -14,15 +14,18 @@ public class BinarySearchTree<E extends Comparable<E>> {
   }
 
   private void add(E data, Node<E> current) {
+    Node<E> newNode = new Node<E>(data);
+    newNode.setParent(current);
+
     if (current.get().compareTo(data) < 0) {
       if (current.getRight() == null) {
-        current.setRight(new Node<E>(data));
+        current.setRight(newNode);
       } else {
         add(data, current.getRight());
       }
     } else {
       if (current.getLeft() == null) {
-        current.setLeft(new Node<E>(data));
+        current.setLeft(newNode);
       } else {
         add(data, current.getLeft());
       }
@@ -163,6 +166,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     private E data;
     private Node<E> left;
     private Node<E> right;
+    private Node<E> parent;
 
     public Node(E data) {
       this.data = data;
@@ -180,12 +184,20 @@ public class BinarySearchTree<E extends Comparable<E>> {
       return right;
     }
 
+    public Node<E> getParent() {
+      return parent;
+    }
+
     public void setLeft(Node<E> left) {
       this.left = left;
     }
 
     public void setRight(Node<E> right) {
       this.right = right;
+    }
+
+    public void setParent(Node<E> parent) {
+      this.parent = parent;
     }
 
     public void setData(E data) {
