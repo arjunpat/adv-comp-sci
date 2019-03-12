@@ -88,11 +88,12 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
   public void remove(E data) {
     if (contains(data)) {
-      remove(data, root, null);
+      remove(data, root);
     }
   }
 
-  private void remove(E data, Node<E> current, Node<E> parent) {
+  private void remove(E data, Node<E> current) {
+    Node<E> parent = current.getParent();
 
     if (current.get().equals(data)) {
 
@@ -134,16 +135,14 @@ public class BinarySearchTree<E extends Comparable<E>> {
       } else if (current.getLeft() != null && current.getRight() != null) {
         Node<E> smallest = findSmallestAndDelete(data, current.getRight(), current);
         current.setData(smallest.get());
-
-
       }
 
     } else {
 
       if (current.get().compareTo(data) > 0) {
-        remove(data, current.getLeft(), current);
+        remove(data, current.getLeft());
       } else  {
-        remove(data, current.getRight(), current);
+        remove(data, current.getRight());
       }
 
     }
