@@ -162,7 +162,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
   }
 
   public int getHeight() {
-    return getHeight(root, 0);
+    return getHeight(root, -1);
   }
 
   private int getHeight(Node<E> current, int num) {
