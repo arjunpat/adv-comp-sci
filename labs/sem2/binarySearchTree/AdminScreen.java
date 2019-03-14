@@ -8,6 +8,7 @@ public class AdminScreen extends View {
 	private Database db;
 	private JTextArea accountsTextArea = new JTextArea(390, 350);
 	private int passes;
+	private Account accountEditing;
 
 	public AdminScreen(Runner runner, Database db) {
 		this.runner = runner;
@@ -66,14 +67,38 @@ public class AdminScreen extends View {
 		searchByName.setText("First and last name");
 		add(searchByName);
 
+		JTextField firstNameEdit = new JTextField();
+		firstNameEdit.setBounds(250, 600, 200, 30);
+
+		JTextField lastNameEdit = new JTextField();
+		lastNameEdit.setBounds(250, 650, 200, 30);
+
+		JTextField pinEdit = new JTextField();
+		pinEdit.setBounds(475, 600, 200, 30);
+
+		JTextField balanceEdit = new JTextField();
+		balanceEdit.setBounds(475, 650, 200, 30);
+
+		JButton updateAccount = new JButton("Update Account");
+		updateAccount.setBounds(250, 700, 425, 30);
+
 		JButton clickToSearch = new JButton("Search");
 		clickToSearch.setBounds(500, 500, 100, 30);
 		clickToSearch.addActionListener(e -> {
 			String[] parts = searchByName.getText().split(" ");
 			Account account = new Account(parts[0], parts[1], 0, 0);
-			account = db.search(account);
-			System.out.println(account);
-			System.out.println(account.getPin());
+			accountEditing = db.search(account);
+
+			firstNameEdit.setText(accountEditing.getFirstName());
+			lastNameEdit.setText(accountEditing.getLastName());
+			pinEdit.setText(accountEditing.getPin() + "");
+			balanceEdit.setText(accountEditing.getBalance() + "");
+
+			add(firstNameEdit);
+			add(lastNameEdit);
+			add(pinEdit);
+			add(balanceEdit);
+			add(updateAccount);
 		});
 		add(clickToSearch);
 	}

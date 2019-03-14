@@ -10,10 +10,6 @@ public class Account implements Comparable<Account> {
 		this.balance = balance;
 	}
 
-	public String getName() {
-		return firstName + " " + lastName;
-	}
-
 	public String getCompareString() {
 		return lastName + ", " + firstName;
 	}
@@ -34,5 +30,16 @@ public class Account implements Comparable<Account> {
 	public int getPin() {
 		return pin;
 	}
+
+	public double getBalance() {
+		return balance;
+	}
 	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 }
