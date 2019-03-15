@@ -39,9 +39,38 @@ public class HomeScreen extends View {
 		});
 		add(adminScreen);
 
-		JButton customerScreen = new JButton("Customer screen");
-		customerScreen.setBounds(400, 350, 300, 100);
-		add(customerScreen);
+		JButton customerScreenBtn = new JButton("Customer screen");
+		customerScreenBtn.setBounds(400, 350, 300, 100);
+		customerScreenBtn.addActionListener(e -> {
+			Thread animate = new Thread(new Runnable() {
+				public void run() {
+					int customerScreenY = 400;
+					double acc = 20;
+					CustomerScreen customerScreen = new CustomerScreen(runner, db);
+					customerScreen.setBounds(0, customerScreenY, 800, 800);
+					customerScreen.setBackground(new Color(255, 255, 255, 0));
+					add(customerScreen);
+
+					while (customerScreenY > 0) {
+						int opacity = (int)(255 * ((400 - customerScreenY) / 400.0));
+						customerScreen.setBackground(new Color(255, 255, 255, opacity));
+						customerScreen.setLocation(0, customerScreenY);
+						repaint();
+						try { Thread.sleep(10); } catch (Exception e) {}
+						customerScreenY -= acc;
+						acc += .5;
+					}
+
+					customerScreen.setLocation(0, 0);
+					customerScreen.setBackground(new Color(255, 255, 255));
+
+					runner.updateScreen(customerScreen);
+				}
+			});
+
+			animate.start();
+		});
+		add(customerScreenBtn);
 	}
 
 	public void draw(Graphics g) {

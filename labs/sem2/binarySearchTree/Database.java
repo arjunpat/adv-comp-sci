@@ -14,7 +14,7 @@ public class Database {
 			while (in.hasNextLine()) {
 
 				String[] itemParts = in.nextLine().split(",");
-				Account account = new Account(itemParts[1], itemParts[0], (int)(10000 * Math.random()), 100000 * Math.random());
+				Account account = new Account(itemParts[1], itemParts[0], (int)(8999 * Math.random()) + 1000, 100000 * Math.random());
 
 				accounts.add(account);
 			}
@@ -34,5 +34,13 @@ public class Database {
 
 	public Account search(Account account) {
 		return accounts.get(account);
+	}
+
+	public void remove(Account account) {
+		accounts.remove(account);
+	}
+
+	public int getPasses() {
+		return accounts.getPasses();
 	}
 }

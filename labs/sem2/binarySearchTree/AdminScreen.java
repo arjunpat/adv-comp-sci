@@ -3,18 +3,28 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import javax.swing.Timer;
+
 public class AdminScreen extends View {
 	private Runner runner;
 	private Database db;
 	private JTextArea accountsTextArea = new JTextArea(390, 350);
-	private int passes;
 	private Account accountEditing;
+	private boolean showMoneySign = false;
+	private Notification notification = new Notification("", 0);
 
 	public AdminScreen(Runner runner, Database db) {
 		this.runner = runner;
 		this.db = db;
 
 		setBackground(new Color(255, 255, 255));
+
+		JButton leave = new JButton("Close");
+		leave.setBounds(680, 10, 100, 30);
+		leave.addActionListener(e -> {
+			runner.showHomeScreen();
+		});
+		add(leave);
 
 		accountsTextArea.setEditable(false);
 		JScrollPane accountsScrollPane = new JScrollPane(accountsTextArea);
@@ -54,7 +64,8 @@ public class AdminScreen extends View {
 		addAccount.setBounds(20, 700, 200, 30);
 		addAccount.addActionListener(e -> {
 			Account account = new Account(firstName.getText(), lastName.getText(), Integer.parseInt(pin.getText()), Double.parseDouble(balance.getText()));
-			passes = db.addAccount(account);
+			int passes = db.addAccount(account);
+			displayNotification("Took " + passes + " passes", 3000);
 
 			reset.apply(true);
 		});
@@ -77,10 +88,22 @@ public class AdminScreen extends View {
 		pinEdit.setBounds(475, 600, 200, 30);
 
 		JTextField balanceEdit = new JTextField();
-		balanceEdit.setBounds(475, 650, 200, 30);
+		balanceEdit.setBounds(485, 650, 190, 30);
 
 		JButton updateAccount = new JButton("Update Account");
 		updateAccount.setBounds(250, 700, 425, 30);
+		updateAccount.addActionListener(e -> {
+			accountEditing.setFirstName(firstNameEdit.getText());
+			accountEditing.setLastName(lastNameEdit.getText());
+			accountEditing.setPin(Integer.parseInt(pinEdit.getText()));
+			accountEditing.setBalance(Double.parseDouble(balanceEdit.getText()));
+
+			db.remove(accountEditing);
+			db.addAccount(accountEditing);
+			reset.apply(true);
+
+			displayNotification("Account updated", 2000);
+		});
 
 		JButton clickToSearch = new JButton("Search");
 		clickToSearch.setBounds(500, 500, 100, 30);
@@ -88,11 +111,14 @@ public class AdminScreen extends View {
 			String[] parts = searchByName.getText().split(" ");
 			Account account = new Account(parts[0], parts[1], 0, 0);
 			accountEditing = db.search(account);
+			showMoneySign = true;
+			displayNotification("Took " + db.getPasses() + " passes", 2000);
 
 			firstNameEdit.setText(accountEditing.getFirstName());
 			lastNameEdit.setText(accountEditing.getLastName());
 			pinEdit.setText(accountEditing.getPin() + "");
 			balanceEdit.setText(accountEditing.getBalance() + "");
+			searchByName.setText("First and last name");
 
 			add(firstNameEdit);
 			add(lastNameEdit);
@@ -101,6 +127,13 @@ public class AdminScreen extends View {
 			add(updateAccount);
 		});
 		add(clickToSearch);
+
+		Timer timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+			}
+		});
+		timer.start();
 	}
 
 	public void draw(Graphics g) {
@@ -108,10 +141,69 @@ public class AdminScreen extends View {
 		drawTitle(g, Color.BLUE, "Add new account", 20, 450);
 		drawTitle(g, Color.GREEN, "Search for an account", 250, 450);
 
-		if (passes > 0) {
-			g.setColor(Color.BLACK);
-			g.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			g.drawString("Took " + passes + " passes", 20, 750);
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		if (showMoneySign) {
+			g.drawString("$", 475, 670);
 		}
+
+		if (!notification.isDone())
+			notification.draw(g);
+
+		if (notification.isOld()) {
+			notification.addASecond();
+			animateNotificationDown();
+		}
+	}
+
+	public void displayNotification(String text, int time) {
+		notification = new Notification(text, time);
+		animateNotificationUp();
+	}
+
+	private void animateNotificationUp() {
+		notification.setY(800);
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() > Notification.FINAL_Y) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveUp();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		animate.start();
+	}
+
+	private void animateNotificationDown() {
+
+		Thread animate = new Thread(new Runnable() {
+			public void run() {
+
+				while (notification.getY() < 800) {
+					try {
+						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
+						notification.moveDown();
+						repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+
+				notification.done();
+
+			}
+		});
+
+		animate.start();
 	}
 }

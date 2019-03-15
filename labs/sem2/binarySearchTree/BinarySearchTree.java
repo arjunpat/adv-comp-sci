@@ -91,11 +91,17 @@ public class BinarySearchTree<E extends Comparable<E>> {
 		}
 	}
 
+	public int getPasses() {
+		return passes;
+	}
+
 	public E get(E data) {
+		passes = 0;
 		return get(data, root);
 	}
 
 	private E get(E data, Node<E> current) {
+		passes++;
 		if (current.get().equals(data)) {
 			return current.get();
 		}
