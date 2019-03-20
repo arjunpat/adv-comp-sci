@@ -1,4 +1,6 @@
-public class BinarySearchTree<E extends Comparable<E>> {
+import java.io.Serializable;
+
+public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 	private Node<E> root;
 	private String str = "";
 	private int passes;
@@ -217,7 +219,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
 		return num;
 	}
 
-	private class Node<E> {
+	private class Node<E> implements Serializable {
 		private E data;
 		private Node<E> left;
 		private Node<E> right;

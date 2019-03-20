@@ -1,4 +1,6 @@
-public class Account implements Comparable<Account> {
+import java.io.Serializable;
+
+public class Account implements Comparable<Account>, Serializable {
 	private String firstName, lastName;
 	private int pin;
 	private double balance;

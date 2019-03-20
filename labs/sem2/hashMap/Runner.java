@@ -37,7 +37,7 @@ public class Runner {
 					e.printStackTrace();
 				}
 			}
-		}));		
+		}));	
 	}
 
 	private void updateScreen(View view) {

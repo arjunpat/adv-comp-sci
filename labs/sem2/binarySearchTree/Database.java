@@ -2,7 +2,9 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-public class Database {
+import java.io.Serializable;
+
+public class Database implements Serializable {
 
 	private BinarySearchTree<Account> accounts = new BinarySearchTree<Account>();
 
@@ -21,8 +23,6 @@ public class Database {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		accounts.add(new Account("Arjun", "Patrawala", 1111, 52));
 
 	}
 
