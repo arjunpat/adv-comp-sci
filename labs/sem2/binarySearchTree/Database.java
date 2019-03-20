@@ -22,6 +22,8 @@ public class Database {
 			e.printStackTrace();
 		}
 
+		accounts.add(new Account("Arjun", "Patrawala", 1111, 52));
+
 	}
 
 	public String getAllNames() {

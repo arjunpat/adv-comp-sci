@@ -46,7 +46,7 @@ public class HomeScreen extends View {
 				public void run() {
 					int customerScreenY = 400;
 					double acc = 20;
-					CustomerScreen customerScreen = new CustomerScreen(runner, db);
+					LoginScreen customerScreen = new LoginScreen(runner, db);
 					customerScreen.setBounds(0, customerScreenY, 800, 800);
 					customerScreen.setBackground(new Color(255, 255, 255, 0));
 					add(customerScreen);

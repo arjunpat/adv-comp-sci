@@ -36,7 +36,11 @@ public abstract class View extends JPanel {
 		g.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		g.drawString(text, x, y);
 		g.setColor(c);
-		g.fillRect(x, y + 5, text.length() * 18, 4);
+		if (text.length() > 20) {
+			g.fillRect(x, y + 5, text.length() * 16, 4);
+		} else {
+			g.fillRect(x, y + 5, text.length() * 18, 4);
+		}
 	}
 
 	public abstract void draw(Graphics g);
