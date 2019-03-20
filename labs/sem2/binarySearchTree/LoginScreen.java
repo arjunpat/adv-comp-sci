@@ -51,11 +51,14 @@ public class LoginScreen extends View {
 				return;
 			}
 
-			displayNotification("Logged in", 2000);
+			login.setEnabled(false);
+
+			displayNotification("Took " + db.getPasses() + " passes; you are being logged in", 2000);
 
 
 			Thread animate = new Thread(new Runnable() {
 				public void run() {
+					try { Thread.sleep(2000); } catch (Exception e) {}
 					int customerScreenY = 400;
 					double acc = 20;
 					CustomerScreen customerScreen = new CustomerScreen(runner, db, theAccount);
@@ -127,11 +130,12 @@ public class LoginScreen extends View {
 
 	private void animateNotificationUp() {
 		notification.setY(800);
+		notification.setX(20);
 
 		Thread animate = new Thread(new Runnable() {
 			public void run() {
 
-				while (notification.getY() > Notification.FINAL_Y) {
+				while (notification.getY() > 720) {
 					try {
 						Thread.sleep(Notification.ANIMATE_WAIT_TIME);
 						notification.moveUp();

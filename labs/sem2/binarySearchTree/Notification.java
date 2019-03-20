@@ -73,6 +73,10 @@ public class Notification {
 		this.y = y;
 	}
 
+	public void setX(int x) {
+		this.x = x;
+	}
+
 	public void addASecond() {
 		created += 1000;
 	}
