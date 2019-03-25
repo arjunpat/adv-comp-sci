@@ -260,6 +260,31 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 		return num;
 	}
 
+  public int getNodes() {
+    return getNodes(root, 0);
+  }
+
+  public int getNodes(E data) {
+    Node<E> current = getNode(data);
+    if (current == null) {
+      return 0;
+    } else {
+      return getNodes(current, 0);
+    }
+  }
+
+  private int getNodes(Node<E> current, int num) {
+    if (current == null) {
+      return num;
+    } else {
+      num++;
+      num = getNodes(current.getLeft(), num);
+      num = getNodes(current.getRight(), num);
+
+      return num;
+    }
+  }
+
 	private class Node<E> implements Serializable {
 		private E data;
 		private Node<E> left;

@@ -44,5 +44,32 @@ public class Runner {
     System.out.println(bt3.getLevels());
     System.out.println(bt3.getLevel(150));
     System.out.println(bt3.getLevel(151));
+
+    System.out.println("Classwork 2A");
+    BinarySearchTree<Integer> bt4 = new BinarySearchTree<Integer>();
+    bt4.add(90);
+    bt4.add(80);
+    bt4.add(100);
+    bt4.add(70);
+    bt4.add(85);
+    bt4.add(98);
+    bt4.add(120);
+    System.out.println(bt4.getNodes(90));
+    System.out.println(bt4.getNodes(80));
+    System.out.println(bt4.getNodes(100));
+    System.out.println(bt4.getNodes(98));
+
+    System.out.println("Classwork 2B");
+    BinarySearchTree<Integer> bt5 = new BinarySearchTree<Integer>();
+    bt5.add(90);
+    bt5.add(150);
+    bt5.add(170);
+    bt5.add(160);
+    bt5.add(171);
+    bt5.add(151);
+    System.out.println(bt5.getNodes(90));
+    System.out.println(bt5.getNodes(150));
+    System.out.println(bt5.getNodes(170));
+    System.out.println(bt5.getNodes(160));
   }
 }
