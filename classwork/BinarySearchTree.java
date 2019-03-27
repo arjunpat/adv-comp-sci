@@ -1,4 +1,7 @@
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 	private Node<E> root;
@@ -51,6 +54,22 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 			toString(current.getLeft());
 			str += current.get().toString() + " ";
 			toString(current.getRight());
+		}
+	}
+
+	private List<E> getArr() {
+		List<E> arr = new ArrayList<E>();
+		getArr(root, arr);
+
+		Collections.sort(arr);
+		return arr;
+	}
+
+	private void getArr(Node<E> current, List<E> arr) {
+		if (current != null) {
+			getArr(current.getLeft(), arr);
+			arr.add(current.get());
+			getArr(current.getRight(), arr);
 		}
 	}
 
@@ -284,6 +303,54 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
       return num;
     }
   }
+
+	public boolean isBalanced() {
+		int left = 0;
+		int right = 0;
+		if (root.getLeft() != null) {
+			left = getHeight(root.getLeft(), 0);
+		}
+
+		if (root.getRight() != null) {
+			right = getHeight(root.getRight(), 0);
+		}
+
+		if (Math.abs(right - left) > 1) {
+			return false;
+		}
+
+		int leftNodes = getNodes(root.getLeft(), 0);
+		int rightNodes = getNodes(root.getRight(), 0);
+
+		int height = getHeight();
+		int nodes = getNodes();
+		if (
+			Math.pow(2, height) - 1 > nodes && nodes > Math.pow(2, height + 1) - 1
+		) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public void balance() {
+		List<E> arr = getArr();
+		root = null;
+		balance(arr);
+	}
+
+	private void balance(List<E> arr) {
+		int mid = (int)Math.ceil(arr.size() / 2);
+		add(arr.get(mid));
+
+		if (arr.size() > 2) {
+			List<E> first = arr.subList(0, mid);
+			List<E> second = arr.subList(mid + 1, arr.size());
+
+			balance(first);
+			balance(second);
+		}
+	}
 
 	private class Node<E> implements Serializable {
 		private E data;
