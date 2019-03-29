@@ -18,11 +18,20 @@ public class Runner extends View {
 		tree.add(new Item("Plug", 40));
 		tree.add(new Item("Table", 40));
 		tree.add(new Item("Floor", 40));
+
+		JButton button = new JButton("Balance");
+		button.setBounds(650, 20, 100, 30);
+		button.addActionListener(e -> {
+			tree.balance();
+			System.out.println(tree);
+			repaint();
+		});
+		add(button);
 	}
 
 	public void draw(Graphics g) {
 
-		tree.draw(g, 800, 800);
+		tree.draw(g, 600, 600);
 
 	}
 

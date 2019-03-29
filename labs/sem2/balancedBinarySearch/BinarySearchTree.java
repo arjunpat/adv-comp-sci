@@ -20,24 +20,24 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 
 		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		g.setColor(Color.BLACK);
-		draw(g, root, width, width / 2, 0, lineHeight);
+		draw(g, root, width / 2, width / 2, 0, lineHeight);
 	}
 
-	private void draw(Graphics g, Node<E> current, int width, int x, int y, int dy) {
-		g.drawString(root.get().toString(), x, y);
+	private void draw(Graphics g, Node<E> current, int x, int dx, int y, int dy) {
+		g.drawString(current.get().toString(), x - 18, y + 16);
 
-		int dx = x / 2;
+		dx = dx / 2;
 
-		if (root.getLeft() != null) {
+		if (current.getLeft() != null) {
 			int ix = x - dx;
-			g.drawLine(x, y, ix, y + dy);
-			draw(g, current, width, ix, y + dy, dy);
+			g.drawLine(x, y + 26, ix, y + dy - 10);
+			draw(g, current.getLeft(), ix, dx, y + dy, dy);
 		}
 
-		if (root.getRight() != null) {
+		if (current.getRight() != null) {
 			int ix = x + dx;
-			g.drawLine(x, y, ix, y + dy);
-			draw(g, current, width, ix, y + dy, dy);
+			g.drawLine(x, y + 26, ix, y + dy - 10);
+			draw(g, current.getRight(), ix, dx, y + dy, dy);
 		}
 	}
 
@@ -371,7 +371,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 	}
 
 	private void balance(List<E> arr) {
-		int mid = (int)Math.ceil(arr.size() / 2);
+		int mid = (int)(arr.size() / 2);
 		add(arr.get(mid));
 
 		if (arr.size() > 2) {
@@ -380,6 +380,10 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 
 			balance(first);
 			balance(second);
+		}
+
+		if (arr.size() == 2) {
+			balance(arr.subList(0, 1));
 		}
 	}
 
