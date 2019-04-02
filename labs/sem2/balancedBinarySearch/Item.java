@@ -21,4 +21,8 @@ public class Item implements Comparable<Item> {
 	public String toString() {
 		return name;
 	}
+
+	public double getPrice() {
+		return price;
+	}
 }
