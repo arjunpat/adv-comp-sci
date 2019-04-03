@@ -15,7 +15,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 
 	public BinarySearchTree() {}
 
-	public void draw(Graphics g, int height, int width) {
+	public void draw(Graphics g, int width, int height) {
 		int lineHeight = height / (getHeight() + 2);
 
 		g.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -24,7 +24,8 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 	}
 
 	private void draw(Graphics g, Node<E> current, int x, int dx, int y, int dy) {
-		g.drawString(current.get().toString(), x - 18, y + 16);
+		Item theItem = (Item)current.get();
+		g.drawString(theItem.getName(), x - 18, y + 16);
 
 		dx = dx / 2;
 
@@ -83,7 +84,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 	private void toString(Node<E> current) {
 		if (current != null) {
 			toString(current.getLeft());
-			str += current.get().toString() + " ";
+			str += current.get().toString() + "\n";
 			toString(current.getRight());
 		}
 	}
@@ -216,7 +217,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements Serializable {
 					return;
 				}
 
-				if (parent.getRight().get().equals(data)) {
+				if (parent.getRight() != null && parent.getRight().get().equals(data)) {
 					parent.setRight(null);
 				} else {
 					parent.setLeft(null);
