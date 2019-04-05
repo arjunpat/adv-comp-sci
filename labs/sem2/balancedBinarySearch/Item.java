@@ -11,18 +11,22 @@ public class Item implements Comparable<Item> {
 
 	public boolean equals(Object o) {
 		Item a = (Item)o;
-		return toString().equals(a.toString());
+		return getName().equals(a.getName());
 	}
 
 	public int compareTo(Item a) {
-		return toString().compareTo(a.toString());
+		return getName().compareTo(a.getName());
 	}
 
 	public String toString() {
-		return name;
+		return name + ", $" + price;
 	}
 
 	public double getPrice() {
 		return price;
+	}
+
+	public String getName() {
+		return name;
 	}
 }
