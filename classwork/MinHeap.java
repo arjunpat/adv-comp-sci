@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MinHeap<E extends Comparable<E>> {
-  private ArrayList<E> heap;
+  private LinkedList<E> heap;
 
   public MinHeap() {
-    heap  = new ArrayList<E>();
+    heap  = new LinkedList<E>();
   }
 
   public void add(E val) {
@@ -15,11 +15,123 @@ public class MinHeap<E extends Comparable<E>> {
       int parent = (current - 1) / 2;
       E a = heap.get(parent);
       E b = heap.get(current);
-      if (a.compareTo(b) < 0) {
+      if (a.compareTo(b) > 0) {
         heap.set(parent, b);
         heap.set(current, a);
         current = parent;
       } else {
+        break;
+      }
+    }
+  }
+
+  /*public E poll() {
+    E top = heap.remove(0);
+
+    int current = 0;
+
+    while (current < heap.size()) {
+      E newTop = heap.get(current);
+      int leftChild = (int)Math.pow(current, 2) + 1;
+      int rightChild = (int)Math.pow(current, 2) + 2;
+
+      if (leftChild >= heap.size() || rightChild >= heap.size()) {
+
+      }
+
+      E left = heap.get(leftChild);
+      E right = heap.get(rightChild);
+
+      if (left.compareTo(newTop) < 0 && right.compareTo(newTop) < 0) {
+        if (left.compareTo(right) < 0) {
+          heap.set(leftChild, newTop);
+          heap.set(current, left);
+          current = leftChild;
+        } else {
+          heap.set(rightChild, newTop);
+          heap.set(current, right);
+          current = rightChild;
+        }
+      } else if (left.compareTo(newTop) < 0 && right.compareTo(newTop) > 0) {
+        heap.set(leftChild, newTop);
+        heap.set(current, left);
+        current = leftChild;
+      } else if (left.compareTo(newTop) > 0 && right.compareTo(newTop) < 0) {
+        heap.set(rightChild, newTop);
+        heap.set(current, right);
+        current = rightChild;
+      } else {
+        break;
+      }
+    }
+
+    return top;
+  }*/
+
+  public E poll() {
+    E top = heap.remove(0);
+
+    swapDown(0);
+
+    return top;
+  }
+
+  private void swapDown(int index) {
+    if (heap.size() < 1) {
+      return;
+    }
+
+    E top = heap.get(index);
+    int leftChild = (int)Math.pow(index, 2) + 1;
+    int rightChild = (int)Math.pow(index, 2) + 2;
+    int size = heap.size();
+
+    if (leftChild < size && rightChild < size) {
+      E left = heap.get(leftChild);
+      E right = heap.get(rightChild);
+
+      if (left.compareTo(top) < 0 && right.compareTo(top) < 0) {
+        if (left.compareTo(right) < 0) {
+          heap.set(leftChild, top);
+          heap.set(index, left);
+          swapDown(leftChild);
+        } else {
+          heap.set(rightChild, top);
+          heap.set(index, right);
+          swapDown(rightChild);
+        }
+      } else if (left.compareTo(top) < 0 && right.compareTo(top) > 0) {
+        heap.set(leftChild, top);
+        heap.set(index, left);
+        swapDown(leftChild);
+      } else if (left.compareTo(top) > 0 && right.compareTo(top) < 0) {
+        heap.set(rightChild, top);
+        heap.set(index, right);
+        swapDown(rightChild);
+      }
+
+    } else if (leftChild < size) {
+      E left = heap.get(leftChild);
+      if (left.compareTo(top) < 0) {
+          heap.set(index, left);
+          heap.set(leftChild, top);
+          swapDown(leftChild);
+      }
+    } else if (rightChild < size) {
+      E right = heap.get(rightChild);
+      if (right.compareTo(top) < 0) {
+        heap.set(index, right);
+        heap.set(rightChild, top);
+        swapDown(rightChild);
+      }
+    }
+  }
+
+  public void remove(E data) {
+    for (int i = 0; i < heap.size(); i++) {
+      if (heap.get(i).equals(data)) {
+        heap.remove(i);
+        swapDown(i);
         break;
       }
     }
@@ -41,5 +153,9 @@ public class MinHeap<E extends Comparable<E>> {
     }
 
     return str + "\n";
+  }
+
+  public int size() {
+    return heap.size();
   }
 }
