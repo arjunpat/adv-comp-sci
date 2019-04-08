@@ -25,49 +25,6 @@ public class MinHeap<E extends Comparable<E>> {
     }
   }
 
-  /*public E poll() {
-    E top = heap.remove(0);
-
-    int current = 0;
-
-    while (current < heap.size()) {
-      E newTop = heap.get(current);
-      int leftChild = (int)Math.pow(current, 2) + 1;
-      int rightChild = (int)Math.pow(current, 2) + 2;
-
-      if (leftChild >= heap.size() || rightChild >= heap.size()) {
-
-      }
-
-      E left = heap.get(leftChild);
-      E right = heap.get(rightChild);
-
-      if (left.compareTo(newTop) < 0 && right.compareTo(newTop) < 0) {
-        if (left.compareTo(right) < 0) {
-          heap.set(leftChild, newTop);
-          heap.set(current, left);
-          current = leftChild;
-        } else {
-          heap.set(rightChild, newTop);
-          heap.set(current, right);
-          current = rightChild;
-        }
-      } else if (left.compareTo(newTop) < 0 && right.compareTo(newTop) > 0) {
-        heap.set(leftChild, newTop);
-        heap.set(current, left);
-        current = leftChild;
-      } else if (left.compareTo(newTop) > 0 && right.compareTo(newTop) < 0) {
-        heap.set(rightChild, newTop);
-        heap.set(current, right);
-        current = rightChild;
-      } else {
-        break;
-      }
-    }
-
-    return top;
-  }*/
-
   public E poll() {
     E top = heap.remove(0);
 
