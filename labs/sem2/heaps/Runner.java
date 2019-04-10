@@ -19,11 +19,13 @@ public class Runner {
 	}
 
 	public void openChefWindow() {
-		this.packView(new JFrame("Chef Window"), new ChefView(db));
+		JFrame j = new JFrame("Chef Window");
+		this.packView(j, new ChefView(db, j));
 	}
 
 	public void openServerWindow() {
-		this.packView(new JFrame("Server Window"), new ServerView(db));
+		JFrame j = new JFrame("Server Window");
+		this.packView(j, new ServerView(db, j));
 	}
 
 	public static void main(String[] args) {

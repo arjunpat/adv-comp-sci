@@ -9,7 +9,7 @@ public class Order implements Comparable<Order> {
 	}
 
 	public int compareTo(Order o) {
-		return (int)(o.getTime() - time);
+		return (int)(time - o.getTime());
 	}
 
 	public double getTime() {
@@ -32,5 +32,17 @@ public class Order implements Comparable<Order> {
 
 	public String toString() {
 		return items.toString();
+	}
+
+	public String stringify() {
+		String str = "";
+
+		for (int i = 0; i < items.size(); i++) {
+			str += items.get(i) + "\n";
+		}
+
+		str += "\nTotal Price: $" + getTotalPrice();
+
+		return str;
 	}
 }

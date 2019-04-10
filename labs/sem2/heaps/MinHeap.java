@@ -34,7 +34,11 @@ public class MinHeap<E extends Comparable<E>> {
 	}
 
 	public E peek() {
-		return heap.get(0);
+		if (heap.size() > 0) {
+			return heap.get(0);
+		}
+
+		return null;
 	}
 
 	private void swapDown(int index) {
