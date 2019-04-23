@@ -1,19 +1,23 @@
 public class Runner {
-  public static void main(String[] args) {
-    MaxHeap<Integer> heap = new MaxHeap<Integer>();
+	public static void main(String[] args) {
+		Manager m = new Manager();
+		System.out.println(m);
+		SimpleThread st = new SimpleThread(m);
 
-    int num = 1;
-    while (num < 9) {
-      int num2 = (int)(Math.random() * 100 + 1);
-      heap.add(num2);
+		Thread[] threadList = new Thread[5];
+		for (int i = 0; i < threadList.length; i++) {
+			threadList[i] = new Thread(st);
+			threadList[i].start();
+		}
 
-      num++;
-    }
+		try {
+			for(int i = 0; i < threadList.length; i++) {
+				threadList[i].join();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 
-    System.out.println(heap.toString());
-
-    while (heap.size() > 0) {
-      System.out.println(heap.poll());
-    }
-  }
+		System.out.println(m);
+	}
 }
