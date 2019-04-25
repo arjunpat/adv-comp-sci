@@ -5,8 +5,8 @@ import java.util.*;
 
 public abstract class View extends JPanel {
 
-	private final int WINDOW_WIDTH = 1200;
-	private final int WINDOW_HEIGHT = 500;
+	private final int WINDOW_WIDTH = 800;
+	private final int WINDOW_HEIGHT = 800;
 
 	public View() {
 		this.setLayout(null);

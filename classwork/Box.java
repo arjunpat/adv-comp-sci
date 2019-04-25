@@ -33,11 +33,9 @@ public class Box implements Runnable {
   }
 
   public void draw(Graphics g) {
+    g.setColor(Color.YELLOW);
     g.fillRect(x, y, 100, 100);
   }
 
 
-  public void run() {
-
-  }
 }

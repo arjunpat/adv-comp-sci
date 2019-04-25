@@ -8,11 +8,22 @@ public class Screen extends View {
   Thread boxThread = new Thread(box);
 
   public Screen() {
+
+    boxThread.start();
+
+    Thread t = new Thread(new Runnable() {
+      public void run() {
+        try { Thread.sleep(10); } catch(Exception e) {}
+        repaint();
+      }
+    });
+
+    t.start();
   }
 
   public void draw(Graphics g) {
+    box.draw(g);
 
   }
 
-  boxThread.start();
 }

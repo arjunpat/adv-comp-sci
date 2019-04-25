@@ -7,7 +7,6 @@ public class Runner
         JFrame frame = new JFrame("Moving Object");
 
         frame.add(game);
-        game.animate();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
