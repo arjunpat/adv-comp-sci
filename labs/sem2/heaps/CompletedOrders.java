@@ -3,34 +3,34 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class NewOrder extends View {
+public class CompletedOrders extends View {
 	private Database db;
 	private JFrame j;
 	private Order order;
-	private JButton[] buttons = new JButton[0];
-	private JTextArea orderTextArea = new JTextArea(300, 190);
+	private JTextArea orderTextArea = new JTextArea(300, 400);
 
-	public NewOrder(Database db, JFrame j) {
+	public CompletedOrders(Database db, JFrame j) {
 		this.db = db;
+		db.addChangeListener(this);
 		this.j = j;
 		order = new Order();
 
+		onChange();
 
 		orderTextArea.setEditable(false);
 		JScrollPane orderScrollPane = new JScrollPane(orderTextArea);
 		orderScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		orderScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		orderScrollPane.setBounds(10, 600, 300, 190);
+		orderScrollPane.setBounds(20, 100, 300, 400);
 		add(orderScrollPane);
 
-		JButton placeOrder = new JButton("Place order");
-		placeOrder.setBounds(320, 600, 200, 60);
-		placeOrder.addActionListener(e -> {
-			db.addOrder(order);
-			order = new Order();
-			update();
+		JButton done = new JButton("I'm done with this order");
+		done.setBounds(340, 100, 200, 30);
+		done.addActionListener(e -> {
+			db.doneWithCompletedOrder();
+			onChange();
 		});
-		add(placeOrder);
+		add(done);
 
 		JButton close = new JButton("Close");
 		close.setBounds(450, 20, 100, 30);
@@ -44,6 +44,7 @@ public class NewOrder extends View {
 	}
 
 	public void draw(Graphics g) {
+		
 	}
 
 	@Override
@@ -52,6 +53,11 @@ public class NewOrder extends View {
 	}
 
 	public void onChange() {
+		order = db.peekCompletedOrder();
 
+		if (order != null)
+			orderTextArea.setText(order.stringify());
+		else
+			orderTextArea.setText("No orders! Relax!");
 	}
 }

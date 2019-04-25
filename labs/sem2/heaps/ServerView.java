@@ -52,7 +52,36 @@ public class ServerView extends View {
 		JButton toCompleted = new JButton("Completed Orders");
 		toCompleted.setBounds(200, 500, 200, 60);
 		toCompleted.addActionListener(e -> {
-			
+			Thread animate = new Thread(new Runnable() {
+				public void run() {
+					int completedY = 400;
+					double acc = 20;
+					CompletedOrders completed = new CompletedOrders(db, j);
+					completed.setBounds(0, completedY, 800, 800);
+					completed.setBackground(new Color(255, 255, 255, 0));
+					add(completed);
+
+					while (completedY > 0) {
+						int opacity = (int)(255 * ((400 - completedY) / 400.0));
+						completed.setBackground(new Color(255, 255, 255, opacity));
+						completed.setLocation(0, completedY);
+						repaint();
+						try { Thread.sleep(10); } catch (Exception e) {}
+						completedY -= acc;
+						acc += .5;
+					}
+
+					completed.setLocation(0, 0);
+					completed.setBackground(new Color(255, 255, 255));
+
+					j.setContentPane(completed);
+					j.pack();
+					j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					j.setVisible(true);
+				}
+			});
+
+			animate.start();
 		});
 		add(toCompleted);
 

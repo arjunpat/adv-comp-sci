@@ -34,9 +34,17 @@ public class Database {
 		return orders.peek();
 	}
 
+	public Order peekCompletedOrder() {
+		return completedOrders.peek();
+	}
+
+	public void doneWithCompletedOrder() {
+		completedOrders.poll();
+	}
+
 	public void doneWithOrder() {
-		Order o = orders.poll();
-		completedOrders.add(o);
+		completedOrders.add(orders.poll());
+		changesMade();
 	}
 
 	public void addChangeListener(View v) {
