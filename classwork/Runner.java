@@ -1,12 +1,16 @@
-public class Runner {
-  public static void main(String[] args) {
-    Manager manager = new Manager();
-    System.out.println(manager);
-    manager.work();
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {}
+import javax.swing.JFrame;
+public class Runner
+{
+    public static void main(String args[])
+    {
+        Screen game = new Screen();
+        JFrame frame = new JFrame("Moving Object");
 
-    System.out.println(manager);
-  }
+        frame.add(game);
+        game.animate();
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 }
