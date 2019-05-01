@@ -53,5 +53,7 @@ public class SpaceFighter {
 
 	public void draw(Graphics g) {
 		g.drawImage(picture, x, y, null);
+		g.setColor(Color.WHITE);
+		g.drawRect(x + 14, y + 10, 120, 70);
 	}
 }

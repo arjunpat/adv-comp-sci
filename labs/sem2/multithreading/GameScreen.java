@@ -9,9 +9,24 @@ public class GameScreen extends View {
 	private Runner screenManager;
 	private SpaceFighter player = new SpaceFighter(50, 200);
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private int lives = 3;
 
 	public GameScreen(Runner screenManager) {
 		this.screenManager = screenManager;
+
+		for (int i = 0; i < 5; i++) {
+			int x = (int)(Math.random() * 800);
+			int y = (int)(Math.random() * 800);
+			double dx = (Math.random() * 3) + 1;
+			double dy = (Math.random() * 3) + 1;
+
+			Enemy e = new Enemy(x, y, dx, dy);
+			Thread t = new Thread(e);
+			t.start();
+
+			enemies.add(e);
+		}
 
 
 		addKeyListener(new KeyListener() {
@@ -60,6 +75,19 @@ public class GameScreen extends View {
 			projectiles.get(i).draw(g);
 		}
 
+		for (int i = 0; i < enemies.size(); i++) {
+			Enemy e = enemies.get(i);
+			e.draw(g);
+
+			if (e.checkCollision(player)) {
+				lives--;
+			}
+		}
+
 		player.draw(g);
+
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		g.drawString("Lives: " + lives, 700, 30);
 	}
 }
