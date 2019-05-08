@@ -18,8 +18,8 @@ public class GameScreen extends View {
 		for (int i = 0; i < 5; i++) {
 			int x = (int)(Math.random() * 800);
 			int y = (int)(Math.random() * 800);
-			double dx = (Math.random() * 3) + 1;
-			double dy = (Math.random() * 3) + 1;
+			double dx = (Math.random() * 2) + 1;
+			double dy = (Math.random() * 2) + 1;
 
 			Enemy e = new Enemy(x, y, dx, dy);
 			Thread t = new Thread(e);
@@ -81,6 +81,7 @@ public class GameScreen extends View {
 
 			if (e.checkCollision(player)) {
 				lives--;
+				e.goToInitial();
 			}
 		}
 

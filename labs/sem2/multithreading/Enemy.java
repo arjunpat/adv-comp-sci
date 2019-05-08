@@ -8,7 +8,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class Enemy implements Runnable {
-	private int x, y;
+	private int x, y, ix, iy;
 	private double dx, dy;
 	private BufferedImage picture;
 	private boolean hit = false;
@@ -16,6 +16,8 @@ public class Enemy implements Runnable {
 	public Enemy(int x, int y, double dx, double dy) {
 		this.x = x;
 		this.y = y;
+		this.ix = x;
+		this.iy = y;
 		this.dx = dx;
 		this.dy = dy;
 
@@ -45,6 +47,11 @@ public class Enemy implements Runnable {
 
 	public void draw(Graphics g) {
 		g.drawImage(picture, x, y, null);
+	}
+
+	public void goToInitial() {
+		x = ix;
+		y = iy;
 	}
 
 	public boolean checkCollision(SpaceFighter p) {
