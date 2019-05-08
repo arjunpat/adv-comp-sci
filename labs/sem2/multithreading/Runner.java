@@ -30,6 +30,10 @@ public class Runner {
 		updateScreen(new LoseScreen(this));
 	}
 
+	public void goToWinScreen() {
+		updateScreen(new WinScreen(this));
+	}
+
 	public static void main(String[] args) {
 		new Runner();
 	}

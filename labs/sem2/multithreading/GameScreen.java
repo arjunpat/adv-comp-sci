@@ -12,14 +12,21 @@ public class GameScreen extends View {
 	private Runner screenManager;
 	private SpaceFighter player = new SpaceFighter(50, 200);
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	private ArrayList<Projectile> bossProjectiles = new ArrayList<Projectile>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private int lives = 3;
+	private boolean boss = false;
+	private Boss theBoss;
+	private Thread theBossThread;
 
 	public GameScreen(Runner screenManager) {
 		super();
 		this.screenManager = screenManager;
 		setRequestFocusEnabled(true);
 		grabFocus();
+
+		theBoss = new Boss((int)(Math.random() * 400) + 400, (int)(Math.random() * 800), (Math.random() * 2) + 3, (Math.random() * 2) + 3);
+		theBossThread = new Thread(theBoss);
 
 		for (int i = 0; i < 5; i++) {
 			int x = (int)(Math.random() * 400) + 400;
@@ -60,6 +67,12 @@ public class GameScreen extends View {
 					});
 
 					t.start();
+				} else if (keyCode == 80) {
+					if (boss) {
+						theBoss.kill();
+					} else {
+						enemies.clear();
+					}
 				}
 			}
 			public void keyReleased(KeyEvent e) {}
@@ -70,6 +83,25 @@ public class GameScreen extends View {
 			public void actionPerformed(ActionEvent e) {
 				repaint();
 				requestFocusInWindow();
+
+				if (Math.random() < .05) {
+					Projectile p = new Projectile(theBoss.getX(), theBoss.getY());
+					p.setColor(Color.RED);
+					bossProjectiles.add(p);
+
+					Thread t = new Thread(new Runnable() {
+						public void run() {
+							while (p.getX() > 0) {
+								try { Thread.sleep(15); } catch (Exception e) {}
+								p.moveLeft();
+							}
+
+							bossProjectiles.remove(p);
+						}
+					});
+
+					t.start();
+				}
 			}
 		});
 		timer.start();
@@ -84,11 +116,19 @@ public class GameScreen extends View {
 			Projectile p = projectiles.get(i);
 			p.draw(g);
 
-			for (int j = 0; j < enemies.size(); j++) {
-				if (enemies.get(j).checkCollision(p)) {
+			if (boss) {
+				if (theBoss.checkCollision(p)) {
+					theBoss.reduceLives();
 					projectiles.remove(p);
-					enemies.remove(enemies.get(j));
-					playSound("sounds/ping.mp3");
+				}
+			} else {
+				for (int j = 0; j < enemies.size(); j++) {
+					if (enemies.get(j).checkCollision(p)) {
+						projectiles.remove(p);
+						enemies.remove(enemies.get(j));
+						playSound("sounds/ping.mp3");
+						break;
+					}
 				}
 			}
 		}
@@ -102,11 +142,36 @@ public class GameScreen extends View {
 				e.goToInitial();
 
 				playSound("sounds/ping.mp3");
+			}
+		}
 
-				if (lives == 0) {
-					screenManager.goToLoseScreen();
+		if (boss) {
+			theBoss.draw(g);
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Tahoma", Font.PLAIN, 24));
+			int bossLives = theBoss.getLives();
+			g.drawString("Boss lives: " + bossLives, 650, 60);
+
+			if (bossLives == 0) {
+				screenManager.goToWinScreen();
+			}
+
+			for (int i = 0; i < bossProjectiles.size(); i++) {
+				Projectile p = bossProjectiles.get(i);
+				p.draw(g);
+
+				if (player.checkCollision(p)) {
+					bossProjectiles.remove(i);
+					lives--;
 				}
 			}
+		} else if (enemies.size() == 0) {
+			boss = true;
+			theBossThread.start();
+		}
+
+		if (lives == 0) {
+			screenManager.goToLoseScreen();
 		}
 
 		player.draw(g);

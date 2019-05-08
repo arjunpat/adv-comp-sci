@@ -56,4 +56,13 @@ public class SpaceFighter {
 		g.setColor(Color.WHITE);
 		g.drawRect(x + 14, y + 10, 120, 70);
 	}
+
+	public boolean checkCollision(Projectile p) {
+		int pX = p.getX();
+		int pY = p.getY();
+		int pWidth = 50;
+		int pHeight = 50;
+
+		return pX + pWidth >= x && pX <= x + pWidth && pY + pHeight >= y && pY <= y + pHeight;
+	}
 }
