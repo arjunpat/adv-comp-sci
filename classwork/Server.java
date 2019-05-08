@@ -1,22 +1,54 @@
-import java.next.*;
+import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Server {
 	public static void main(String[] args) throws IOException {
-		int portNumber = 1024;
+		int portNumber = 8080;
 		ServerSocket serverSocket = new ServerSocket(portNumber);
+		ArrayList<Socket> clientSockets = new ArrayList<Socket>();
 
-		Manager cm = new Manager();
+		Thread acceptConnections = new Thread(new Runnable() {
+			public void run() {
+				while (true) {
 
-		while (true) {
-			System.out.println("Waiting for a connection");
-			Socket clientSocket = serverSocket.accept();
+					try {
+						Socket clientSocket = serverSocket.accept();
+						System.out.println("New connection");
 
-			ServerThread st = new ServerThread(clientSocket, cm);
-			cm.addthread(st);
+						clientSockets.add(clientSocket);
 
-			Thread thread = new Thread(st);
-			thread.start();
+						Thread each = new Thread(new Runnable() {
+							public void run() {
+
+								try {
+									BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+									while (true) {
+										String line = in.readLine();
+										broadcast(line, clientSockets);
+									}
+								} catch (Exception e) {}
+							}
+						});
+
+						each.start();
+					} catch (Exception e) {}
+				}
+			}
+		});
+
+		acceptConnections.start();
+	}
+
+	public static void broadcast(String text, ArrayList<Socket> sockets) {
+		for (int i = 0; i < sockets.size(); i++) {
+
+			try {
+				PrintWriter out = new PrintWriter(sockets.get(i).getOutputStream(), true);
+
+				out.println(text);
+			} catch (Exception e) {}
 		}
 	}
 }
