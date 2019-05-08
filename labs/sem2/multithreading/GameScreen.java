@@ -140,6 +140,7 @@ public class GameScreen extends View {
 			if (e.checkCollision(player)) {
 				lives--;
 				e.goToInitial();
+				player.goToInitial();
 
 				playSound("sounds/ping.mp3");
 			}
@@ -163,6 +164,7 @@ public class GameScreen extends View {
 				if (player.checkCollision(p)) {
 					bossProjectiles.remove(i);
 					lives--;
+					player.goToInitial();
 				}
 			}
 		} else if (enemies.size() == 0) {

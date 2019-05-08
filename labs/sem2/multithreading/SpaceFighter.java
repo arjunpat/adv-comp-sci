@@ -8,13 +8,15 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public class SpaceFighter {
-	private int x, y;
+	private int x, y, ix, iy;
 	private BufferedImage picture;
 	private int moveConstant = 12;
 
 	public SpaceFighter(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.ix = x;
+		this.iy = y;
 
 		try {
 			picture = ImageIO.read(getClass().getResource("img/spaceship.png"));
@@ -41,6 +43,11 @@ public class SpaceFighter {
 	public void moveRight() {
 		if (x + moveConstant <= 800)
 			x += moveConstant;
+	}
+
+	public void goToInitial() {
+		x = ix;
+		y = iy;
 	}
 
 	public int getX() {
