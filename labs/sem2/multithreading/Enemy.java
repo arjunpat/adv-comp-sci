@@ -62,4 +62,13 @@ public class Enemy implements Runnable {
 
 		return pX + pWidth >= x && pX <= x + pWidth && pY + pHeight >= y && pY <= y + pHeight;
 	}
+
+	public boolean checkCollision(Projectile p) {
+		int pX = p.getX();
+		int pY = p.getY();
+		int pWidth = 20;
+		int pHeight = 20;
+
+		return pX + pWidth >= x && pX <= x + pWidth && pY + pHeight >= y && pY <= y + pHeight;
+	}
 }

@@ -19,6 +19,10 @@ public class Projectile {
 		return x;
 	}
 
+	public int getY() {
+		return y;
+	}
+
 	public void draw(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, 10, 10);

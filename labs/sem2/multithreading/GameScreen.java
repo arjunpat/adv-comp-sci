@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.Timer;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.net.URL;
 
 public class GameScreen extends View {
 	private Runner screenManager;
@@ -13,10 +16,13 @@ public class GameScreen extends View {
 	private int lives = 3;
 
 	public GameScreen(Runner screenManager) {
+		super();
 		this.screenManager = screenManager;
+		setRequestFocusEnabled(true);
+		grabFocus();
 
 		for (int i = 0; i < 5; i++) {
-			int x = (int)(Math.random() * 800);
+			int x = (int)(Math.random() * 400) + 400;
 			int y = (int)(Math.random() * 800);
 			double dx = (Math.random() * 2) + 1;
 			double dy = (Math.random() * 2) + 1;
@@ -40,6 +46,7 @@ public class GameScreen extends View {
 				} else if (keyCode == 32) { // space, shoot projectile
 					Projectile p = new Projectile(player.getX() + 140, player.getY() + 40);
 					projectiles.add(p);
+					playSound("sounds/ping.wav");
 
 					Thread t = new Thread(new Runnable() {
 						public void run() {
@@ -62,9 +69,11 @@ public class GameScreen extends View {
 		Timer timer = new Timer(30, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				repaint();
+				requestFocusInWindow();
 			}
 		});
 		timer.start();
+
 	}
 
 	public void draw(Graphics g) {
@@ -72,7 +81,16 @@ public class GameScreen extends View {
 		g.fillRect(0, 0, 800, 800);
 
 		for (int i = 0; i < projectiles.size(); i++) {
-			projectiles.get(i).draw(g);
+			Projectile p = projectiles.get(i);
+			p.draw(g);
+
+			for (int j = 0; j < enemies.size(); j++) {
+				if (enemies.get(j).checkCollision(p)) {
+					projectiles.remove(p);
+					enemies.remove(enemies.get(j));
+					playSound("sounds/ping.mp3");
+				}
+			}
 		}
 
 		for (int i = 0; i < enemies.size(); i++) {
@@ -82,6 +100,12 @@ public class GameScreen extends View {
 			if (e.checkCollision(player)) {
 				lives--;
 				e.goToInitial();
+
+				playSound("sounds/ping.mp3");
+
+				if (lives == 0) {
+					screenManager.goToLoseScreen();
+				}
 			}
 		}
 
@@ -90,5 +114,16 @@ public class GameScreen extends View {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		g.drawString("Lives: " + lives, 700, 30);
+	}
+
+	private void playSound(String filename) {
+		try {
+			URL url = this.getClass().getClassLoader().getResource(filename);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(url));
+			clip.start();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }
