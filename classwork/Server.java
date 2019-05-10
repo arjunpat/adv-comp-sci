@@ -23,9 +23,17 @@ public class Server {
 
 								try {
 									BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+									PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
 									while (true) {
 										String line = in.readLine();
+
+										if (line.indexOf("has left the chat") > 0) {
+											out.flush();
+											out.close();
+											clientSockets.remove(clientSocket);
+										}
+
 										broadcast(line, clientSockets);
 									}
 								} catch (Exception e) {}
