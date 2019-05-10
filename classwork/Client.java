@@ -1,48 +1,83 @@
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 import java.util.Scanner;
 
-public class Client {
-	public static void main(String[] args) throws IOException {
+public class Client extends View {
+	public Client() throws Exception {
+		setBackground(new Color(255, 255, 255));
 
 		Socket serverSocket = new Socket("localhost", 8080);
 		BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 		PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
-		Scanner kb = new Scanner(System.in);
+		JTextArea accountsTextArea = new JTextArea(390, 350);
+		JTextField theName = new JTextField();
+		theName.setText("");
 
-		System.out.println("What is your name?");
-		String name = kb.nextLine();
+		accountsTextArea.setText("Type your name below and press enter");
 
+		accountsTextArea.setEditable(false);
+		JScrollPane accountsScrollPane = new JScrollPane(accountsTextArea);
+		accountsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		accountsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		accountsScrollPane.setBounds(20, 50, 390, 350);
+		add(accountsScrollPane);
 
-		Thread reader = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			public void run() {
-				out.println(name + " has joined the chat");
-				while (true) {
-					String line = kb.nextLine();
 
-					if (line.equals("bye")) {
-						out.println(name + " has left the chat");
-						out.flush();
-						out.close();
-						System.exit(1);
-					} else {
-						out.println(name + ": " + line);
+				try {
+					while (true) {
+						String fromServer = in.readLine();
+
+						if (fromServer.indexOf(theName.getText()) != 0)
+							accountsTextArea.setText(accountsTextArea.getText() + "\n" + fromServer);
 					}
+
+				} catch (Exception e) {}
+			}
+		}).start();
+
+		JTextField enterText = new JTextField();
+		enterText.setBounds(20, 600, 300, 50);
+		enterText.addActionListener(e -> {
+			String line = enterText.getText();
+
+			if (theName.getText().equals("")) {
+				theName.setText(line);
+				out.println(theName.getText() + " has joined the chat");
+				accountsTextArea.setText(accountsTextArea.getText() + "\n" + theName.getText() + " has joined the chat");
+			} else {
+				if (line.equals("bye")) {
+					out.println(theName.getText() + " has left the chat");
+					out.flush();
+					out.close();
+					System.exit(1);
+				} else {
+					out.println(theName.getText() + ": " + line);
+					accountsTextArea.setText(accountsTextArea.getText() + "\n" + line);
 				}
 			}
+
+			enterText.setText("");
 		});
+		add(enterText);
+	}
 
-		reader.start();
+	public void draw(Graphics g) {
+		drawBigTitle(g, Color.RED, "Chat", 20, 30);
+	}
 
-		try {
-			while (true) {
-				String fromServer = in.readLine();
+	public static void main(String[] args) throws Exception {
+		JFrame frame = new JFrame("Scenery Grid");
 
-				if (fromServer.indexOf(name) != 0)
-					System.out.println(fromServer);
-			}
+		frame.add(new Client());
 
-			
-		} catch (Exception e) {}
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }
