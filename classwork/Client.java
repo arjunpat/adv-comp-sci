@@ -10,7 +10,7 @@ public class Client extends View {
 	public Client() throws Exception {
 		setBackground(new Color(255, 255, 255));
 
-		Socket serverSocket = new Socket("localhost", 8080);
+		Socket serverSocket = new Socket("10.210.18.235", 8080);
 		BufferedReader in = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 		PrintWriter out = new PrintWriter(serverSocket.getOutputStream(), true);
 		JTextArea accountsTextArea = new JTextArea(390, 350);
